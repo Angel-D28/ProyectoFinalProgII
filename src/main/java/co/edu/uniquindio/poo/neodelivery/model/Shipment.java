@@ -1,18 +1,21 @@
 package co.edu.uniquindio.poo.neodelivery.model;
 
-public class Shipment {
+
+public class Shipment implements IShipment {
+
     private String id;
     private Address origin;
     private Address destination;
     private double weight;
     private double volume;
     private double cost;
-    private Status status; // "Solicitado", "Asignado", etc.
+    private Status status;
     private boolean hasInsurance;
     private boolean isPriority;
     private boolean requiresSignature;
+    private boolean fragile;
 
-    private Shipment(Builder builder){
+    private Shipment(Builder builder) {
         this.id = builder.id;
         this.origin = builder.origin;
         this.destination = builder.destination;
@@ -23,9 +26,20 @@ public class Shipment {
         this.hasInsurance = builder.hasInsurance;
         this.isPriority = builder.isPriority;
         this.requiresSignature = builder.requiresSignature;
+        this.fragile = builder.fragile;
     }
 
-    public static class Builder{
+    @Override
+    public double getCost() {
+        return cost;
+    }
+
+    @Override
+    public String getDescription() {
+        return "Envío desde " + origin + " hasta " + destination;
+    }
+
+    public static class Builder {
         private String id;
         private Address origin;
         private Address destination;
@@ -36,49 +50,21 @@ public class Shipment {
         private boolean hasInsurance;
         private boolean isPriority;
         private boolean requiresSignature;
+        private boolean fragile;
 
-        public Builder id(String id){
-            this.id = id;
-            return this;
-        }
+        public Builder id(String id) { this.id = id; return this; }
+        public Builder origin(Address origin) { this.origin = origin; return this; }
+        public Builder destination(Address destination) { this.destination = destination; return this; }
+        public Builder weight(double weight) { this.weight = weight; return this; }
+        public Builder volume(double volume) { this.volume = volume; return this; }
+        public Builder cost(double cost) { this.cost = cost; return this; }
+        public Builder status(Status status) { this.status = status; return this; }
+        public Builder hasInsurance(boolean hasInsurance) { this.hasInsurance = hasInsurance; return this; }
+        public Builder isPriority(boolean isPriority) { this.isPriority = isPriority; return this; }
+        public Builder requiresSignature(boolean requiresSignature) { this.requiresSignature = requiresSignature; return this; }
+        public Builder fragile(boolean fragile) { this.fragile = fragile; return this; }
 
-        public Builder origin(Address origin){
-            this.origin = origin;
-            return this;
-        }
-
-        public Builder destination(Address destination){
-            this.destination = destination;
-            return this;
-        }
-        public Builder weight(double weight){
-            this.weight = weight;
-            return this;
-        }
-        public Builder volume(double volume){
-            this.volume = volume;
-            return this;
-        }
-        public Builder cost(double cost){
-            this.cost = cost;
-            return this;
-        }
-        public Builder status(Status status){
-            this.status = status;
-            return this;
-        }
-        public Builder hasInsurance(boolean hasInsurance){
-            this.hasInsurance = hasInsurance;
-            return this;
-        }
-        public Builder isPriority(boolean isPriority){
-            this.isPriority = isPriority;
-            return this;
-        }
-        public Builder requiresSignature(boolean requiresSignature){
-            this.requiresSignature = requiresSignature;
-            return this;
-        }
+        public Shipment build() { return new Shipment(this); }
     }
 
     @Override

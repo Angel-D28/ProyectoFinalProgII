@@ -1,7 +1,6 @@
-package co.edu.uniquindio.poo.neodelivery.model.Repository;
+package co.edu.uniquindio.poo.neodelivery.model;
 
-import co.edu.uniquindio.poo.neodelivery.model.Shipment;
-import co.edu.uniquindio.poo.neodelivery.model.ShipmentDecorator;
+
 
 public class InsuraceDecorator extends ShipmentDecorator {
 
