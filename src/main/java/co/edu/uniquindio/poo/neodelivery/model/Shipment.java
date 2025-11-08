@@ -1,7 +1,10 @@
 package co.edu.uniquindio.poo.neodelivery.model;
 
 
-public class Shipment implements IShipment {
+import java.util.ArrayList;
+import java.util.List;
+
+public class Shipment implements IShipment , Subject {
 
     private String id;
     private Address origin;
@@ -14,6 +17,9 @@ public class Shipment implements IShipment {
     private boolean isPriority;
     private boolean requiresSignature;
     private boolean fragile;
+    private DeliveryDriver assignedDriver;
+
+    private List<Observer> observers = new ArrayList<>();
 
     private Shipment(Builder builder) {
         this.id = builder.id;
@@ -28,18 +34,8 @@ public class Shipment implements IShipment {
         this.requiresSignature = builder.requiresSignature;
         this.fragile = builder.fragile;
     }
-
-    @Override
-    public double getCost() {
-        return cost;
-    }
-
-    @Override
-    public String getDescription() {
-        return "Envío desde " + origin + " hasta " + destination;
-    }
-
     public static class Builder {
+
         private String id;
         private Address origin;
         private Address destination;
@@ -65,6 +61,129 @@ public class Shipment implements IShipment {
         public Builder fragile(boolean fragile) { this.fragile = fragile; return this; }
 
         public Shipment build() { return new Shipment(this); }
+    }
+
+    @Override
+    public double getCost() {
+        return cost;
+    }
+
+    @Override
+    public String getDescription() {
+        return "Envío desde " + origin + " hasta " + destination;
+    }
+
+    public void setStatus(Status newStatus) {
+        this.status = newStatus;
+        notifyObservers("El envío " + id + " cambió su estado a: " + newStatus);
+    }
+    @Override
+    public void addObserver(Observer o) {
+        observers.add(o); }
+    @Override
+    public void removeObserver(Observer o) {
+        observers.remove(o); }
+    @Override
+    public void notifyObservers(String msg) {
+        observers.forEach(o -> o.update(msg)); }
+
+    public void assignDriver(DeliveryDriver driver) {
+        this.assignedDriver = driver;
+        this.status = Status.DELIVERASSIGNED;
+        notifyObservers("El envío " + id + " ha sido asignado al repartidor " + driver.getName());
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+    public DeliveryDriver getAssignedDriver() { return assignedDriver; }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Address getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(Address origin) {
+        this.origin = origin;
+    }
+
+    public Address getDestination() {
+        return destination;
+    }
+
+    public void setDestination(Address destination) {
+        this.destination = destination;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public double getVolume() {
+        return volume;
+    }
+
+    public void setVolume(double volume) {
+        this.volume = volume;
+    }
+
+    public void setCost(double cost) {
+        this.cost = cost;
+    }
+
+    public boolean isHasInsurance() {
+        return hasInsurance;
+    }
+
+    public void setHasInsurance(boolean hasInsurance) {
+        this.hasInsurance = hasInsurance;
+    }
+
+    public boolean isPriority() {
+        return isPriority;
+    }
+
+    public void setPriority(boolean priority) {
+        isPriority = priority;
+    }
+
+    public boolean isRequiresSignature() {
+        return requiresSignature;
+    }
+
+    public void setRequiresSignature(boolean requiresSignature) {
+        this.requiresSignature = requiresSignature;
+    }
+
+    public boolean isFragile() {
+        return fragile;
+    }
+
+    public void setFragile(boolean fragile) {
+        this.fragile = fragile;
+    }
+
+    public void setAssignedDriver(DeliveryDriver assignedDriver) {
+        this.assignedDriver = assignedDriver;
+    }
+
+    public List<Observer> getObservers() {
+        return observers;
+    }
+
+    public void setObservers(List<Observer> observers) {
+        this.observers = observers;
     }
 
     @Override

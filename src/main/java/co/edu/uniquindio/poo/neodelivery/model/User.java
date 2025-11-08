@@ -1,6 +1,6 @@
 package co.edu.uniquindio.poo.neodelivery.model;
 
-public class User {
+public class User implements Observer {
     private String name;
     private String password;
     private String email;
@@ -19,6 +19,11 @@ public class User {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public void update(String message) {
+        EmailService.sendEmail(email, name, message);
     }
 
     public void setName(String name) {

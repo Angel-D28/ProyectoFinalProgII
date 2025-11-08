@@ -1,12 +1,15 @@
 package co.edu.uniquindio.poo.neodelivery.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
-public abstract class Payment {
+public abstract class Payment implements Subject  {
     protected String idPayment;
     protected double amount;
     protected LocalDate paymentDate;
     protected StatusPayment status;
+    private List<Observer> observers = new ArrayList<>();
 
     public Payment(double amount){
         this.amount = amount;
@@ -33,8 +36,9 @@ public abstract class Payment {
         return status;
     }
 
-    public void setStatus(StatusPayment status) {
+    public void setStatus(StatusPayment newStatus) {
         this.status = status;
+        notifyObservers("El envío " + idPayment + " cambió su estado a: " + newStatus);
     }
 
     @Override
@@ -45,5 +49,21 @@ public abstract class Payment {
                 ", paymentDate=" + paymentDate +
                 ", status=" + status +
                 '}';
+    }
+    @Override
+    public void addObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers(String message) {
+        for (Observer obs : observers) {
+            obs.update(message);
+        }
     }
 }

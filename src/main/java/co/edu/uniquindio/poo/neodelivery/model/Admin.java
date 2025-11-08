@@ -1,6 +1,6 @@
 package co.edu.uniquindio.poo.neodelivery.model;
 
-public class Admin {
+public class Admin implements Observer{
     private String idAdmin;
     private String name;
     private String email;
@@ -11,6 +11,12 @@ public class Admin {
         this.name = name;
         this.email = email;
         this.number = number;
+    }
+    @Override
+    public void update(String message) {
+        System.out.println("[Admin " + name + "] Notificación: " + message);
+
+        //SE UTILIZARIA EL METODO DE LA ALERTA DE JAVA FX
     }
 
     // Se delega a los "Gestores" para cumplir SOLID
