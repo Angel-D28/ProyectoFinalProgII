@@ -11,8 +11,8 @@ import java.util.List;
 
 public class ManagePayments {
     private DataBase db = DataBase.getInstance();
-
     // Crea y procesa un pago según el tipo seleccionado
+
     public Payment createAndProcessPayment(double amount, String type, String cardNumber, String walletProvider, String number) {
         PaymentFactory factory;
         Payment payment;
@@ -62,5 +62,11 @@ public class ManagePayments {
         }
     }
 
-
+    public String showManagePayments() {
+        String managePayments = "";
+        for (Payment payment : db.getListaPagos()) {
+            managePayments += payment.toString() + "\n";
+        }
+        return managePayments;
+    }
 }

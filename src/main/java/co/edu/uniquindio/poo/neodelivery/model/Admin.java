@@ -20,6 +20,7 @@ public class Admin implements Observer{
     }
 
     // Se delega a los "Gestores" para cumplir SOLID
+
     public void gestionarUsuarios() {
         System.out.println("Accediendo a gestión de usuarios...");
     }
@@ -70,11 +71,7 @@ public class Admin implements Observer{
 
     @Override
     public String toString() {
-        return "Admin{" +
-                "idAdmin='" + idAdmin + '\'' +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", number='" + number + '\'' +
-                '}';
+        return "idAdmin: " + idAdmin + "Nombre: " + name + "Email: " + email +
+                "Numero: " + number;
     }
 }

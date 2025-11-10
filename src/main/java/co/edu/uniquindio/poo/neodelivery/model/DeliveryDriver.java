@@ -12,6 +12,11 @@ public class DeliveryDriver {
         this.shipmentAssigned = null;
     }
 
+    public String toString(){
+        return "Nombre: " +name+ " Id: "+ id + " Envio asignado: "+ shipmentAssigned.getId();
+    }
+
+
     public String getId() {
         return id;
     }

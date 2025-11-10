@@ -18,6 +18,15 @@ public class ManageUsers {
         return user;
     }
 
+    public String showUsers() {
+        String users = "";
+        for (User user : db.getListaUsuarios()) {
+            users += user.toString() + "\n";
+        }
+        return users;
+    }
+
+
     public void createUser(User user) {
         db.getListaUsuarios().add(user);
     }
