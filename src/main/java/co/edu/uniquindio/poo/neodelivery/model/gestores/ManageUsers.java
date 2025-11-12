@@ -7,6 +7,7 @@ import java.util.List;
 
 public class ManageUsers {
     private DataBase db = DataBase.getInstance();
+    private int userId;
 
     public User findUser(String findId){
         User user = null;
@@ -24,6 +25,10 @@ public class ManageUsers {
             users += user.toString() + "\n";
         }
         return users;
+    }
+
+    public String generateId(){
+        return String.valueOf(userId++);
     }
 
 

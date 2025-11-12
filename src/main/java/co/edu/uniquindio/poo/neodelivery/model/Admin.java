@@ -5,12 +5,14 @@ public class Admin implements Observer{
     private String name;
     private String email;
     private String number;
+    private String password;
 
-    public Admin(String idAdmin, String name, String email, String number) {
+    public Admin(String idAdmin, String name, String email, String number, String password) {
         this.idAdmin = idAdmin;
         this.name = name;
         this.email = email;
         this.number = number;
+        this.password = password;
     }
     @Override
     public void update(String message) {
@@ -51,6 +53,13 @@ public class Admin implements Observer{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getEmail() {

@@ -7,6 +7,7 @@ import java.util.List;
 
 public class ManageAdmin {
     private final DataBase db = DataBase.getInstance();
+    private int adminId;
 
     public Admin findAdmin(String adminId) {
         Admin found = null;
@@ -24,6 +25,10 @@ public class ManageAdmin {
             admins += admin.toString() + "\n";
         }
         return admins;
+    }
+
+    public String generateId(){
+        return String.valueOf(adminId++);
     }
 
     public void createAdmin(Admin admin) {

@@ -8,6 +8,7 @@ import java.util.List;
 
 public class ManageDeliveryDrivers {
     private DataBase db = DataBase.getInstance();
+    private int driverId;
 
     public DeliveryDriver findDeliveryDriver(String findId){
         DeliveryDriver driver = null;
@@ -25,6 +26,10 @@ public class ManageDeliveryDrivers {
             deliveryDrivers += driver.toString() + "\n";
         }
         return deliveryDrivers;
+    }
+
+    public String generateId(){
+        return String.valueOf(driverId++);
     }
 
 

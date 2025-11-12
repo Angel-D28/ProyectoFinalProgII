@@ -1,0 +1,148 @@
+
+#mainText {
+    -fx-text-fill: #F8FAFC;
+    -fx-font-style:"Cambria";
+}
+
+#registerText{
+    -fx-text-fill: #F8FAFC;
+    -fx-font-style:"Cambria";
+    -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.4), 18, 0.3, 0, 0);
+}
+
+#text {
+    -fx-text-fill: #1E293B;
+    -fx-font-style:"Cambria";
+}
+
+#leftPane{
+    -fx-background-color: linear-gradient(to bottom right, #3A6073, #16222A);
+}
+
+#appLogo {
+    -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.4), 18, 0.3, 0, 0);
+}
+
+#loginPane {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-padding: 40;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 15, 0.2, 0, 5);
+}
+
+.mainButton {
+    -fx-background-color: linear-gradient(to right, #3A7BD5, #3A6073);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+    -fx-padding: 10 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 8, 0, 0, 2);
+    -fx-border-color: transparent;
+    -fx-border-radius: 10;
+    -fx-transition: all 0.3s ease;
+}
+
+.mainButton:hover {
+    -fx-background-color: linear-gradient(to right, #4F91E3, #416D8C);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 10, 0, 0, 3);
+    -fx-translate-y: -1;
+}
+
+.mainButton:pressed {
+    -fx-background-color: linear-gradient(to right, #355E8A, #2E4F68);
+    -fx-effect: none;
+    -fx-translate-y: 1;
+}
+
+.text-field, .password-field {
+    -fx-background-color: #f0f0f0;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1.5;
+    -fx-padding: 8 12 8 12;
+    -fx-font-size: 14;
+}
+
+.text-field:focused, .password-field:focused, .choice-box:focused {
+    -fx-border-color: #4A90E2;
+    -fx-border-width: 2;
+    -fx-background-color: #ffffff;
+}
+
+.text-field .text, .password-field .text, .checkbox-field .text {
+    -fx-fill: #999999;
+}
+
+.choice-box{
+    -fx-background-color: #f0f0f0;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1;
+    -fx-padding: 6 10 6 10;
+    -fx-font-size: 10;
+}
+
+#mainContentDashboard{
+    -fx-background-color: #F8FAFC;
+}
+
+#dashboardButton{
+    -fx-background-color: transparent;
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-text-fill: #F8FAFC;
+    -fx-font-family: "Cambria";
+    -fx-font-size: 16px;
+}
+
+#dashboardButton:hover{
+    -fx-scale-y: 1.05;
+    -fx-scale-x: 1.05;
+    -fx-cursor: hand;
+    -fx-border-color: #F8FAFC;
+    -fx-border-width: 2;
+}
+
+#dashboardButton:pressed{
+    -fx-opacity: 0.7;
+    -fx-translate-y: 1;
+}
+
+.buttonBar {
+    -fx-background-color: transparent;
+    -fx-text-fill: #3A6073;
+    -fx-font-size: 18px;
+    -fx-font-family: "Cambria";
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-padding: 8 16;
+    -fx-border-style: none;
+    -fx-border-insets: 0;
+    -fx-background-insets: 0;
+}
+
+.buttonBar:hover {
+    -fx-background-color: transparent;
+    -fx-border-style: solid inside;
+    -fx-border-color: transparent transparent #3A6073 transparent;
+    -fx-border-width: 0 0 3 0;
+}
+
+.buttonBar:pressed {
+    -fx-background-color: transparent;
+    -fx-border-style: solid inside;
+    -fx-border-color: transparent transparent #16222A transparent;
+    -fx-border-width: 0 0 3 0;
+    -fx-translate-y: 1;
+}
+
+.labelTitles{
+    -fx-font-family: "Cambria";
+    -fx-text-fill: #F8FAFC;
+    -fx-font-size: 20;
+    -fx-font-weight: bold;
+}
