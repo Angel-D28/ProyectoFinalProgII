@@ -1,14 +1,26 @@
-# Archivos compilados
+# Carpetas de compilación
+target/
+out/
+
+# Archivos de IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+
+# Archivos generados por el sistema
 *.class
-
-# Carpeta de compilación
-/target/
-
-# Archivos de configuración de IDE
-/.idea/
-/*.iml
-
-# Archivos temporales del sistema
 *.log
 *.tmp
+*.swp
+
+# Archivos de configuración del sistema operativo
 .DS_Store
+Thumbs.db
+
+# Archivos de Maven (si usas)
+*.jar
+*.war
+*.ear
+
+# Archivos de NetBeans (si se abren en otro IDE)
+nbproject/
