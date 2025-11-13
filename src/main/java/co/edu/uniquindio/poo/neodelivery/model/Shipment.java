@@ -188,17 +188,8 @@ public class Shipment implements IShipment , Subject {
 
     @Override
     public String toString() {
-        return "Shipment{" +
-                "id='" + id + '\'' +
-                ", origin=" + origin +
-                ", destination=" + destination +
-                ", weight=" + weight +
-                ", volume=" + volume +
-                ", cost=" + cost +
-                ", status=" + status +
-                ", hasInsurance=" + hasInsurance +
-                ", isPriority=" + isPriority +
-                ", requiresSignature=" + requiresSignature +
-                '}';
+        return "Id: " + id + "Origen: " + origin + "Destino: " + destination + "Peso" + weight +
+                "Volumen: " + volume + "Costo: " + cost + "Estado: " + status + "TuvoInconveniente" + hasInsurance +
+                "TienePrioridad: " + isPriority + "RequiereFirma: " + requiresSignature;
     }
 }

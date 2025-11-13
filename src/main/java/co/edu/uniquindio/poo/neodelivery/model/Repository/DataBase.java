@@ -2,6 +2,7 @@ package co.edu.uniquindio.poo.neodelivery.model.Repository;
 
 import co.edu.uniquindio.poo.neodelivery.model.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DataBase {
@@ -14,8 +15,15 @@ public class DataBase {
     private List<Admin> listaAdmin;
 
     private DataBase() {
-
+    this.listaUsers = new ArrayList<>();
+    this.listaShipments = new ArrayList<>();
+    this.listaRepartidores = new ArrayList<>();
+    this.listaPayments = new ArrayList<>();
+    this.listaAdmin = new ArrayList<>();
     }
+
+
+
 
     public static DataBase getInstance() {
         if(Instance == null) {

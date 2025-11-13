@@ -5,12 +5,14 @@ public class Admin implements Observer{
     private String name;
     private String email;
     private String number;
+    private String password;
 
-    public Admin(String idAdmin, String name, String email, String number) {
+    public Admin(String idAdmin, String name, String email, String number, String password) {
         this.idAdmin = idAdmin;
         this.name = name;
         this.email = email;
         this.number = number;
+        this.password = password;
     }
     @Override
     public void update(String message) {
@@ -20,6 +22,7 @@ public class Admin implements Observer{
     }
 
     // Se delega a los "Gestores" para cumplir SOLID
+
     public void gestionarUsuarios() {
         System.out.println("Accediendo a gestión de usuarios...");
     }
@@ -52,6 +55,13 @@ public class Admin implements Observer{
         this.name = name;
     }
 
+    public String getPassword() {
+        return password;
+    }
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -70,11 +80,7 @@ public class Admin implements Observer{
 
     @Override
     public String toString() {
-        return "Admin{" +
-                "idAdmin='" + idAdmin + '\'' +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", number='" + number + '\'' +
-                '}';
+        return "idAdmin: " + idAdmin + "Nombre: " + name + "Email: " + email +
+                "Numero: " + number;
     }
 }

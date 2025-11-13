@@ -5,7 +5,7 @@ public class User implements Observer {
     private String password;
     private String email;
     private Address address;
-    private String numbre;
+    private String number;
     private String idUser;
 
     public User(String name, String password, String email, Address address, String numbre, String idUser) {
@@ -13,7 +13,7 @@ public class User implements Observer {
         this.password = password;
         this.email = email;
         this.address = address;
-        this.numbre = numbre;
+        this.number = numbre;
         this.idUser = idUser;
     }
 
@@ -55,11 +55,11 @@ public class User implements Observer {
     }
 
     public String getNumbre() {
-        return numbre;
+        return number;
     }
 
     public void setNumbre(String numbre) {
-        this.numbre = numbre;
+        this.number = numbre;
     }
 
     public String getIdUser() {
@@ -68,5 +68,9 @@ public class User implements Observer {
 
     public void setIdUser(String idUser) {
         this.idUser = idUser;
+    }
+
+    public String toString() {
+        return "Nombre:" + name + "Contraseña:" + password + "Email:" + email + "Direccion:" + address + "Número:" + number + "IdUsuario:" + idUser;
     }
 }
