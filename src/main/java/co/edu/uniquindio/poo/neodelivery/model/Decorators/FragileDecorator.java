@@ -1,4 +1,6 @@
-package co.edu.uniquindio.poo.neodelivery.model;
+package co.edu.uniquindio.poo.neodelivery.model.Decorators;
+
+import co.edu.uniquindio.poo.neodelivery.model.IShipment;
 
 public class FragileDecorator extends ShipmentDecorator {
 

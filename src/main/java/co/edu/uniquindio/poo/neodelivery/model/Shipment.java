@@ -17,6 +17,7 @@ public class Shipment implements IShipment , Subject {
     private boolean isPriority;
     private boolean requiresSignature;
     private boolean fragile;
+    private ShipmentState state;
     private DeliveryDriver assignedDriver;
 
     private List<Observer> observers = new ArrayList<>();
@@ -29,6 +30,7 @@ public class Shipment implements IShipment , Subject {
         this.volume = builder.volume;
         this.cost = builder.cost;
         this.status = builder.status;
+        this.state = new PendingState();
         this.hasInsurance = builder.hasInsurance;
         this.isPriority = builder.isPriority;
         this.requiresSignature = builder.requiresSignature;
@@ -100,6 +102,14 @@ public class Shipment implements IShipment , Subject {
 
     public String getId() {
         return id;
+    }
+
+    public ShipmentState getState() {
+        return state;
+    }
+
+    public void setState(ShipmentState state) {
+        this.state = state;
     }
 
     public void setId(String id) {

@@ -1,10 +1,11 @@
-package co.edu.uniquindio.poo.neodelivery.model;
+package co.edu.uniquindio.poo.neodelivery.model.Decorators;
 
 
+import co.edu.uniquindio.poo.neodelivery.model.IShipment;
 
-public class InsuraceDecorator extends ShipmentDecorator {
+public class InsuranceDecorator extends ShipmentDecorator {
 
-    public InsuraceDecorator(Shipment shipment) {
+    public InsuranceDecorator(IShipment shipment) {
         super(shipment);
     }
 

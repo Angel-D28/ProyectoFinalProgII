@@ -1,6 +1,7 @@
 module co.edu.uniquindio.poo.neodelivery {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.sql;
 
     exports co.edu.uniquindio.poo.neodelivery.controllers;
     opens co.edu.uniquindio.poo.neodelivery.controllers to javafx.fxml;
