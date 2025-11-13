@@ -1,0 +1,14 @@
+# Archivos compilados
+*.class
+
+# Carpeta de compilación
+/target/
+
+# Archivos de configuración de IDE
+/.idea/
+/*.iml
+
+# Archivos temporales del sistema
+*.log
+*.tmp
+.DS_Store
