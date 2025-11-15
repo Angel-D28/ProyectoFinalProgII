@@ -6,27 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="7d3116f7-1435-4f3f-9cbb-1d1d1f1be084" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/uniquindio/poo/neodelivery/controllers/AdminDashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/uniquindio/poo/neodelivery/controllers/AdminDashboardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/uniquindio/poo/neodelivery/controllers/ManageClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/uniquindio/poo/neodelivery/controllers/ManageClientController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/uniquindio/poo/neodelivery/model/Address.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/uniquindio/poo/neodelivery/model/Address.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/uniquindio/poo/neodelivery/model/Repository/DataBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/uniquindio/poo/neodelivery/model/Repository/DataBase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/uniquindio/poo/neodelivery/model/gestores/ManageAdmin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/uniquindio/poo/neodelivery/model/gestores/ManageAdmin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/uniquindio/poo/neodelivery/model/gestores/ManageUsers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/uniquindio/poo/neodelivery/model/gestores/ManageUsers.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/uniquindio/poo/neodelivery/model/utils/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/uniquindio/poo/neodelivery/model/utils/Utils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/co/edu/uniquindio/poo/neodelivery/loginView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/co/edu/uniquindio/poo/neodelivery/loginView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/co/edu/uniquindio/poo/neodelivery/manageClient(Admin).fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/co/edu/uniquindio/poo/neodelivery/manageClient(Admin).fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/co/edu/uniquindio/poo/neodelivery/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/co/edu/uniquindio/poo/neodelivery/styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/uniquindio/poo/neodelivery/controllers/AdminDashboardController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/uniquindio/poo/neodelivery/controllers/AdminDashboardController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/uniquindio/poo/neodelivery/controllers/ManageClientController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/uniquindio/poo/neodelivery/controllers/ManageClientController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/uniquindio/poo/neodelivery/loginView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/uniquindio/poo/neodelivery/loginView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/uniquindio/poo/neodelivery/model/Address.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/uniquindio/poo/neodelivery/model/Address.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/uniquindio/poo/neodelivery/model/Repository/DataBase.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/uniquindio/poo/neodelivery/model/Repository/DataBase.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/uniquindio/poo/neodelivery/model/gestores/ManageAdmin.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/uniquindio/poo/neodelivery/model/gestores/ManageAdmin.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/uniquindio/poo/neodelivery/model/gestores/ManageUsers.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/uniquindio/poo/neodelivery/model/gestores/ManageUsers.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/uniquindio/poo/neodelivery/model/utils/Utils.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/uniquindio/poo/neodelivery/model/utils/Utils.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/uniquindio/poo/neodelivery/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/uniquindio/poo/neodelivery/styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/module-info.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/module-info.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,6 +116,8 @@
       <workItem from="1762960691501" duration="40000" />
       <workItem from="1763061092859" duration="16019000" />
       <workItem from="1763175925327" duration="16460000" />
+      <workItem from="1763194278043" duration="97000" />
+      <workItem from="1763233473460" duration="69000" />
     </task>
     <servers />
   </component>
