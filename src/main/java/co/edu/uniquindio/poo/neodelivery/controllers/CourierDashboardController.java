@@ -1,5 +1,6 @@
 package co.edu.uniquindio.poo.neodelivery.controllers;
 
+import co.edu.uniquindio.poo.neodelivery.model.DeliveryDriver;
 import co.edu.uniquindio.poo.neodelivery.model.utils.Utils;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
@@ -12,21 +13,34 @@ import javafx.scene.layout.BorderPane;
 import javafx.util.Duration;
 
 public class CourierDashboardController {
+
     @FXML
     private Button btnLogOut;
+
     @FXML
     private Label lblWelcomeCourier;
+
     @FXML
     private BorderPane root;
+
     @FXML
     private AnchorPane mainContent;
+
     @FXML
     private Button menuButton;
+
     @FXML
     private AnchorPane menu;
 
     private boolean visibleMenu = true;
     private final double menuWidth = 200;
+
+    private DeliveryDriver currentCourier;
+
+    public void setCurrentCourier(DeliveryDriver courier) {
+        this.currentCourier = courier;
+        lblWelcomeCourier.setText("Bienvenido, " + courier.getName());
+    }
 
     @FXML
     void logOut(ActionEvent event) {
@@ -38,7 +52,6 @@ public class CourierDashboardController {
         double duration = 250;
 
         if (visibleMenu) {
-
             TranslateTransition hideMenu = new TranslateTransition(Duration.millis(duration), menu);
             hideMenu.setToX(-menuWidth);
             hideMenu.setInterpolator(Interpolator.EASE_BOTH);
@@ -62,5 +75,16 @@ public class CourierDashboardController {
         }
 
         visibleMenu = !visibleMenu;
+    }
+
+    @FXML
+    void openShipments(ActionEvent event) {
+        try {
+            ManageShipmentsController controller = Utils.replaceMainContent(mainContent, "manageShipments(DeliveryDriver).fxml");
+            controller.setMainContent(mainContent);
+            controller.setCurrentUser(currentCourier);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

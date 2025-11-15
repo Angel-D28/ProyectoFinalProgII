@@ -5,10 +5,14 @@ module co.edu.uniquindio.poo.neodelivery {
     requires javafx.base;
     requires jdk.jshell;
 
+    // Exportar los paquetes que pueden ser usados fuera del módulo
     exports co.edu.uniquindio.poo.neodelivery.controllers;
-    opens co.edu.uniquindio.poo.neodelivery.controllers to javafx.fxml;
-
+    exports co.edu.uniquindio.poo.neodelivery.model;
+    exports co.edu.uniquindio.poo.neodelivery.model.utils;
     exports co.edu.uniquindio.poo.neodelivery.App;
-    opens co.edu.uniquindio.poo.neodelivery.App to javafx.fxml;
+
+    // Abrir paquetes que JavaFX necesita para FXMLLoader
+    opens co.edu.uniquindio.poo.neodelivery.controllers to javafx.fxml;
     opens co.edu.uniquindio.poo.neodelivery.model to javafx.base;
+    opens co.edu.uniquindio.poo.neodelivery.App to javafx.fxml;
 }
