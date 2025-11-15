@@ -70,7 +70,7 @@ public class LoginViewController {
 
             Utils.showAlert("ERROR", "Email or password incorrect");
         } else {
-            (new Alert(AlertType.WARNING, "Please type your email and password", new ButtonType[0])).showAndWait();
+            Utils.showAlert("WARNING", "Typer your email and password");
         }
     }
 }

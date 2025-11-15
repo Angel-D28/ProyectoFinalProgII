@@ -1,13 +1,19 @@
 package co.edu.uniquindio.poo.neodelivery.controllers;
 
 import co.edu.uniquindio.poo.neodelivery.model.utils.Utils;
+import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.util.Duration;
 
 public class AdminDashboardController {
+
+    @FXML
+    private Button btnManageUsers;
     @FXML
     private Button btnLogOut;
     @FXML
@@ -15,10 +21,14 @@ public class AdminDashboardController {
     @FXML
     private AnchorPane mainContent;
     @FXML
+    private BorderPane root;
+    @FXML
     private Button menuButton;
     @FXML
     private AnchorPane menu;
+
     private boolean visibleMenu = true;
+    private final double menuWidth = 200;
 
     @FXML
     void logOut(ActionEvent event) {
@@ -27,14 +37,37 @@ public class AdminDashboardController {
 
     @FXML
     void slideMenu(ActionEvent event) {
-        if (this.visibleMenu) {
-            this.menu.setVisible(false);
-            this.menu.setManaged(false);
+        double duration = 250;
+
+        if (visibleMenu) {
+
+            TranslateTransition hideMenu = new TranslateTransition(Duration.millis(duration), menu);
+            hideMenu.setToX(-menuWidth);
+            hideMenu.setInterpolator(Interpolator.EASE_BOTH);
+
+            hideMenu.setOnFinished(e -> {
+                root.setLeft(null);
+                menu.setTranslateX(0);
+            });
+
+            hideMenu.play();
+
         } else {
-            this.menu.setVisible(true);
-            this.menu.setManaged(true);
+
+            root.setLeft(menu);
+            menu.setTranslateX(-menuWidth);
+
+            TranslateTransition showMenu = new TranslateTransition(Duration.millis(duration), menu);
+            showMenu.setToX(0);
+            showMenu.setInterpolator(Interpolator.EASE_BOTH);
+            showMenu.play();
         }
 
-        this.visibleMenu = !this.visibleMenu;
+        visibleMenu = !visibleMenu;
+    }
+
+    @FXML
+    void goToManageUsers(ActionEvent event) {
+        Utils.replaceMainContent(mainContent, "manageClient(Admin).fxml");
     }
 }

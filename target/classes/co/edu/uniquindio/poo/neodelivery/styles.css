@@ -1,3 +1,7 @@
+#mainContent {
+    -fx-background-color: #FAFAFA;
+}
+
 
 #mainText {
     -fx-text-fill: #F8FAFC;
@@ -17,6 +21,10 @@
 
 #leftPane{
     -fx-background-color: linear-gradient(to bottom right, #3A6073, #16222A);
+}
+
+#rightPane{
+    -fx-background-color: linear-gradient(to bottom left, #3A6073, #16222A);
 }
 
 #appLogo {
@@ -145,4 +153,109 @@
     -fx-text-fill: #F8FAFC;
     -fx-font-size: 20;
     -fx-font-weight: bold;
+}
+
+/* COLORES PARA GESTORES (ADMIN, CLIENT, DELIVERYDRIVER) */
+#clientManagerPane {
+    -fx-background-color: #FAFAFA;
+    -fx-padding: 20;
+}
+
+.custom-table {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #1E293B;
+    -fx-border-width: 1px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 5, 0, 0, 1);
+}
+
+.custom-table .column-header-background{
+    -fx-background-color: transparent;
+    -fx-border-width: 2px;
+    -fx-border-color: transparent transparent #16222A transparent;
+}
+
+.custom-table .column-header-background .label{
+    -fx-text-fill: #16222A;
+}
+
+.custom-table .column-header{
+    -fx-background-color: transparent;
+}
+
+.custom-table .table-row-cell:filled:selected {
+    -fx-background-color: red;
+}
+
+.custom-table .table-row-cell{
+    -fx-background-color: transparent;
+    -fx-text-fill: #16222A;
+}
+
+.managerButton {
+    -fx-background-color: linear-gradient(to right, #E0E5EC, #C9D6DF);
+    -fx-text-fill: #1E293B;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-background-radius: 8;
+    -fx-padding: 6 14;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 5, 0, 0, 1);
+    -fx-border-color: transparent;
+    -fx-border-radius: 8;
+}
+
+.managerButton:hover {
+    -fx-background-color: linear-gradient(to right, #D3DAE1, #B5C0CA);
+}
+
+.managerButton:pressed {
+    -fx-background-color: linear-gradient(to right, #B9C4CF, #9EADBD);
+    -fx-translate-y: 1;
+}
+
+#titleManager {
+    -fx-font-family: "Cambria";
+    -fx-font-size: 38px;
+    -fx-text-fill: #1E293B;
+    -fx-font-weight: bold;
+}
+
+
+/* Estilo de alertas (darle un toque más bacano con alertas que peguen con el color de nuestra aplicación) */
+.custom-alert-pane {
+    -fx-background-color: linear-gradient(to bottom right, #132d3e, #0b1c26);
+    -fx-border-color: rgba(255, 255, 255, 0.20);
+    -fx-border-width: 1.2;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.45), 20, 0.2, 0, 4);
+}
+
+.alert-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.alert-message {
+    -fx-font-size: 15px;
+    -fx-text-fill: #d6d6d6;
+}
+
+.alert-button {
+    -fx-background-color: #d2dde8;
+    -fx-background-radius: 12;
+    -fx-padding: 6px 18px;
+    -fx-font-size: 14px;
+    -fx-text-fill: #132d3e;
+    -fx-font-weight: bold;
+}
+
+.alert-button:hover {
+    -fx-background-color: #ffffff;
+    -fx-cursor: hand;
+}
+
+.alert-button:pressed {
+    -fx-background-color: #c4d0da;
 }

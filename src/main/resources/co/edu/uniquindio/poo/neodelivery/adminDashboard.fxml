@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.neodelivery.controllers.AdminDashboardController">
+<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.neodelivery.controllers.AdminDashboardController">
    <center>
       <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
@@ -31,7 +31,7 @@
             </Pane>
             <VBox alignment="TOP_CENTER" layoutY="96.0" prefHeight="430.0" prefWidth="200.0" spacing="25.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="96.0">
                <children>
-                  <Button id="dashboardButton" mnemonicParsing="false" prefHeight="24.0" prefWidth="202.0" text="Option 1" VBox.vgrow="SOMETIMES" />
+                  <Button id="dashboardButton" fx:id="btnManageUsers" mnemonicParsing="false" onAction="#goToManageUsers" prefHeight="24.0" prefWidth="202.0" text="Manage users" VBox.vgrow="SOMETIMES" />
                   <Button id="dashboardButton" mnemonicParsing="false" prefHeight="24.0" prefWidth="202.0" text="Option 2" />
                   <Button id="dashboardButton" mnemonicParsing="false" prefHeight="24.0" prefWidth="202.0" text="Option 3" />
                   <Button id="dashboardButton" mnemonicParsing="false" prefHeight="24.0" prefWidth="202.0" text="Option 4" />
