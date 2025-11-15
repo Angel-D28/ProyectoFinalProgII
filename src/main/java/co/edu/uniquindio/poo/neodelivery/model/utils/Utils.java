@@ -1,12 +1,6 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
 package co.edu.uniquindio.poo.neodelivery.model.utils;
 
 import java.io.IOException;
-import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -19,13 +13,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
@@ -45,27 +35,24 @@ public class Utils {
 
     }
 
-    public static void replaceMainContent(AnchorPane mainContent, String fxmlPath) {
+    public static <T> T replaceMainContent(AnchorPane mainContent, String fxmlPath) {
         try {
             FXMLLoader loader = new FXMLLoader(Utils.class.getResource("/co/edu/uniquindio/poo/neodelivery/" + fxmlPath));
-            Node view = (Node)loader.load();
-            if (view instanceof Region region) {
-                region.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-                region.setPrefSize(mainContent.getWidth(), mainContent.getHeight());
-                region.prefWidthProperty().bind(mainContent.widthProperty());
-                region.prefHeightProperty().bind(mainContent.heightProperty());
-            }
+            Node view = loader.load();
 
-            mainContent.getChildren().setAll(new Node[]{view});
-            AnchorPane.setTopAnchor(view, (double)0.0F);
-            AnchorPane.setBottomAnchor(view, (double)0.0F);
-            AnchorPane.setLeftAnchor(view, (double)0.0F);
-            AnchorPane.setRightAnchor(view, (double)0.0F);
+            mainContent.getChildren().setAll(view);
+            AnchorPane.setTopAnchor(view, 0.0);
+            AnchorPane.setBottomAnchor(view, 0.0);
+            AnchorPane.setLeftAnchor(view, 0.0);
+            AnchorPane.setRightAnchor(view, 0.0);
+
+            return loader.getController();
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
-
     }
+
 
     public static String hashPassword(String password) {
         try {

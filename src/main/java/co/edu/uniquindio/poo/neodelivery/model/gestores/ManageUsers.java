@@ -45,6 +45,7 @@ public class ManageUsers {
         userToUpdate.setNumbre(userUpdated.getNumbre());
         userToUpdate.setEmail(userUpdated.getEmail());
         userToUpdate.setAddress(userUpdated.getAddress());
+        userToUpdate.setPassword(userUpdated.getPassword());
     }
 
     public List<User> getAllUsers() {

@@ -9,13 +9,14 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.neodelivery.controllers.ManageClientController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.neodelivery.controllers.ManageClientController">
    <bottom>
       <HBox id="rightPane" alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="30.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="btnDeselect" alignment="CENTER" mnemonicParsing="false" onAction="#deselect" prefWidth="90.0" styleClass="managerButton" text="Deselect" HBox.hgrow="ALWAYS" />
             <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#deleteUser" prefWidth="90.0" styleClass="managerButton" text="Delete" HBox.hgrow="ALWAYS" />
             <Button fx:id="btnUpdate" mnemonicParsing="false" onAction="#updateUser" prefWidth="90.0" styleClass="managerButton" text="Update" HBox.hgrow="ALWAYS" />
+            <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#addUser" prefWidth="90.0" styleClass="managerButton" text="Add" />
          </children>
       </HBox>
    </bottom>
@@ -29,7 +30,6 @@
                   <TableColumn fx:id="columnPhoneNumber" prefWidth="75.0" text="Number" />
                   <TableColumn fx:id="columnAddress" prefWidth="75.0" text="Address" />
                   <TableColumn fx:id="columnEmail" prefWidth="75.0" text="Email" />
-                  <TableColumn fx:id="columnRol" prefWidth="75.0" text="Rol" />
                </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -37,7 +37,7 @@
             </TableView>
             <StackPane prefHeight="61.0" prefWidth="871.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="8.0">
                <children>
-                  <Label id="titleManager" alignment="CENTER" contentDisplay="CENTER" prefHeight="24.0" prefWidth="871.0" text="Manage users" textAlignment="CENTER" />
+                  <Label id="titleManager" alignment="CENTER" contentDisplay="CENTER" prefHeight="24.0" prefWidth="871.0" text="Manage clients" textAlignment="CENTER" />
                </children>
             </StackPane>
          </children>

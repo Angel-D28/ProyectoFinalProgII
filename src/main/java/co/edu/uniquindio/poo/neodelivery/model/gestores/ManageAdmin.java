@@ -6,7 +6,7 @@ import co.edu.uniquindio.poo.neodelivery.model.Repository.DataBase;
 import java.util.List;
 
 public class ManageAdmin {
-    private final DataBase db = DataBase.getInstance();
+    private DataBase db = DataBase.getInstance();
     private int adminId;
 
     public Admin findAdmin(String adminId) {

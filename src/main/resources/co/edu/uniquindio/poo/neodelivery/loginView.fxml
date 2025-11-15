@@ -48,7 +48,7 @@
                <children>
                   <AnchorPane prefHeight="246.0" prefWidth="270.0">
                      <children>
-                        <Label id="text" contentDisplay="CENTER" layoutX="12.0" layoutY="72.0" text="Username:">
+                        <Label id="text" contentDisplay="CENTER" layoutX="46.0" layoutY="72.0" text="Email:">
                            <font>
                               <Font size="18.0" />
                            </font>

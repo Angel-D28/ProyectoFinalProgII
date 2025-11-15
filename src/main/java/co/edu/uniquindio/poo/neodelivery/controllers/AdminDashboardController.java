@@ -4,10 +4,13 @@ import co.edu.uniquindio.poo.neodelivery.model.utils.Utils;
 import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Region;
 import javafx.util.Duration;
 
 public class AdminDashboardController {
@@ -68,6 +71,11 @@ public class AdminDashboardController {
 
     @FXML
     void goToManageUsers(ActionEvent event) {
-        Utils.replaceMainContent(mainContent, "manageClient(Admin).fxml");
+        try {
+            ManageClientController controller = Utils.replaceMainContent(mainContent, "manageClient(Admin).fxml");
+            controller.setMainContent(mainContent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
