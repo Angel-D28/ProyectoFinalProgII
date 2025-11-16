@@ -34,7 +34,7 @@
                   <Button id="dashboardButton" mnemonicParsing="false" prefHeight="24.0" prefWidth="202.0" text="Option 1" VBox.vgrow="SOMETIMES" />
                   <Button id="dashboardButton" mnemonicParsing="false" prefHeight="24.0" prefWidth="202.0" text="Option 2" />
                   <Button id="dashboardButton" mnemonicParsing="false" prefHeight="24.0" prefWidth="202.0" text="Option 3" />
-                  <Button id="dashboardButton" mnemonicParsing="false" prefHeight="24.0" prefWidth="202.0" text="Option 4" />
+                  <Button id="dashboardButton" fx:id="btnGenerateReport" mnemonicParsing="false" onAction="#goToManageReports" prefHeight="24.0" prefWidth="202.0" text="Generate Report" />
                   <Button id="dashboardButton" mnemonicParsing="false" prefHeight="24.0" prefWidth="202.0" text="Option 5" />
                </children>
                <padding>

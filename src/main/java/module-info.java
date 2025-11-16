@@ -4,6 +4,8 @@ module co.edu.uniquindio.poo.neodelivery {
     requires javafx.graphics;
     requires javafx.base;
     requires jdk.jshell;
+    requires org.apache.pdfbox;
+    requires java.desktop;
 
 
     exports co.edu.uniquindio.poo.neodelivery.controllers;

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.neodelivery.controllers.ManageReportsController">
+   <bottom>
+      <HBox id="rightPane" alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="30.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="btnGenerateReport" alignment="CENTER" mnemonicParsing="false" onAction="#generateReport" prefWidth="120.0" styleClass="managerButton" text="Generate Report" HBox.hgrow="ALWAYS" />
+            <Button fx:id="btnViewReport" mnemonicParsing="false" onAction="#viewReport" prefWidth="120.0" styleClass="managerButton" text="View Report" HBox.hgrow="ALWAYS" />
+            <Button fx:id="btnOpenFolder" mnemonicParsing="false" onAction="#openReportsFolder" prefWidth="120.0" styleClass="managerButton" text="Open Folder" HBox.hgrow="ALWAYS" />
+         </children>
+      </HBox>
+   </bottom>
+   <center>
+      <AnchorPane id="mainContent" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <TableView fx:id="tableViewReports" layoutX="14.0" layoutY="80.0" prefHeight="261.0" prefWidth="576.0" styleClass="custom-table" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="80.0">
+               <columns>
+                  <TableColumn fx:id="columnID" prefWidth="80.0" text="ID" />
+                  <TableColumn fx:id="columnClient" prefWidth="120.0" text="Client" />
+                  <TableColumn fx:id="columnAddress" prefWidth="150.0" text="Address" />
+                  <TableColumn fx:id="columnStatus" prefWidth="100.0" text="Status" />
+                  <TableColumn fx:id="columnDriver" prefWidth="120.0" text="Driver" />
+                  <TableColumn fx:id="columnDate" prefWidth="100.0" text="Date" />
+               </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
+            <StackPane prefHeight="61.0" prefWidth="871.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="8.0">
+               <children>
+                  <Label id="titleManager" alignment="CENTER" contentDisplay="CENTER" prefHeight="24.0" prefWidth="871.0" text="Gestión de Reportes" textAlignment="CENTER" />
+               </children>
+            </StackPane>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
+
