@@ -45,7 +45,7 @@
                <children>
                   <AnchorPane prefHeight="336.0" prefWidth="410.0">
                      <children>
-                        <TextField fx:id="txtEmail" layoutX="205.0" layoutY="111.0" promptText="Type your email" />
+                        <TextField fx:id="txtEmail" layoutX="205.0" layoutY="118.0" promptText="Type your email" />
                         <Label id="text" layoutX="14.0" layoutY="117.0" text="Email:">
                            <font>
                               <Font size="18.0" />
@@ -66,22 +66,22 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="txtName" layoutX="205.0" layoutY="8.0" promptText="Type your name" />
+                        <TextField fx:id="txtName" layoutX="205.0" layoutY="15.0" promptText="Type your name" />
                         <Label id="text" contentDisplay="CENTER" layoutX="12.0" layoutY="218.0" text="Password:">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <PasswordField fx:id="txtPassword" layoutX="205.0" layoutY="212.0" promptText="Type your password" />
+                        <PasswordField fx:id="txtPassword" layoutX="205.0" layoutY="219.0" promptText="Type your password" />
                         <Button fx:id="btnRegister" contentDisplay="CENTER" layoutX="156.0" layoutY="325.0" mnemonicParsing="false" onAction="#register" styleClass="mainButton" text="Register" />
-                        <TextField fx:id="txtPhoneNumber" layoutX="205.0" layoutY="60.0" promptText="Type your number" />
-                        <ChoiceBox fx:id="choiceBoxRol" layoutX="204.0" layoutY="262.0" prefHeight="36.0" prefWidth="185.0" />
+                        <TextField fx:id="txtPhoneNumber" layoutX="205.0" layoutY="67.0" promptText="Type your number" />
+                        <ChoiceBox fx:id="choiceBoxRol" layoutX="204.0" layoutY="262.0" prefHeight="14.0" prefWidth="172.0" />
                         <Label id="text" layoutX="13.0" layoutY="167.0" text="Address:">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="txtAddress" layoutX="205.0" layoutY="161.0" promptText="Type your address" />
+                        <TextField fx:id="txtAddress" layoutX="205.0" layoutY="168.0" promptText="Type your address" />
                      </children>
                   </AnchorPane>
                   <Pane prefHeight="37.0" prefWidth="291.0">

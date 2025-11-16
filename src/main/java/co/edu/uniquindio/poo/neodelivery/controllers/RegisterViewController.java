@@ -64,7 +64,9 @@ public class RegisterViewController {
         if (!name.isEmpty() && !phoneNumber.isEmpty() && !email.isEmpty() && !password.isEmpty() && rol != null) {
             if (this.isEmailRegistered(email)) {
                 Utils.showAlert("ERROR", "Email already in use");
-            } else {
+            }else if (password.length() < 8){
+                Utils.showAlert("ERROR", "Password must be at least 8 characters!");
+            }else {
                 String hashedPassword = Utils.hashPassword(password);
                 switch (rol) {
                     case "Administrator" -> {

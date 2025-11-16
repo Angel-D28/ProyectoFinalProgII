@@ -39,7 +39,7 @@ public class CourierDashboardController {
 
     public void setCurrentCourier(DeliveryDriver courier) {
         this.currentCourier = courier;
-        lblWelcomeCourier.setText("Bienvenido, " + courier.getName());
+        lblWelcomeCourier.setText("Welcome, " + courier.getName());
     }
 
     @FXML

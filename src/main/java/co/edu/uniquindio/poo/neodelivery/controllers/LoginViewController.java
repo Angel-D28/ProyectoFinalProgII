@@ -49,21 +49,24 @@ public class LoginViewController {
 
             for(User user : db.getListaUsuarios()) {
                 if (user.getEmail().toLowerCase().equals(email) && user.getPassword().equals(hashedInput)) {
-                    Utils.replaceScene(event, "clientDashboard.fxml", "Dashboard - Client");
+                    ClientDashboardController clientController = Utils.replaceScene(event, "clientDashboard.fxml", "Dashboard - Client");
+                    clientController.setClient(user);
                     return;
                 }
             }
 
             for(Admin admin : db.getListaAdmin()) {
                 if (admin.getEmail().toLowerCase().equals(email) && admin.getPassword().equals(hashedInput)) {
-                    Utils.replaceScene(event, "adminDashboard.fxml", "Dashboard - Admin");
+                    AdminDashboardController adminController = Utils.replaceScene(event, "adminDashboard.fxml", "Dashboard - Admin");
+                    adminController.setAdmin(admin);
                     return;
                 }
             }
 
             for(DeliveryDriver driver : db.getListaRepartidores()) {
                 if (driver.getEmail().toLowerCase().equals(email) && driver.getPassword().equals(hashedInput)) {
-                    Utils.replaceScene(event, "courierDashboard.fxml", "Dashboard - Delivery Driver");
+                    CourierDashboardController courierController = Utils.replaceScene(event, "courierDashboard.fxml", "Dashboard - Delivery Driver");
+                    courierController.setCurrentCourier(driver);
                     return;
                 }
             }

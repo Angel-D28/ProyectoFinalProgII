@@ -1,5 +1,6 @@
 package co.edu.uniquindio.poo.neodelivery.controllers;
 
+import co.edu.uniquindio.poo.neodelivery.model.User;
 import co.edu.uniquindio.poo.neodelivery.model.utils.Utils;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
@@ -27,6 +28,12 @@ public class ClientDashboardController {
 
     private boolean visibleMenu = true;
     private final double menuWidth = 200;
+    private User userLogged;
+
+    public void setClient(User userLogged) {
+        this.userLogged = userLogged;
+        lblWelcomeClient.setText("Welcome " + userLogged.getName());
+    }
 
     @FXML
     void logOut(ActionEvent event) {

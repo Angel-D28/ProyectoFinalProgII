@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.neodelivery.controllers.AddDeliveryDriverController">
+   <center>
+      <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox id="loginPane" alignment="CENTER" fillWidth="false" prefHeight="400.0" prefWidth="300.0" spacing="25.0" StackPane.alignment="CENTER">
+               <children>
+                  <Label id="titleManager" text="Create a delivery driver" />
+                  <AnchorPane prefHeight="173.0" prefWidth="410.0">
+                     <children>
+                        <TextField fx:id="txtDriverEmail" layoutX="205.0" layoutY="67.0" promptText="Type your email" />
+                        <Label id="text" layoutX="14.0" layoutY="117.0" text="Password:">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label id="text" layoutX="13.0" layoutY="66.0" text="Email:">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label id="text" contentDisplay="CENTER" layoutX="12.0" layoutY="14.0" text="Full Name:">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txtDriverName" layoutX="205.0" layoutY="15.0" promptText="Type your name" />
+                        <PasswordField fx:id="txtDriverPassword" layoutX="205.0" layoutY="118.0" promptText="Type your password" />
+                     </children>
+                  </AnchorPane>
+               </children>
+               <StackPane.margin>
+                  <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+               </StackPane.margin>
+            </VBox>
+         </children>
+      </StackPane>
+   </center>
+   <bottom>
+      <HBox id="rightPane" alignment="CENTER" prefHeight="67.0" prefWidth="900.0" spacing="50.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="btnCreateDriver" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#createDriver" styleClass="managerButton" text="Create" />
+            <Button fx:id="btnCancel" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#cancelCreate" styleClass="managerButton" text="Cancel" />
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>

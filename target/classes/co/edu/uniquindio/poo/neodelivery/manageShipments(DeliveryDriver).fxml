@@ -9,11 +9,12 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="549.0" prefWidth="885.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.neodelivery.controllers.ManageShipmentsController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.neodelivery.controllers.ManageShipmentsController">
    <bottom>
       <HBox id="rightPane" alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="30.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btnChangeStatus" mnemonicParsing="false" onAction="#changeShippingStatus" prefHeight="31.0" prefWidth="252.0" styleClass="managerButton" text="change shipping status" HBox.hgrow="ALWAYS" />
+            <Button fx:id="btnChangeStatus" mnemonicParsing="false" onAction="#changeShippingStatus" prefHeight="34.0" prefWidth="172.0" styleClass="managerButton" text="change shipping status" HBox.hgrow="ALWAYS" />
+            <Button fx:id="btnDeselect" mnemonicParsing="false" onAction="#deselectShipment" prefHeight="34.0" prefWidth="172.0" styleClass="managerButton" text="Deselect" />
          </children>
       </HBox>
    </bottom>

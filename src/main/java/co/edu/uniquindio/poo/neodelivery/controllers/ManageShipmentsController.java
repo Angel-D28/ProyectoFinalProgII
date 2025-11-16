@@ -1,7 +1,11 @@
 package co.edu.uniquindio.poo.neodelivery.controllers;
 
-import co.edu.uniquindio.poo.neodelivery.model.*;
+import co.edu.uniquindio.poo.neodelivery.model.DeliveryDriver;
 import co.edu.uniquindio.poo.neodelivery.model.Repository.DataBase;
+import co.edu.uniquindio.poo.neodelivery.model.Shipment;
+import co.edu.uniquindio.poo.neodelivery.model.Status;
+import co.edu.uniquindio.poo.neodelivery.model.utils.Utils;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -9,6 +13,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+
+import java.security.interfaces.DSAPublicKey;
 
 public class ManageShipmentsController {
 
@@ -19,25 +25,28 @@ public class ManageShipmentsController {
     private Button btnChangeStatus;
 
     @FXML
-    private TableColumn<Shipment, Address> columnDestination;
+    private Button btnDeselect;
 
     @FXML
-    private TableColumn<Shipment, Boolean> columnFragile;
+    private TableColumn<Shipment, String> columnDestination;
 
     @FXML
-    private TableColumn<Shipment, Boolean> columnHasInsurence;
+    private TableColumn<Shipment, String> columnFragile;
 
     @FXML
-    private TableColumn<Shipment, Integer> columnID;
+    private TableColumn<Shipment, String> columnHasInsurence;
 
     @FXML
-    private TableColumn<Shipment, Boolean> columnIsPriority;
+    private TableColumn<Shipment, String> columnID;
 
     @FXML
-    private TableColumn<Shipment, Address> columnOrigin;
+    private TableColumn<Shipment, String> columnIsPriority;
 
     @FXML
-    private TableColumn<Shipment, Boolean> columnRequiresSignature;
+    private TableColumn<Shipment, String> columnOrigin;
+
+    @FXML
+    private TableColumn<Shipment, String> columnRequiresSignature;
 
     @FXML
     private TableColumn<Shipment, Status> columnStatus;
@@ -48,10 +57,11 @@ public class ManageShipmentsController {
     @FXML
     private TableColumn<Shipment, Double> columnWeight;
 
-    private ObservableList<Shipment> shipmentsList = FXCollections.observableArrayList();
     private AnchorPane mainContent;
 
     private DeliveryDriver currentUser;
+
+    private ObservableList<Shipment> shipmentsList = FXCollections.observableArrayList();
 
     public void setMainContent(AnchorPane mainContent) {
         this.mainContent = mainContent;
@@ -62,22 +72,6 @@ public class ManageShipmentsController {
         loadShipmentsFromDatabase();
     }
 
-    @FXML
-    public void initialize() {
-        columnID.setCellValueFactory(new PropertyValueFactory<>("idUser"));
-        columnDestination.setCellValueFactory(new PropertyValueFactory<>("destination"));
-        columnFragile.setCellValueFactory(new PropertyValueFactory<>("fragile"));
-        columnHasInsurence.setCellValueFactory(new PropertyValueFactory<>("hasInsurance"));
-        columnIsPriority.setCellValueFactory(new PropertyValueFactory<>("isPriority"));
-        columnOrigin.setCellValueFactory(new PropertyValueFactory<>("origin"));
-        columnRequiresSignature.setCellValueFactory(new PropertyValueFactory<>("requiresSignature"));
-        columnStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
-        columnVolume.setCellValueFactory(new PropertyValueFactory<>("volume"));
-        columnWeight.setCellValueFactory(new PropertyValueFactory<>("weight"));
-
-        assignedShipments.setItems(shipmentsList);
-    }
-
     private void loadShipmentsFromDatabase() {
         if (currentUser == null) return;
 
@@ -85,24 +79,48 @@ public class ManageShipmentsController {
         shipmentsList.clear();
 
         for (Shipment shipment : db.getListaEnvios()) {
-            if (shipment.getAssignedDriver() != null &&
-                    shipment.getAssignedDriver().getId().equals(currentUser.getId())) {
-
+            if (shipment.getAssignedDriver() != null && shipment.getAssignedDriver().getId().equals(currentUser.getId())) {
                 shipmentsList.add(shipment);
+                System.out.println("Shipment: " + shipment.getId() + ", driver: " +
+                        (shipment.getAssignedDriver() != null ? shipment.getAssignedDriver().getName() : "null"));
             }
         }
     }
+
+
+    @FXML
+    public void initialize() {
+        columnID.setCellValueFactory(new PropertyValueFactory<>("id"));
+        columnOrigin.setCellValueFactory(new PropertyValueFactory<>("origin"));
+        columnDestination.setCellValueFactory(new PropertyValueFactory<>("destination"));
+        columnWeight.setCellValueFactory(new PropertyValueFactory<>("weight"));
+        columnVolume.setCellValueFactory(new PropertyValueFactory<>("volume"));
+        columnHasInsurence.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().isHasInsurance() ? "Yes" : "No")
+        );
+        columnIsPriority.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().isPriority() ? "Yes" : "No")
+        );
+        columnRequiresSignature.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().isRequiresSignature() ? "Yes" : "No")
+        );
+        columnFragile.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().isFragile() ? "Yes" : "No")
+        );
+        columnStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+        assignedShipments.setItems(shipmentsList);
+    }
+
     @FXML
     void changeShippingStatus(ActionEvent event) {
-        // Obtener el envío seleccionado
         Shipment selectedShipment = assignedShipments.getSelectionModel().getSelectedItem();
 
         if (selectedShipment == null) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Primero debe seleccionar un envío", ButtonType.OK);
-            alert.showAndWait();
+            Utils.showAlert("WARNING", "No shipment was selected, please select one.");
             return;
         }
-        // Crear un diálogo para seleccionar el nuevo estado
+
         ChoiceDialog<Status> dialog = new ChoiceDialog<>(selectedShipment.getStatus(), Status.values());
         dialog.setTitle("Cambiar estado del envío");
         dialog.setHeaderText("Envío ID: " + selectedShipment.getId());
@@ -113,4 +131,12 @@ public class ManageShipmentsController {
             assignedShipments.refresh();
         });
     }
+
+    @FXML
+    void deselectShipment(ActionEvent event) {
+        assignedShipments.getSelectionModel().clearSelection();
+    }
+
+
+
 }

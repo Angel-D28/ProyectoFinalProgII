@@ -104,19 +104,6 @@ public class ManageClientController {
             UpdateClientController controller = Utils.replaceMainContent(mainContent, "updateClient(Admin).fxml");
             controller.setClient(selected);
             controller.setContentUpdateClient(mainContent);
-            /*FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/neodelivery/updateClient(Admin).fxml"));
-            Parent view = loader.load();
-
-            UpdateClientController controller = loader.getController();
-            controller.setClient(selected);
-            controller.setMainContent(mainContent);
-
-            mainContent.getChildren().clear();
-            mainContent.getChildren().add(view);
-            AnchorPane.setTopAnchor(view, 0.0);
-            AnchorPane.setBottomAnchor(view, 0.0);
-            AnchorPane.setLeftAnchor(view, 0.0);
-            AnchorPane.setRightAnchor(view, 0.0);*/
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -126,7 +113,8 @@ public class ManageClientController {
 
     @FXML
     void addUser(ActionEvent event) {
-        Utils.replaceMainContent(mainContent, "addClient(Admin).fxml");
+        AddClientController addClientController = Utils.replaceMainContent(mainContent, "addClient(Admin).fxml");
+        addClientController.setContentAddClient(mainContent);
     }
 
 }

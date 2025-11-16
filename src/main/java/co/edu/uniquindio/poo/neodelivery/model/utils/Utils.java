@@ -21,18 +21,21 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 public class Utils {
-    public static void replaceScene(ActionEvent event, String fxmlPath, String title) {
+    public static <T> T replaceScene(ActionEvent event, String fxmlPath, String title) {
         try {
             FXMLLoader loader = new FXMLLoader(Utils.class.getResource("/co/edu/uniquindio/poo/neodelivery/" + fxmlPath));
-            Parent root = (Parent)loader.load();
-            Stage currentStage = (Stage)((Node)event.getSource()).getScene().getWindow();
-            currentStage.setTitle(title);
-            currentStage.setScene(new Scene(root));
-            currentStage.show();
+            Parent root = loader.load();
+
+            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            stage.setTitle(title);
+            stage.setScene(new Scene(root));
+            stage.show();
+
+            return loader.getController();
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
-
     }
 
     public static <T> T replaceMainContent(AnchorPane mainContent, String fxmlPath) {

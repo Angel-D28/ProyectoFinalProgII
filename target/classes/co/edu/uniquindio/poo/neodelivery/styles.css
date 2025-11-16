@@ -2,6 +2,15 @@
     -fx-background-color: #FAFAFA;
 }
 
+#logOut:hover {
+    -fx-scale-y: 1.05;
+    -fx-scale-x: 1.05;
+}
+
+#logOut:pressed{
+    -fx-opacity: 0.7;
+    -fx-translate-y: 1;
+}
 
 #mainText {
     -fx-text-fill: #F8FAFC;
@@ -69,8 +78,8 @@
     -fx-background-radius: 10;
     -fx-border-radius: 10;
     -fx-border-color: #cccccc;
-    -fx-border-width: 1.5;
-    -fx-padding: 8 12 8 12;
+    -fx-border-width: 0.5;
+    -fx-padding: 2 6 2 6;
     -fx-font-size: 14;
 }
 
@@ -89,9 +98,9 @@
     -fx-background-radius: 10;
     -fx-border-radius: 10;
     -fx-border-color: #cccccc;
-    -fx-border-width: 1;
-    -fx-padding: 6 10 6 10;
-    -fx-font-size: 10;
+    -fx-border-width: 0.5;
+    -fx-padding: 2 6 2 6;
+    -fx-font-size: 14;
 }
 
 #mainContentDashboard{
@@ -112,7 +121,7 @@
     -fx-scale-x: 1.05;
     -fx-cursor: hand;
     -fx-border-color: #F8FAFC;
-    -fx-border-width: 2;
+    -fx-border-width: 1.5;
 }
 
 #dashboardButton:pressed{
@@ -151,7 +160,7 @@
 .labelTitles{
     -fx-font-family: "Cambria";
     -fx-text-fill: #F8FAFC;
-    -fx-font-size: 20;
+    -fx-font-size: 13;
     -fx-font-weight: bold;
 }
 
