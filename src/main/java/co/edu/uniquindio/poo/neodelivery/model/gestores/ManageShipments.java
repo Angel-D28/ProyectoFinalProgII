@@ -11,6 +11,7 @@ public class ManageShipments {
         if (shipment.getStatus() == Status.PENDING) {
             shipment.setAssignedDriver(driver);
             shipment.setStatus(Status.DELIVERASSIGNED);
+            driver.setAvalibility(false);
 
             System.out.println("Admin " + admin.getName() +
                     " asignó el envío " + shipment.getId() +

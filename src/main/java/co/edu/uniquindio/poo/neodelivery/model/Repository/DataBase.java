@@ -64,7 +64,6 @@ public class DataBase {
                 .weight(2.5)
                 .volume(1.2)
                 .cost(15.0)
-                .status(Status.PENDING)
                 .hasInsurance(true)
                 .isPriority(true)
                 .requiresSignature(true)
@@ -78,7 +77,6 @@ public class DataBase {
                 .weight(1.0)
                 .volume(0.5)
                 .cost(7.5)
-                .status(Status.PENDING)
                 .hasInsurance(false)
                 .isPriority(false)
                 .requiresSignature(false)
@@ -92,7 +90,6 @@ public class DataBase {
                 .weight(3.0)
                 .volume(2.0)
                 .cost(20.0)
-                .status(Status.PENDING)
                 .hasInsurance(true)
                 .isPriority(false)
                 .requiresSignature(true)
@@ -106,15 +103,14 @@ public class DataBase {
                 .weight(0.5)
                 .volume(0.3)
                 .cost(5.0)
-                .status(Status.PENDING)
                 .hasInsurance(false)
                 .isPriority(false)
                 .requiresSignature(false)
                 .fragile(true)
                 .build();
 
-        shipment1.assignDriver(listaRepartidores.get(0));
-        shipment2.assignDriver(listaRepartidores.get(1));
+        shipment1.assignerDriver(listaAdmin.getFirst(), listaRepartidores.get(0));
+        shipment2.assignerDriver(listaAdmin.getFirst(), listaRepartidores.get(1));
 
         listaShipments.add(shipment1);
         listaShipments.add(shipment2);

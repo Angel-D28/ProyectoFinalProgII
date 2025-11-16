@@ -1,5 +1,9 @@
 package co.edu.uniquindio.poo.neodelivery.App;
 
+import co.edu.uniquindio.poo.neodelivery.model.*;
+import co.edu.uniquindio.poo.neodelivery.model.Decorators.*;
+import co.edu.uniquindio.poo.neodelivery.model.gestores.ManagePayments;
+import co.edu.uniquindio.poo.neodelivery.model.gestores.ManageShipments;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

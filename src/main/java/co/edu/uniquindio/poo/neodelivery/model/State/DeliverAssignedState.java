@@ -1,4 +1,9 @@
-package co.edu.uniquindio.poo.neodelivery.model;
+package co.edu.uniquindio.poo.neodelivery.model.State;
+
+import co.edu.uniquindio.poo.neodelivery.model.Admin;
+import co.edu.uniquindio.poo.neodelivery.model.DeliveryDriver;
+import co.edu.uniquindio.poo.neodelivery.model.Shipment;
+import co.edu.uniquindio.poo.neodelivery.model.Status;
 
 public class DeliverAssignedState implements ShipmentState{
 
