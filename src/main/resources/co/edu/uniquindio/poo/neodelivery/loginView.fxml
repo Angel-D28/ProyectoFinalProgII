@@ -48,18 +48,18 @@
                <children>
                   <AnchorPane prefHeight="246.0" prefWidth="270.0">
                      <children>
-                        <Label id="text" contentDisplay="CENTER" layoutX="12.0" layoutY="72.0" text="Username:">
+                        <Label id="text" contentDisplay="CENTER" layoutX="46.0" layoutY="72.0" text="Email:">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="txtUsername" layoutX="106.0" layoutY="66.0" promptText="Type your email" />
+                        <TextField fx:id="txtUsername" layoutX="106.0" layoutY="73.0" promptText="Type your email" />
                         <Label id="text" contentDisplay="CENTER" layoutX="14.0" layoutY="136.0" text="Password:">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <PasswordField fx:id="txtPassword" layoutX="106.0" layoutY="130.0" promptText="Type your password" />
+                        <PasswordField fx:id="txtPassword" layoutX="106.0" layoutY="137.0" promptText="Type your password" />
                         <Button fx:id="btnLogin" contentDisplay="CENTER" layoutX="96.0" layoutY="211.0" mnemonicParsing="false" onAction="#login" styleClass="mainButton" text="Login" />
                      </children>
                   </AnchorPane>

@@ -63,8 +63,10 @@ public class RegisterViewController {
         String rol = (String)this.choiceBoxRol.getValue();
         if (!name.isEmpty() && !phoneNumber.isEmpty() && !email.isEmpty() && !password.isEmpty() && rol != null) {
             if (this.isEmailRegistered(email)) {
-                (new Alert(AlertType.WARNING, "Email registrado", new ButtonType[0])).showAndWait();
-            } else {
+                Utils.showAlert("ERROR", "Email already in use");
+            }else if (password.length() < 8){
+                Utils.showAlert("ERROR", "Password must be at least 8 characters!");
+            }else {
                 String hashedPassword = Utils.hashPassword(password);
                 switch (rol) {
                     case "Administrator" -> {
@@ -88,11 +90,11 @@ public class RegisterViewController {
 
                 }
 
-                (new Alert(AlertType.INFORMATION, "Registro exitoso. Ya puedes iniciar Sesion :)", new ButtonType[0])).showAndWait();
+                Utils.showAlert("VERIFIED", "You have registered successfully | Welcome to Neo Delivery");
                 Utils.replaceScene(event, "loginView.fxml", "Login - Neo Delivery");
             }
         } else {
-            (new Alert(AlertType.WARNING, "Completa todos los campos", new ButtonType[0])).showAndWait();
+            Utils.showAlert("WARNING", "Fill in all fields");
         }
     }
 

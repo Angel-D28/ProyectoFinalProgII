@@ -7,7 +7,6 @@ import java.util.List;
 
 public class ManageUsers {
     private DataBase db = DataBase.getInstance();
-    private int userId;
 
     public User findUser(String findId){
         User user = null;
@@ -28,7 +27,18 @@ public class ManageUsers {
     }
 
     public String generateId(){
-        return String.valueOf(userId++);
+        int maxId = 0;
+
+        for (User user : db.getListaUsuarios()) {
+            try {
+                int id = Integer.parseInt(user.getIdUser());
+                if (id > maxId) maxId = id;
+            } catch (NumberFormatException e) {
+
+            }
+        }
+
+        return String.valueOf(maxId + 1);
     }
 
 
@@ -45,6 +55,7 @@ public class ManageUsers {
         userToUpdate.setNumbre(userUpdated.getNumbre());
         userToUpdate.setEmail(userUpdated.getEmail());
         userToUpdate.setAddress(userUpdated.getAddress());
+        userToUpdate.setPassword(userUpdated.getPassword());
     }
 
     public List<User> getAllUsers() {

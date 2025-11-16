@@ -1,26 +1,5 @@
-# Carpetas de compilación
+.idea/workspace.xml
+
 target/
-out/
-
-# Archivos de IntelliJ IDEA
-.idea/
-*.iml
-*.iws
-
-# Archivos generados por el sistema
 *.class
-*.log
-*.tmp
-*.swp
-
-# Archivos de configuración del sistema operativo
-.DS_Store
-Thumbs.db
-
-# Archivos de Maven (si usas)
-*.jar
-*.war
-*.ear
-
-# Archivos de NetBeans (si se abren en otro IDE)
-nbproject/
+.idea/

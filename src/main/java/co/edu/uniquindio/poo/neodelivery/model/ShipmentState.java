@@ -1,6 +1,5 @@
 package co.edu.uniquindio.poo.neodelivery.model;
 
-import java.sql.Driver;
 
 public interface ShipmentState {
     void assignerDriver(Shipment shipment , Admin admin , DeliveryDriver driver);

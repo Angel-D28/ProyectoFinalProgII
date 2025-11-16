@@ -2,7 +2,6 @@ package co.edu.uniquindio.poo.neodelivery.model.gestores;
 
 import co.edu.uniquindio.poo.neodelivery.model.DeliveryDriver;
 import co.edu.uniquindio.poo.neodelivery.model.Repository.DataBase;
-import co.edu.uniquindio.poo.neodelivery.model.User;
 
 import java.util.List;
 
@@ -29,7 +28,18 @@ public class ManageDeliveryDrivers {
     }
 
     public String generateId(){
-        return String.valueOf(driverId++);
+        int maxId = 0;
+
+        for (DeliveryDriver deliveryDriver : db.getListaRepartidores()) {
+            try {
+                int id = Integer.parseInt(deliveryDriver.getId());
+                if (id > maxId) maxId = id;
+            } catch (NumberFormatException e) {
+
+            }
+        }
+
+        return String.valueOf(maxId + 1);
     }
 
 
@@ -41,7 +51,13 @@ public class ManageDeliveryDrivers {
         db.getListaRepartidores().remove(deliveryDriver);
     }
 
-    //Falta el método de update
+    //Falta el metodo de update
+    public void updateDeliveryDriverr(String idDeliveryDriver, DeliveryDriver deliveryDriverUpdated) {
+        DeliveryDriver deliveryDriverToUpdate = findDeliveryDriver(idDeliveryDriver);
+        deliveryDriverToUpdate.setName(deliveryDriverUpdated.getName());
+        deliveryDriverToUpdate.setEmail(deliveryDriverUpdated.getEmail());
+        deliveryDriverToUpdate.setPassword(deliveryDriverUpdated.getPassword());
+    }
 
 
     public List<DeliveryDriver> getAllDeliveryUser() {

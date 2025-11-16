@@ -6,6 +6,7 @@ public class Admin implements Observer{
     private String email;
     private String number;
     private String password;
+    private String profilePicturePath;
 
     public Admin(String idAdmin, String name, String email, String number, String password) {
         this.idAdmin = idAdmin;
@@ -76,6 +77,14 @@ public class Admin implements Observer{
 
     public void setNumber(String number) {
         this.number = number;
+    }
+
+    public String getProfilePicturePath() {
+        return profilePicturePath;
+    }
+
+    public void setProfilePicturePath(String profilePicturePath) {
+        this.profilePicturePath = profilePicturePath;
     }
 
     @Override
