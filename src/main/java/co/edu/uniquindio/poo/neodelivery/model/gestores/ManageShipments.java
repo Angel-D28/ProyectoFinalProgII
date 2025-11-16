@@ -1,16 +1,17 @@
 package co.edu.uniquindio.poo.neodelivery.model.gestores;
 
-import co.edu.uniquindio.poo.neodelivery.model.Admin;
-import co.edu.uniquindio.poo.neodelivery.model.DeliveryDriver;
-import co.edu.uniquindio.poo.neodelivery.model.Shipment;
-import co.edu.uniquindio.poo.neodelivery.model.Status;
+import co.edu.uniquindio.poo.neodelivery.model.*;
+import co.edu.uniquindio.poo.neodelivery.model.Decorators.*;
 
 public class ManageShipments {
+
+    private final ShipmentCostCalculator calculator = new ShipmentCostCalculator();
 
     public void assignDriver(Admin admin, Shipment shipment, DeliveryDriver driver) {
         if (shipment.getStatus() == Status.PENDING) {
             shipment.setAssignedDriver(driver);
             shipment.setStatus(Status.DELIVERASSIGNED);
+            driver.setAvalibility(false);
 
             System.out.println("Admin " + admin.getName() +
                     " asignó el envío " + shipment.getId() +
@@ -30,6 +31,34 @@ public class ManageShipments {
         } else {
             System.out.println(" El envío no está listo o el repartidor no coincide.");
         }
+    }
+
+    public double calculateShipmentCost(Shipment shipment, String method) {
+        switch (method.toLowerCase()) {
+            case "peso" -> calculator.setStrategy(new WeightBasedCostStrategy());
+            case "volumen" -> calculator.setStrategy(new VolumeBasedCostStrategy());
+            case "distancia" -> calculator.setStrategy(new DistanceBasedCostStrategy());
+            default -> throw new IllegalArgumentException("Método de cálculo desconocido: " + method);
+        }
+
+        double baseCost = calculator.calculate(shipment);
+        IShipment decorated = new ShipmentDecoratorBase(shipment, baseCost);
+
+        if (shipment.isHasInsurance())
+            decorated = new InsuranceDecorator(decorated);
+        if (shipment.isPriority())
+            decorated = new PriorityDecorator(decorated);
+        if (shipment.isRequiresSignature())
+            decorated = new SignatureDecorator(decorated);
+        if (shipment.isFragile())
+            decorated = new FragileDecorator((decorated));
+
+        double finalCost = decorated.getCost();
+        System.out.println("Costo final del envío: $" + finalCost);
+
+        shipment.setCost(finalCost);
+        return finalCost;
+
     }
 
 }
