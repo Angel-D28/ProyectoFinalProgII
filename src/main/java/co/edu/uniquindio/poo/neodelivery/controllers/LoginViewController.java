@@ -1,5 +1,6 @@
 package co.edu.uniquindio.poo.neodelivery.controllers;
 
+import co.edu.uniquindio.poo.neodelivery.model.ActivityLogService;
 import co.edu.uniquindio.poo.neodelivery.model.Admin;
 import co.edu.uniquindio.poo.neodelivery.model.DeliveryDriver;
 import co.edu.uniquindio.poo.neodelivery.model.User;
@@ -49,28 +50,34 @@ public class LoginViewController {
 
             for(User user : db.getListaUsuarios()) {
                 if (user.getEmail().toLowerCase().equals(email) && user.getPassword().equals(hashedInput)) {
-                    Utils.replaceScene(event, "clientDashboard.fxml", "Dashboard - Client");
+                    ClientDashboardController clientController = Utils.replaceScene(event, "clientDashboard.fxml", "Dashboard - Client");
+                    clientController.setClient(user);
+                    ActivityLogService.log(user.getName() + "-ID: "+user.getIdUser(), "Logged in");
                     return;
                 }
             }
 
             for(Admin admin : db.getListaAdmin()) {
                 if (admin.getEmail().toLowerCase().equals(email) && admin.getPassword().equals(hashedInput)) {
-                    Utils.replaceScene(event, "adminDashboard.fxml", "Dashboard - Admin");
+                    AdminDashboardController adminController = Utils.replaceScene(event, "adminDashboard.fxml", "Dashboard - Admin");
+                    adminController.setAdmin(admin);
+                    ActivityLogService.log(admin.getName()+" - ID: "+admin.getIdAdmin(), "Logged in");
                     return;
                 }
             }
 
             for(DeliveryDriver driver : db.getListaRepartidores()) {
                 if (driver.getEmail().toLowerCase().equals(email) && driver.getPassword().equals(hashedInput)) {
-                    Utils.replaceScene(event, "courierDashboard.fxml", "Dashboard - Delivery Driver");
+                    CourierDashboardController courierController = Utils.replaceScene(event, "courierDashboard.fxml", "Dashboard - Delivery Driver");
+                    courierController.setCurrentCourier(driver);
+                    ActivityLogService.log(driver.getName()+" - ID: "+driver.getId(), "Logged in");
                     return;
                 }
             }
 
             Utils.showAlert("ERROR", "Email or password incorrect");
         } else {
-            (new Alert(AlertType.WARNING, "Please type your email and password", new ButtonType[0])).showAndWait();
+            Utils.showAlert("WARNING", "Typer your email and password");
         }
     }
 }

@@ -7,13 +7,14 @@ import co.edu.uniquindio.poo.neodelivery.model.factory.CashPaymentFactory;
 import co.edu.uniquindio.poo.neodelivery.model.factory.DigitalWalletPaymentFactory;
 import co.edu.uniquindio.poo.neodelivery.model.factory.PaymentFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ManagePayments {
     private DataBase db = DataBase.getInstance();
     // Crea y procesa un pago según el tipo seleccionado
 
-    public Payment createAndProcessPayment(double amount, String type, String cardNumber, String walletProvider, String number) {
+    public Payment createAndProcessPayment(User client, Shipment shipment, double amount, String type, String cardNumber, String walletProvider, String number) {
         PaymentFactory factory;
         Payment payment;
 
@@ -34,7 +35,16 @@ public class ManagePayments {
         }
 
         payment.processPayment();
-        db.getListaPagos().add(payment); // guardamos el pago en la base de datos simulada
+        db.getListaPagos().add(payment);
+        if (client.getPaymentsMethodsList() == null) {
+            client.setPaymentsMethodsList(new ArrayList<>());
+        }
+        client.getPaymentsMethodsList().add(payment);
+
+        if (shipment != null) {
+            shipment.setPayment(payment);
+        }
+
         return payment;
     }
 

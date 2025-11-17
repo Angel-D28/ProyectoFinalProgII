@@ -1,10 +1,12 @@
 package co.edu.uniquindio.poo.neodelivery.model;
 
+import co.edu.uniquindio.poo.neodelivery.model.State.PendingState;
+import co.edu.uniquindio.poo.neodelivery.model.State.ShipmentState;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Shipment implements IShipment , Subject {
+public class Shipment implements IShipment, Subject {
 
     private String id;
     private Address origin;
@@ -17,9 +19,12 @@ public class Shipment implements IShipment , Subject {
     private boolean isPriority;
     private boolean requiresSignature;
     private boolean fragile;
+    private Payment payment;
+
+    private ShipmentState state;
     private DeliveryDriver assignedDriver;
 
-    private List<Observer> observers = new ArrayList<>();
+    private final List<Observer> observers = new ArrayList<>();
 
     private Shipment(Builder builder) {
         this.id = builder.id;
@@ -28,21 +33,25 @@ public class Shipment implements IShipment , Subject {
         this.weight = builder.weight;
         this.volume = builder.volume;
         this.cost = builder.cost;
-        this.status = builder.status;
+
         this.hasInsurance = builder.hasInsurance;
         this.isPriority = builder.isPriority;
         this.requiresSignature = builder.requiresSignature;
         this.fragile = builder.fragile;
-    }
-    public static class Builder {
 
+
+        this.state = new PendingState();
+        this.status = Status.PENDING;
+    }
+
+    // BUILDER
+    public static class Builder {
         private String id;
         private Address origin;
         private Address destination;
         private double weight;
         private double volume;
         private double cost;
-        private Status status;
         private boolean hasInsurance;
         private boolean isPriority;
         private boolean requiresSignature;
@@ -54,7 +63,6 @@ public class Shipment implements IShipment , Subject {
         public Builder weight(double weight) { this.weight = weight; return this; }
         public Builder volume(double volume) { this.volume = volume; return this; }
         public Builder cost(double cost) { this.cost = cost; return this; }
-        public Builder status(Status status) { this.status = status; return this; }
         public Builder hasInsurance(boolean hasInsurance) { this.hasInsurance = hasInsurance; return this; }
         public Builder isPriority(boolean isPriority) { this.isPriority = isPriority; return this; }
         public Builder requiresSignature(boolean requiresSignature) { this.requiresSignature = requiresSignature; return this; }
@@ -63,40 +71,63 @@ public class Shipment implements IShipment , Subject {
         public Shipment build() { return new Shipment(this); }
     }
 
-    @Override
-    public double getCost() {
-        return cost;
+    // STATE DELEGATION
+
+    public void assignerDriver(Admin admin, DeliveryDriver driver) {
+        state.assignerDriver(this, admin, driver);
     }
+
+    public void collect(DeliveryDriver driver) {
+        state.collect(this, driver);
+    }
+
+    public void deliver(DeliveryDriver driver) {
+        state.deliver(this, driver);
+    }
+
+    public void setState(ShipmentState newState) {
+        this.state = newState;
+    }
+
+    public ShipmentState getState() {
+        return state;
+    }
+
+
+
+    public void setStatus(Status newStatus) {
+        this.status = newStatus;
+        notifyObservers("El envío " + id + " cambió su estado a: " + newStatus);
+    }
+
+    public DeliveryDriver getAssignedDriver() {
+        return assignedDriver;
+    }
+
+    public void setAssignedDriver(DeliveryDriver assignedDriver) {
+        this.assignedDriver = assignedDriver;
+    }
+
+    @Override
+    public double getCost() { return cost; }
 
     @Override
     public String getDescription() {
         return "Envío desde " + origin + " hasta " + destination;
     }
 
-    public void setStatus(Status newStatus) {
-        this.status = newStatus;
-        notifyObservers("El envío " + id + " cambió su estado a: " + newStatus);
-    }
+  //OBSERVER
+
     @Override
-    public void addObserver(Observer o) {
-        observers.add(o); }
+    public void addObserver(Observer o) { observers.add(o); }
+
     @Override
-    public void removeObserver(Observer o) {
-        observers.remove(o); }
+    public void removeObserver(Observer o) { observers.remove(o); }
+
     @Override
     public void notifyObservers(String msg) {
-        observers.forEach(o -> o.update(msg)); }
-
-    public void assignDriver(DeliveryDriver driver) {
-        this.assignedDriver = driver;
-        this.status = Status.DELIVERASSIGNED;
-        notifyObservers("El envío " + id + " ha sido asignado al repartidor " + driver.getName());
+        observers.forEach(o -> o.update(msg));
     }
-
-    public Status getStatus() {
-        return status;
-    }
-    public DeliveryDriver getAssignedDriver() { return assignedDriver; }
 
     public String getId() {
         return id;
@@ -142,6 +173,10 @@ public class Shipment implements IShipment , Subject {
         this.cost = cost;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
     public boolean isHasInsurance() {
         return hasInsurance;
     }
@@ -174,22 +209,15 @@ public class Shipment implements IShipment , Subject {
         this.fragile = fragile;
     }
 
-    public void setAssignedDriver(DeliveryDriver assignedDriver) {
-        this.assignedDriver = assignedDriver;
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
     }
 
     public List<Observer> getObservers() {
         return observers;
-    }
-
-    public void setObservers(List<Observer> observers) {
-        this.observers = observers;
-    }
-
-    @Override
-    public String toString() {
-        return "Id: " + id + "Origen: " + origin + "Destino: " + destination + "Peso" + weight +
-                "Volumen: " + volume + "Costo: " + cost + "Estado: " + status + "TuvoInconveniente" + hasInsurance +
-                "TienePrioridad: " + isPriority + "RequiereFirma: " + requiresSignature;
     }
 }

@@ -7,6 +7,7 @@ public class DeliveryDriver {
     private String email;
     private String password;
     private Shipment shipmentAssigned;
+    private boolean avalibility;
 
     public DeliveryDriver(String id, String name, String password, String email) {
         this.id = id;
@@ -14,6 +15,7 @@ public class DeliveryDriver {
         this.password = password;
         this.email = email;
         this.shipmentAssigned = null;
+        this.avalibility = true;
     }
 
     public String toString(){
@@ -57,5 +59,13 @@ public class DeliveryDriver {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isAvalibility() {
+        return avalibility;
+    }
+
+    public void setAvalibility(boolean avalibility) {
+        this.avalibility = avalibility;
     }
 }

@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.neodelivery.controllers.CourierDashboardController">
+<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.neodelivery.controllers.CourierDashboardController">
    <center>
       <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
@@ -26,12 +26,25 @@
          <children>
             <Pane prefHeight="93.0" prefWidth="200.0">
                <children>
-                  <Label fx:id="lblWelcomeCourier" alignment="CENTER" prefHeight="94.0" prefWidth="200.0" styleClass="labelTitles" text="Welcome courier," />
+                  <Label fx:id="lblWelcomeCourier" alignment="CENTER" contentDisplay="TOP" prefHeight="94.0" prefWidth="200.0" styleClass="labelTitles" text="Welcome courier,">
+                     <graphic>
+                        <ImageView fx:id="profileImageView" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
+                     </graphic>
+                     <padding>
+                        <Insets top="25.0" />
+                     </padding></Label>
                </children>
             </Pane>
-            <VBox alignment="TOP_CENTER" layoutY="96.0" prefHeight="430.0" prefWidth="200.0" spacing="25.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="96.0">
+            <VBox alignment="TOP_CENTER" layoutY="96.0" prefHeight="430.0" prefWidth="200.0" spacing="25.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="200.0">
                <children>
-                  <Button id="dashboardButton" mnemonicParsing="false" prefHeight="24.0" prefWidth="202.0" text="Option 1" VBox.vgrow="SOMETIMES" />
+                  <Button id="dashboardButton" fx:id="btnAssignedShipment" mnemonicParsing="false" onAction="#openShipments" prefHeight="24.0" prefWidth="202.0" text="Shipments" VBox.vgrow="SOMETIMES">
+                     <graphic>
+                        <ImageView fitHeight="112.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../images/caja.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
                   <Button id="dashboardButton" mnemonicParsing="false" prefHeight="24.0" prefWidth="202.0" text="Option 2" />
                   <Button id="dashboardButton" mnemonicParsing="false" prefHeight="24.0" prefWidth="202.0" text="Option 3" />
                   <Button id="dashboardButton" mnemonicParsing="false" prefHeight="24.0" prefWidth="202.0" text="Option 4" />
