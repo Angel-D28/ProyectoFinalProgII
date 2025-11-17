@@ -72,4 +72,34 @@ public class ClientDashboardController {
 
         visibleMenu = !visibleMenu;
     }
+
+    /**
+     * Navega a la vista de gestión de reportes
+     */
+    @FXML
+    void goToManageReports(ActionEvent event) {
+        try {
+            ManageReportsController controller = Utils.replaceMainContent(mainContent, "manageReports.fxml");
+            controller.setMainContent(mainContent);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Utils.showAlert("ERROR", "No se pudo cargar la vista de reportes");
+        }
+    }
+
+    /**
+     * Genera un reporte PDF directamente desde el dashboard
+     */
+    @FXML
+    void generateReport(ActionEvent event) {
+        try {
+            ManageReportsController controller = Utils.replaceMainContent(mainContent, "manageReports.fxml");
+            controller.setMainContent(mainContent);
+            // Generar el reporte automáticamente
+            controller.generateDeliveryReportPDF();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Utils.showAlert("ERROR", "No se pudo generar el reporte");
+        }
+    }
 }
