@@ -68,7 +68,7 @@ public class ManageReportsController {
 
     @FXML
     public void initialize() {
-        // Configurar columnas de la tabla
+
         columnID.setCellValueFactory(new PropertyValueFactory<>("id"));
         columnAddress.setCellValueFactory(cellData -> 
             new javafx.beans.property.SimpleStringProperty(
@@ -107,9 +107,6 @@ public class ManageReportsController {
         shipmentsList.addAll(db.getListaEnvios());
     }
 
-    /**
-     * Traduce el estado del envío al español
-     */
     private String translateStatus(co.edu.uniquindio.poo.neodelivery.model.Status status) {
         if (status == null) return "N/D";
         return switch(status) {
@@ -157,21 +154,21 @@ public class ManageReportsController {
                 java.io.InputStream logoStream = null;
                 
                 // Intentar desde la raíz de resources
-                logoStream = Utils.class.getResourceAsStream("/images/logoCamion.png");
+                logoStream = Utils.class.getResourceAsStream("/images/logoCamionReportes.png");
                 
                 // Si no funciona, intentar desde el paquete
                 if (logoStream == null) {
-                    logoStream = getClass().getResourceAsStream("/images/logoCamion.png");
+                    logoStream = getClass().getResourceAsStream("/images/logoCamionReportes.png");
                 }
                 
                 // Si aún no funciona, intentar ruta absoluta completa
                 if (logoStream == null) {
-                    logoStream = ManageReportsController.class.getResourceAsStream("/images/logoCamion.png");
+                    logoStream = ManageReportsController.class.getResourceAsStream("/images/logoCamionReportes.png");
                 }
                 
                 // Si aún no funciona, intentar desde el classloader
                 if (logoStream == null) {
-                    logoStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("images/logoCamion.png");
+                    logoStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("images/logoCamionReportes.png");
                 }
                 
                 if (logoStream != null) {

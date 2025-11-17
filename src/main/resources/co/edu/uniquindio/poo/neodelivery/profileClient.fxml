@@ -12,19 +12,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.neodelivery.controllers.ProfileAdminController">
-   <bottom>
-      <HBox id="rightPane" alignment="CENTER" prefHeight="64.0" prefWidth="600.0" spacing="50.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button fx:id="btnSave" onAction="#saveChanges" styleClass="managerButton" text="Save Changes">
-               <padding>
-                  <Insets bottom="25.0" />
-               </padding>
-            </Button>
-            <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#cancel" styleClass="managerButton" text="Cancel" />
-         </children>
-      </HBox>
-   </bottom>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.neodelivery.controllers.ProfileClientController">
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
@@ -75,4 +64,16 @@
          </children>
       </AnchorPane>
    </center>
+   <bottom>
+      <HBox id="rightPane" alignment="CENTER" prefHeight="60.0" prefWidth="600.0" spacing="75.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="btnSave" onAction="#saveChanges" prefHeight="34.0" prefWidth="114.0" styleClass="managerButton" text="Save Changes">
+               <padding>
+                  <Insets bottom="25.0" />
+               </padding>
+            </Button>
+            <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#cancel" prefHeight="34.0" prefWidth="124.0" styleClass="managerButton" text="Cancel" />
+         </children>
+      </HBox>
+   </bottom>
 </BorderPane>

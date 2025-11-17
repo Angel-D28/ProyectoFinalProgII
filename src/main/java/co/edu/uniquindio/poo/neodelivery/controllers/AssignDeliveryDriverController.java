@@ -1,5 +1,6 @@
 package co.edu.uniquindio.poo.neodelivery.controllers;
 
+import co.edu.uniquindio.poo.neodelivery.model.ActivityLogService;
 import co.edu.uniquindio.poo.neodelivery.model.Admin;
 import co.edu.uniquindio.poo.neodelivery.model.DeliveryDriver;
 import co.edu.uniquindio.poo.neodelivery.model.Repository.DataBase;
@@ -51,9 +52,12 @@ public class AssignDeliveryDriverController {
         this.root = mainContent;
     }
 
-    public void setAdminAndShipment(Admin admin, Shipment shipment) {
+    public void setShipment(Shipment shipmentSelected) {
+        this.shipmentSelected = shipmentSelected;
+    }
+
+    public void setAdmin(Admin admin) {
         this.adminLogged = admin;
-        this.shipmentSelected = shipment;
     }
 
     void loadDeliveryDriversFromDatabase(){
@@ -85,10 +89,15 @@ public class AssignDeliveryDriverController {
             return;
         }
         manageShipments.assignDriver(adminLogged, shipmentSelected, deliverySelected);
+        deliverySelected.setShipmentAssigned(shipmentSelected);
         Utils.showAlert("VERIFIED", "Successfully assigned.");
+        ActivityLogService.log(adminLogged.getName() +
+                " - ID: "+adminLogged.getIdAdmin(), "He assigned an order to "+
+                deliverySelected.getName()+" - ID: "+deliverySelected.getId());
 
         try {
             ManageShipmentsAdminController controller = Utils.replaceMainContent(root, "manageShipments(Admin).fxml");
+            controller.setAdminLogged(adminLogged);
             controller.setShipment(shipmentSelected);
             controller.setMainContentManageShipments(root);
         }catch (Exception e){

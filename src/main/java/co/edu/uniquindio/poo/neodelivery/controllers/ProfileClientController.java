@@ -1,7 +1,6 @@
 package co.edu.uniquindio.poo.neodelivery.controllers;
 
-import co.edu.uniquindio.poo.neodelivery.model.Admin;
-import co.edu.uniquindio.poo.neodelivery.model.Repository.DataBase;
+import co.edu.uniquindio.poo.neodelivery.model.User;
 import co.edu.uniquindio.poo.neodelivery.model.utils.Utils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,7 +15,7 @@ import javafx.stage.FileChooser;
 
 import java.io.File;
 
-public class ProfileAdminController {
+public class ProfileClientController {
 
     @FXML
     private Button btnCancel;
@@ -31,7 +30,10 @@ public class ProfileAdminController {
     private ImageView imageProfile;
 
     @FXML
-    private AnchorPane root;
+    private TextField txtEmail;
+
+    @FXML
+    private TextField txtName;
 
     @FXML
     private PasswordField txtNewPassword;
@@ -40,39 +42,33 @@ public class ProfileAdminController {
     private PasswordField txtOldPassword;
 
     @FXML
-    private TextField txtEmail;
-
-    @FXML
-    private TextField txtName;
-
-    @FXML
     private TextField txtPhone;
 
-    private Admin adminLogged;
+    private User clientLogged;
 
     private File imageFile;
 
     private AnchorPane mainContent;
 
-    private AdminDashboardController dashboardController;
+    private ClientDashboardController dashboardController;
 
     public void setMainContent(AnchorPane mainContent) {
         this.mainContent = mainContent;
     }
 
-    public void setDashboardController(AdminDashboardController controller) {
+    public void setDashboardController(ClientDashboardController controller) {
         this.dashboardController = controller;
     }
 
-    public void setAdmin(Admin admin) {
-        this.adminLogged = admin;
+    public void setClient(User user) {
+        this.clientLogged = user;
 
-        txtName.setText(admin.getName());
-        txtEmail.setText(admin.getEmail());
-        txtPhone.setText(admin.getNumber());
+        txtName.setText(user.getName());
+        txtEmail.setText(user.getEmail());
+        txtPhone.setText(user.getNumbre());
 
-        if (admin.getProfilePicturePath() != null) {
-            Image img = new Image(new File(admin.getProfilePicturePath()).toURI().toString(), 100, 100, false, true);
+        if (user.getProfilePicturePath() != null) {
+            Image img = new Image(new File(user.getProfilePicturePath()).toURI().toString(), 100, 100, false, true);
             imageProfile.setImage(img);
         }else {
             Image defaultImg = new Image(getClass().getResource("/images/defaultAvatar.png").toString(), 100, 100, false, true);
@@ -81,6 +77,11 @@ public class ProfileAdminController {
 
         Circle clip = new Circle(50, 50, 50);
         imageProfile.setClip(clip);
+    }
+
+    @FXML
+    void cancel(ActionEvent event) {
+        backToHome();
     }
 
     @FXML
@@ -98,11 +99,11 @@ public class ProfileAdminController {
 
     @FXML
     void saveChanges(ActionEvent event) {
-        if (adminLogged == null) return;
+        if (clientLogged == null) return;
 
-        adminLogged.setName(txtName.getText());
-        adminLogged.setEmail(txtEmail.getText());
-        adminLogged.setNumber(txtPhone.getText());
+        clientLogged.setName(txtName.getText());
+        clientLogged.setEmail(txtEmail.getText());
+        clientLogged.setNumbre(txtPhone.getText());
 
         String oldPass = txtOldPassword.getText();
         String newPass = txtNewPassword.getText();
@@ -111,7 +112,7 @@ public class ProfileAdminController {
         String message = "Profile updated successfully!";
 
         if(!oldPass.isEmpty() || !newPass.isEmpty()) {
-            if(!Utils.hashPassword(oldPass).equals(adminLogged.getPassword())) {
+            if(!Utils.hashPassword(oldPass).equals(clientLogged.getPassword())) {
                 valid = false;
                 message = "The old password doesn't match.";
             } else if(newPass.length() < 8) {
@@ -121,12 +122,12 @@ public class ProfileAdminController {
                 valid = false;
                 message = "The new password must be different from the old one.";
             } else {
-                adminLogged.setPassword(Utils.hashPassword(newPass));
+                clientLogged.setPassword(Utils.hashPassword(newPass));
             }
         }
 
         if (imageFile != null) {
-            adminLogged.setProfilePicturePath(imageFile.getAbsolutePath());
+            clientLogged.setProfilePicturePath(imageFile.getAbsolutePath());
         }
 
         if(valid) {
@@ -138,14 +139,9 @@ public class ProfileAdminController {
         }
     }
 
-    @FXML
-    void cancel(ActionEvent event) {
-        backToHome();
-    }
-
     void backToHome(){
-        AdminHomeController adminHomeController = Utils.replaceMainContent(mainContent, "adminHome.fxml");
-        adminHomeController.setHomeMainContent(mainContent);
+        HomeClientController homeController = Utils.replaceMainContent(mainContent, "homeClient.fxml");
+        homeController.setMainContentHomeClient(mainContent);
     }
 
 }

@@ -7,6 +7,7 @@ public class User implements Observer {
     private Address address;
     private String number;
     private String idUser;
+    private String profilePicturePath;
 
     public User(String name, String password, String email, Address address, String numbre, String idUser) {
         this.name = name;
@@ -69,6 +70,13 @@ public class User implements Observer {
 
     public void setIdUser(String idUser) {
         this.idUser = idUser;
+    }
+
+    public String getProfilePicturePath() {
+        return profilePicturePath;
+    }
+    public void setProfilePicturePath(String profilePicturePath) {
+        this.profilePicturePath = profilePicturePath;
     }
 
     public String toString() {

@@ -4,6 +4,7 @@ import co.edu.uniquindio.poo.neodelivery.model.ActivityLogService;
 import co.edu.uniquindio.poo.neodelivery.model.Admin;
 import co.edu.uniquindio.poo.neodelivery.model.DeliveryDriver;
 import co.edu.uniquindio.poo.neodelivery.model.Repository.DataBase;
+import co.edu.uniquindio.poo.neodelivery.model.Status;
 import co.edu.uniquindio.poo.neodelivery.model.gestores.ManageDeliveryDrivers;
 import co.edu.uniquindio.poo.neodelivery.model.utils.Utils;
 import javafx.beans.property.SimpleStringProperty;
@@ -68,7 +69,7 @@ public class ManageDeliveryDriverController {
         columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colAssignedShipment.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getShipmentAssigned() != null ? "Assigned" : "None")
+                new SimpleStringProperty(cellData.getValue().getShipmentAssigned() != null ? "Assigned - ID: " + cellData.getValue().getShipmentAssigned().getId() : "None")
         );
 
         tableDriversList.setItems(driversList);
@@ -91,12 +92,15 @@ public class ManageDeliveryDriverController {
     @FXML
     void deleteDriver(ActionEvent event) {
         DeliveryDriver selectedDriver = tableDriversList.getSelectionModel().getSelectedItem();
-        if (selectedDriver != null) {
+        if (selectedDriver != null && selectedDriver.getShipmentAssigned() == null) {
             driversList.remove(selectedDriver);
             manageDriver.deleteDeliveyDriver(selectedDriver);
             Utils.showAlert("VERIFIED", "Successfully deleted");
             ActivityLogService.log(adminLogged.getName(), "Deleted a delivery driver");
-        }else{
+        }else if (selectedDriver.getShipmentAssigned() != null) {
+            Utils.showAlert("ERROR", "You cannot delete it until it has delivered all of its orders.");
+        }
+        else{
             Utils.showAlert("WARNING", "Select a driver first");
         }
     }

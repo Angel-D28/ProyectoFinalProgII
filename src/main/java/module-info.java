@@ -9,6 +9,7 @@ module co.edu.uniquindio.poo.neodelivery {
     requires jdk.jshell;
     requires org.apache.pdfbox;
     requires java.desktop;
+    requires javafx.graphics;
 
 
     exports co.edu.uniquindio.poo.neodelivery.controllers;
