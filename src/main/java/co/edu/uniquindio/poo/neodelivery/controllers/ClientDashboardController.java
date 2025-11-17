@@ -94,7 +94,9 @@ public class ClientDashboardController {
 
     @FXML
     void showOrders(ActionEvent event) {
-
+        ManageShipmentsClientController shipmentController = Utils.replaceMainContent(mainContent, "manageShipments(Client).fxml");
+        shipmentController.setMainContentManageShipments(mainContent);
+        shipmentController.setClientLogged(userLogged);
     }
 
     @FXML

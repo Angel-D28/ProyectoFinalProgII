@@ -34,9 +34,8 @@ public class ManagePayments {
             default -> throw new IllegalArgumentException("Tipo de pago no válido: " + type);
         }
 
-        //Guardamos el pago en base de datos, Cliente/user, y asociamos el pago al pedido.
         payment.processPayment();
-        db.getListaPagos().add(payment);// guardamos el pago en la base de datos simulada
+        db.getListaPagos().add(payment);
         if (client.getPaymentsMethodsList() == null) {
             client.setPaymentsMethodsList(new ArrayList<>());
         }

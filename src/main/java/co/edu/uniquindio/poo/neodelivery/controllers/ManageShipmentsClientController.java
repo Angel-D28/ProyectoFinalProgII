@@ -3,7 +3,9 @@ package co.edu.uniquindio.poo.neodelivery.controllers;
 import co.edu.uniquindio.poo.neodelivery.model.Admin;
 import co.edu.uniquindio.poo.neodelivery.model.Repository.DataBase;
 import co.edu.uniquindio.poo.neodelivery.model.Shipment;
+import co.edu.uniquindio.poo.neodelivery.model.Status;
 import co.edu.uniquindio.poo.neodelivery.model.User;
+import co.edu.uniquindio.poo.neodelivery.model.utils.Utils;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -65,6 +67,8 @@ public class ManageShipmentsClientController {
     @FXML
     private TableView<Shipment> tableShipmentsClient;
 
+    private DataBase db = DataBase.getInstance();
+
     private AnchorPane mainContent;
 
     private User clientLogged;
@@ -120,7 +124,16 @@ public class ManageShipmentsClientController {
 
     @FXML
     void cancelShipment(ActionEvent event) {
-
+        Shipment shipmentSelected = tableShipmentsClient.getSelectionModel().getSelectedItem();
+        if(shipmentSelected == null){
+            Utils.showAlert("WARNING", "Select a shipment.");
+        }else if(shipmentSelected.getStatus().equals(Status.PENDING) || shipmentSelected.getStatus().equals(Status.DELIVERASSIGNED)){
+            clientLogged.getShipmentsList().remove(shipmentSelected);
+            db.getListaEnvios().remove(shipmentSelected);
+            Utils.showAlert("VERIFIED", "Shipping canceled.");
+        }else{
+            Utils.showAlert("ERROR", "You cannot cancel a shipment that has already been picked up by a delivery driver.");
+        }
     }
 
     @FXML
@@ -130,7 +143,7 @@ public class ManageShipmentsClientController {
 
     @FXML
     void deselectShipment(ActionEvent event) {
-
+        tableShipmentsClient.getSelectionModel().clearSelection();
     }
 
     @FXML
