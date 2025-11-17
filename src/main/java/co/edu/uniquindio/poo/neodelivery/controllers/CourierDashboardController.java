@@ -1,5 +1,6 @@
 package co.edu.uniquindio.poo.neodelivery.controllers;
 
+import co.edu.uniquindio.poo.neodelivery.controllers.delivery.DeliveryShipmentsController;
 import co.edu.uniquindio.poo.neodelivery.model.ActivityLogService;
 import co.edu.uniquindio.poo.neodelivery.model.DeliveryDriver;
 import co.edu.uniquindio.poo.neodelivery.model.utils.Utils;
@@ -81,12 +82,9 @@ public class CourierDashboardController {
 
     @FXML
     void openShipments(ActionEvent event) {
-        try {
-            ManageShipmentsController controller = Utils.replaceMainContent(mainContent, "manageShipments(DeliveryDriver).fxml");
-            controller.setMainContent(mainContent);
-            controller.setCurrentUser(currentCourier);
-        } catch (Exception e) {
-            e.printStackTrace();
+        DeliveryShipmentsController controller = Utils.replaceMainContent(mainContent, "delivery/DeliveryShipmentsView.fxml");
+        if (controller != null) {
+            controller.setCurrentCourier(currentCourier);
         }
     }
 }
