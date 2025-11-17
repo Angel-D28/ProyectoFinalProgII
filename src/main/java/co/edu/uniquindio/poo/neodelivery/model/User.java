@@ -23,7 +23,8 @@ public class User implements Observer {
 
     @Override
     public void update(String message) {
-        EmailService.sendEmail(email, name, message);
+        System.out.println("Enviando gmail en tiempo real");
+        EmailService.sendEmail(email,"Actualizacion de Envio", message);
     }
 
     public void setName(String name) {
