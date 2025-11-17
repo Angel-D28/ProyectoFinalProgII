@@ -1,5 +1,6 @@
 package co.edu.uniquindio.poo.neodelivery.controllers;
 
+import co.edu.uniquindio.poo.neodelivery.model.ActivityLogService;
 import co.edu.uniquindio.poo.neodelivery.model.Admin;
 import co.edu.uniquindio.poo.neodelivery.model.Repository.DataBase;
 import co.edu.uniquindio.poo.neodelivery.model.gestores.ManageAdmin;
@@ -104,6 +105,7 @@ public class ManageAdminController {
         listAdmins.remove(selected);
         manageAdmin.deleteAdmin(selected);
         Utils.showAlert("VERIFIED", "Successfully removed");
+        ActivityLogService.log(adminLogged.getName(), "Deleted admin");
     }
 
     @FXML

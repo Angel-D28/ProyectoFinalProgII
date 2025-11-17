@@ -1,5 +1,7 @@
 package co.edu.uniquindio.poo.neodelivery.App;
 
+import co.edu.uniquindio.poo.neodelivery.model.gestores.ManageAdmin;
+import co.edu.uniquindio.poo.neodelivery.model.gestores.ManageReports;
 import co.edu.uniquindio.poo.neodelivery.model.*;
 import co.edu.uniquindio.poo.neodelivery.model.Decorators.*;
 import co.edu.uniquindio.poo.neodelivery.model.gestores.ManagePayments;

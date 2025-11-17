@@ -18,6 +18,9 @@ import java.io.File;
 public class ProfileAdminController {
 
     @FXML
+    private Button btnCancel;
+
+    @FXML
     private Button btnChangePhoto;
 
     @FXML
@@ -64,6 +67,9 @@ public class ProfileAdminController {
         if (admin.getProfilePicturePath() != null) {
             Image img = new Image(new File(admin.getProfilePicturePath()).toURI().toString(), 100, 100, false, true);
             imageProfile.setImage(img);
+        }else {
+            Image defaultImg = new Image(getClass().getResource("/images/defaultAvatar.png").toString(), 100, 100, false, true);
+            imageProfile.setImage(defaultImg);
         }
 
         Circle clip = new Circle(50, 50, 50);
@@ -98,12 +104,22 @@ public class ProfileAdminController {
         Utils.showAlert("VERIFIED", "Profile updated successfully!");
 
         if (mainContent != null) {
-            mainContent.getChildren().clear();
+            backToHome();
         }
 
         if (dashboardController != null) {
             dashboardController.refreshProfileImage();
         }
+    }
+
+    @FXML
+    void cancel(ActionEvent event) {
+        backToHome();
+    }
+
+    void backToHome(){
+        AdminHomeController adminHomeController = Utils.replaceMainContent(mainContent, "adminHome.fxml");
+        adminHomeController.setHomeMainContent(mainContent);
     }
 
 }

@@ -1,19 +1,17 @@
 package co.edu.uniquindio.poo.neodelivery.controllers;
 
+import co.edu.uniquindio.poo.neodelivery.model.ActivityLogService;
 import co.edu.uniquindio.poo.neodelivery.model.Admin;
 import co.edu.uniquindio.poo.neodelivery.model.utils.Utils;
 import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Region;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 
@@ -21,6 +19,10 @@ import java.io.File;
 
 public class AdminDashboardController {
 
+    @FXML
+    private Button btnActivityLog;
+    @FXML
+    private Button btnShipments;
     @FXML
     private Button btnManageDrivers;
     @FXML
@@ -58,12 +60,20 @@ public class AdminDashboardController {
 
     @FXML
     public void initialize() {
+        Utils.replaceMainContent(mainContent, "adminHome.fxml");
+
         profileImageView.setClip(new Circle(50, 50, 50));
+
+        if (admin != null) {
+            loadAdminImage();
+        }
     }
 
     @FXML
     void logOut(ActionEvent event) {
         Utils.replaceScene(event, "loginView.fxml", "Login - Neo Delivery");
+        ActivityLogService.log(admin.getName() + " - ID: "+admin.getIdAdmin(), "Signed out");
+
     }
 
     @FXML
@@ -101,6 +111,7 @@ public class AdminDashboardController {
     void goToManageUsers(ActionEvent event) {
         try {
             ManageClientController controller = Utils.replaceMainContent(mainContent, "manageClient(Admin).fxml");
+            controller.setAdminLogged(admin);
             controller.setMainContent(mainContent);
         } catch (Exception e) {
             e.printStackTrace();
@@ -123,6 +134,7 @@ public class AdminDashboardController {
         try {
             ManageDeliveryDriverController controller = Utils.replaceMainContent(mainContent, "manageDeliveryDrivers(Admin).fxml");
             controller.setMainContent(mainContent);
+            controller.setAdminLogged(admin);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -143,27 +155,41 @@ public class AdminDashboardController {
     @FXML
     void goToHome(ActionEvent event) {
         if (mainContent != null) {
-            mainContent.getChildren().clear();
+            AdminHomeController controller = Utils.replaceMainContent(mainContent, "adminHome.fxml");
+            controller.setHomeMainContent(mainContent);
         }
         loadAdminImage();
     }
 
+    @FXML
+    void goToShipments(ActionEvent event) {
+        ManageShipmentsAdminController shipmentController = Utils.replaceMainContent(mainContent, "manageShipments(Admin).fxml");
+        shipmentController.setAdminLogged(admin);
+        shipmentController.setMainContentManageShipments(mainContent);
+    }
+
+    @FXML
+    void viewActivityLog(ActionEvent event) {
+        ActivityLogController logController = Utils.replaceMainContent(mainContent, "activityLog.fxml");
+        logController.setMainContent(mainContent);
+    }
+
     private void loadAdminImage() {
+        Image img;
         if (admin != null && admin.getProfilePicturePath() != null) {
             File f = new File(admin.getProfilePicturePath());
             if (f.exists()) {
-                Image img = new Image(f.toURI().toString());
-                profileImageView.setImage(img);
+                img = new Image(f.toURI().toString());
+            } else {
+                img = new Image(getClass().getResource("/images/defaultAvatar.png").toString());
             }
+        } else {
+            img = new Image(getClass().getResource("/images/defaultAvatar.png").toString());
         }
+        profileImageView.setImage(img);
     }
 
     public void refreshProfileImage() {
-        if (admin != null && admin.getProfilePicturePath() != null) {
-            File f = new File(admin.getProfilePicturePath());
-            if (f.exists()) {
-                profileImageView.setImage(new Image(f.toURI().toString()));
-            }
-        }
+        loadAdminImage();
     }
 }

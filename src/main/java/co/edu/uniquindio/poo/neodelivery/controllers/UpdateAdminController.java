@@ -1,5 +1,6 @@
 package co.edu.uniquindio.poo.neodelivery.controllers;
 
+import co.edu.uniquindio.poo.neodelivery.model.ActivityLogService;
 import co.edu.uniquindio.poo.neodelivery.model.Admin;
 import co.edu.uniquindio.poo.neodelivery.model.Repository.DataBase;
 import co.edu.uniquindio.poo.neodelivery.model.gestores.ManageAdmin;
@@ -102,6 +103,7 @@ public class UpdateAdminController {
         );
         manageAdmin.updateAdmin(adminToUpdate.getIdAdmin().toString(), updatedAdmin);
         Utils.showAlert("VERIFIED", "Successfully updated");
+        ActivityLogService.log(adminLogged.getName(), "Created Admin - Name: "+name+" ID: "+adminToUpdate.getIdAdmin());
 
         try {
             ManageAdminController controller = Utils.replaceMainContent(mainContent, "manageAdmin.fxml");

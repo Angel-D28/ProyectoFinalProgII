@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.neodelivery.controllers.AdminHomeController">
+   <center>
+      <AnchorPane prefHeight="600.0" prefWidth="900.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label id="text" style="-fx-font-size: 28; -fx-font-weight: bold;" text="Home" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="15.0" />
+            <HBox layoutY="55.0" prefHeight="46.0" prefWidth="900.0" spacing="40" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="55.0">
+               <children>
+                  <Label id="text" fx:id="lblUsuarios" style="-fx-font-size: 20;" />
+                  <Label id="text" fx:id="lblRepartidores" style="-fx-font-size: 20;" />
+                  <Label id="text" fx:id="lblPedidos" style="-fx-font-size: 20;" />
+               </children>
+            </HBox>
+            <HBox layoutY="132.8" prefHeight="433.0" prefWidth="900.0" spacing="25.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="133.0">
+               <children>
+                  <BarChart id="homeBarChart" fx:id="barChart" prefHeight="382.0" prefWidth="465.0" styleClass="custom-bar-chart" HBox.hgrow="ALWAYS">
+                     <xAxis>
+                        <CategoryAxis label="State" />
+                     </xAxis>
+                     <yAxis>
+                        <NumberAxis label="Quantity" />
+                     </yAxis>
+                     <HBox.margin>
+                        <Insets left="50.0" />
+                     </HBox.margin>
+                  </BarChart>
+                  <PieChart id="homePieChart" fx:id="pieChart" prefHeight="336.0" prefWidth="352.0" styleClass="custom-pie" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets right="50.0" />
+                     </HBox.margin>
+                  </PieChart>
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

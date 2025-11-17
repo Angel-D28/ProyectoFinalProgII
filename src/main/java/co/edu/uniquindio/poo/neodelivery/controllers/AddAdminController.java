@@ -1,5 +1,6 @@
 package co.edu.uniquindio.poo.neodelivery.controllers;
 
+import co.edu.uniquindio.poo.neodelivery.model.ActivityLogService;
 import co.edu.uniquindio.poo.neodelivery.model.Admin;
 import co.edu.uniquindio.poo.neodelivery.model.Repository.DataBase;
 import co.edu.uniquindio.poo.neodelivery.model.gestores.ManageAdmin;
@@ -79,6 +80,7 @@ public class AddAdminController {
                     ManageAdminController controller = Utils.replaceMainContent(mainContent, "manageAdmin.fxml");
                     controller.setMainContent(mainContent);
                     controller.setLoggedAdmin(adminLogged);
+                    ActivityLogService.log(adminLogged.getName(), "Created Admin - Name: "+name+" ID: "+adminId);
                 } catch (Exception e) {
                     e.printStackTrace();
                     Utils.showAlert("ERROR", "Could not return to Manage Clients");
