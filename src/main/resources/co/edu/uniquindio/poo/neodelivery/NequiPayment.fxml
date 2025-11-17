@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefWidth="380" prefHeight="560" style="-fx-background-color: #ffffff;"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml">
+
+    <VBox spacing="25" alignment="CENTER" layoutX="40" layoutY="40"
+          prefWidth="300">
+
+        <!-- LOGO -->
+        <Label text="NEQUI" style="-fx-text-fill: #F5008D; -fx-font-size: 38px; -fx-font-weight: bold;" />
+
+        <!-- DESCRIPCIÓN -->
+        <Label text="Pagar con Nequi" style="-fx-font-size: 18px; -fx-text-fill: #333;" />
+
+        <!-- NUMERO -->
+        <VBox spacing="6" alignment="CENTER_LEFT">
+            <Label text="Número Nequi" style="-fx-font-size: 14px;" />
+            <TextField fx:id="txtNequiNumber"
+                       promptText="Ej: 3001234567"
+                       style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-padding: 10;" />
+        </VBox>
+
+        <!-- CODIGO -->
+        <VBox spacing="6" alignment="CENTER_LEFT">
+            <Label text="Código de seguridad" style="-fx-font-size: 14px;" />
+            <PasswordField fx:id="txtNequiCode"
+                           promptText="Código de 6 dígitos"
+                           style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-padding: 10;" />
+        </VBox>
+
+        <!-- BOTÓN PAGO -->
+        <Button fx:id="btnPagarNequi"
+                text="Pagar con Nequi"
+                prefWidth="250"
+                style="-fx-background-color: #F5008D; -fx-text-fill: white; -fx-font-size: 16px;
+                       -fx-background-radius: 15;" />
+
+        <!-- NOTA -->
+        <Label text="Serás redirigido a la confirmación."
+               style="-fx-font-size: 12px; -fx-text-fill: #777;" />
+
+    </VBox>
+
+</AnchorPane>
