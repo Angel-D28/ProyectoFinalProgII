@@ -1,6 +1,8 @@
 package co.edu.uniquindio.poo.neodelivery.controllers;
 
+import co.edu.uniquindio.poo.neodelivery.model.ActivityLogService;
 import co.edu.uniquindio.poo.neodelivery.model.Address;
+import co.edu.uniquindio.poo.neodelivery.model.Admin;
 import co.edu.uniquindio.poo.neodelivery.model.Repository.DataBase;
 import co.edu.uniquindio.poo.neodelivery.model.User;
 import co.edu.uniquindio.poo.neodelivery.model.gestores.ManageUsers;
@@ -39,12 +41,18 @@ public class AddClientController {
     @FXML
     private PasswordField txtPasswordClient;
 
+    private Admin admin;
+
     private final ManageUsers manageUser = new ManageUsers();
 
     private AnchorPane mainContent;
 
     public void setContentAddClient(AnchorPane mainContent) {
         this.mainContent = mainContent;
+    }
+
+    public void setAdminLogged(Admin admin) {
+        this.admin = admin;
     }
 
     @FXML
@@ -74,6 +82,7 @@ public class AddClientController {
                 User registerUser = new User(name, hashedPassword, email, clientAddress, phoneNumber, clientId);
                 manageUser.createUser(registerUser);
                 Utils.showAlert("VERIFIED", "Client successfully registered.");
+                ActivityLogService.log(admin.getName(), "Created client: " + name + ", ID: "+ clientId);
 
                 try {
                     ManageClientController controller = Utils.replaceMainContent(mainContent, "manageClient(Admin).fxml");

@@ -1,6 +1,8 @@
 package co.edu.uniquindio.poo.neodelivery.controllers;
 
+import co.edu.uniquindio.poo.neodelivery.model.ActivityLogService;
 import co.edu.uniquindio.poo.neodelivery.model.Address;
+import co.edu.uniquindio.poo.neodelivery.model.Admin;
 import co.edu.uniquindio.poo.neodelivery.model.Repository.DataBase;
 import co.edu.uniquindio.poo.neodelivery.model.User;
 import co.edu.uniquindio.poo.neodelivery.model.utils.Utils;
@@ -48,12 +50,18 @@ public class ManageClientController {
     @FXML
     private TableView<User> manageUsers;
 
+    private Admin adminLogged;
+
     private ObservableList<User> userList = FXCollections.observableArrayList();
 
     private AnchorPane mainContent;
 
     public void setMainContent(AnchorPane mainContent) {
         this.mainContent = mainContent;
+    }
+
+    public void setAdminLogged(Admin adminLogged) {
+        this.adminLogged = adminLogged;
     }
 
     @FXML
@@ -81,6 +89,7 @@ public class ManageClientController {
             userList.remove(selected);
             DataBase.getInstance().getListaUsuarios().remove(selected);
             Utils.showAlert("VERIFIED", "Successfully removed");
+            ActivityLogService.log(adminLogged.getName(), "Deleted a user");
         }else{
             Utils.showAlert("WARNING", "Select a user to delete");
         }
@@ -103,6 +112,7 @@ public class ManageClientController {
         try {
             UpdateClientController controller = Utils.replaceMainContent(mainContent, "updateClient(Admin).fxml");
             controller.setClient(selected);
+            controller.setAdminLogged(adminLogged);
             controller.setContentUpdateClient(mainContent);
 
         } catch (Exception e) {
@@ -114,6 +124,7 @@ public class ManageClientController {
     @FXML
     void addUser(ActionEvent event) {
         AddClientController addClientController = Utils.replaceMainContent(mainContent, "addClient(Admin).fxml");
+        addClientController.setAdminLogged(adminLogged);
         addClientController.setContentAddClient(mainContent);
     }
 

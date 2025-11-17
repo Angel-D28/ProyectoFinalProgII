@@ -28,11 +28,7 @@
                <children>
                   <Label fx:id="lblWelcomeAdmin" alignment="CENTER" contentDisplay="TOP" prefHeight="94.0" prefWidth="200.0" styleClass="labelTitles" text="Welcome Admin,">
                      <graphic>
-                        <ImageView fx:id="profileImageView" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../../../images/defaultAvatar.png" />
-                           </image>
-                        </ImageView>
+                        <ImageView fx:id="profileImageView" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
                      </graphic>
                      <padding>
                         <Insets top="25.0" />
@@ -65,8 +61,14 @@
                            </image>
                         </ImageView>
                      </graphic></Button>
-                  <Button id="dashboardButton" mnemonicParsing="false" prefHeight="24.0" prefWidth="202.0" text="Option 4" />
-                  <Button id="dashboardButton" mnemonicParsing="false" prefHeight="24.0" prefWidth="202.0" text="Option 5" />
+                  <Button id="dashboardButton" fx:id="btnShipments" mnemonicParsing="false" onAction="#goToShipments" prefHeight="24.0" prefWidth="202.0" text="Shipments">
+                     <graphic>
+                        <ImageView fitHeight="28.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../images/caja.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
                </children>
                <padding>
                   <Insets left="15.0" right="15.0" />
@@ -120,15 +122,17 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button id="buttonBar" contentDisplay="RIGHT" mnemonicParsing="false" styleClass="buttonBar" text="Item 3">
+                  <Button id="buttonBar" fx:id="btnActivityLog" mnemonicParsing="false" onAction="#viewActivityLog" styleClass="buttonBar" text="Activity Log">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
-                  </Button>
-                  <Button id="buttonBar" contentDisplay="RIGHT" mnemonicParsing="false" styleClass="buttonBar" text="Item 4">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
+                     <graphic>
+                        <ImageView fitHeight="84.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../images/activityLog.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
                   </Button>
                </children>
             </HBox>

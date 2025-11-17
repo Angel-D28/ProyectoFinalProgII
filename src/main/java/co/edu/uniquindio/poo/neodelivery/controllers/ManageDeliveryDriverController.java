@@ -1,5 +1,7 @@
 package co.edu.uniquindio.poo.neodelivery.controllers;
 
+import co.edu.uniquindio.poo.neodelivery.model.ActivityLogService;
+import co.edu.uniquindio.poo.neodelivery.model.Admin;
 import co.edu.uniquindio.poo.neodelivery.model.DeliveryDriver;
 import co.edu.uniquindio.poo.neodelivery.model.Repository.DataBase;
 import co.edu.uniquindio.poo.neodelivery.model.gestores.ManageDeliveryDrivers;
@@ -44,11 +46,17 @@ public class ManageDeliveryDriverController {
     @FXML
     private TableView<DeliveryDriver> tableDriversList;
 
+    private Admin adminLogged;
+
     private ObservableList<DeliveryDriver> driversList = FXCollections.observableArrayList();
 
     private AnchorPane mainContent;
 
     private ManageDeliveryDrivers manageDriver = new ManageDeliveryDrivers();
+
+    void setAdminLogged(Admin adminLogged) {
+        this.adminLogged = adminLogged;
+    }
 
     public void setMainContent(AnchorPane mainContent) {
         this.mainContent = mainContent;
@@ -60,7 +68,7 @@ public class ManageDeliveryDriverController {
         columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colAssignedShipment.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getShipmentAssigned() == null ? "Assigned" : "None")
+                new SimpleStringProperty(cellData.getValue().getShipmentAssigned() != null ? "Assigned" : "None")
         );
 
         tableDriversList.setItems(driversList);
@@ -77,6 +85,7 @@ public class ManageDeliveryDriverController {
     void createDriver(ActionEvent event) {
         AddDeliveryDriverController addDriverController = Utils.replaceMainContent(mainContent, "addDeliveryDriver(Admin).fxml");
         addDriverController.setContentAddDriver(mainContent);
+        addDriverController.setAdminL(adminLogged);
     }
 
     @FXML
@@ -86,6 +95,7 @@ public class ManageDeliveryDriverController {
             driversList.remove(selectedDriver);
             manageDriver.deleteDeliveyDriver(selectedDriver);
             Utils.showAlert("VERIFIED", "Successfully deleted");
+            ActivityLogService.log(adminLogged.getName(), "Deleted a delivery driver");
         }else{
             Utils.showAlert("WARNING", "Select a driver first");
         }
@@ -107,6 +117,7 @@ public class ManageDeliveryDriverController {
         try {
             UpdateDeliveryDriverController deliveryDriverController = Utils.replaceMainContent(mainContent, "updateDriver(Admin).fxml");
             deliveryDriverController.setDriverToUpdate(selectedDriver);
+            deliveryDriverController.setAdminLogged(adminLogged);
             deliveryDriverController.setContentUpdateDriver(mainContent);
 
         }catch (Exception e){

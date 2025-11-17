@@ -1,5 +1,6 @@
 package co.edu.uniquindio.poo.neodelivery.controllers;
 
+import co.edu.uniquindio.poo.neodelivery.model.ActivityLogService;
 import co.edu.uniquindio.poo.neodelivery.model.DeliveryDriver;
 import co.edu.uniquindio.poo.neodelivery.model.utils.Utils;
 import javafx.animation.Interpolator;
@@ -45,6 +46,7 @@ public class CourierDashboardController {
     @FXML
     void logOut(ActionEvent event) {
         Utils.replaceScene(event, "loginView.fxml", "Login - Neo Delivery");
+        ActivityLogService.log(currentCourier.getName()+" - ID: "+currentCourier.getId(), "Signed out");
     }
 
     @FXML

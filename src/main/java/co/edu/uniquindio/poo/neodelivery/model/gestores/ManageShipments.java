@@ -2,9 +2,11 @@ package co.edu.uniquindio.poo.neodelivery.model.gestores;
 
 import co.edu.uniquindio.poo.neodelivery.model.*;
 import co.edu.uniquindio.poo.neodelivery.model.Decorators.*;
+import co.edu.uniquindio.poo.neodelivery.model.Repository.DataBase;
 
 public class ManageShipments {
 
+    private DataBase db = DataBase.getInstance();
     private final ShipmentCostCalculator calculator = new ShipmentCostCalculator();
 
     public void assignDriver(Admin admin, Shipment shipment, DeliveryDriver driver) {
@@ -59,6 +61,23 @@ public class ManageShipments {
         shipment.setCost(finalCost);
         return finalCost;
 
+    }
+
+    public String generateID() {
+        int maxId = 0;
+
+        for (Shipment shipment : db.getListaEnvios()) {
+            String idStr = shipment.getId();
+            if (idStr.startsWith("SHP")) {
+                try {
+                    int num = Integer.parseInt(idStr.substring(3));
+                    if (num > maxId) maxId = num;
+                } catch (NumberFormatException e) {
+                }
+            }
+        }
+
+        return "SHP" + (maxId + 1);
     }
 
 }

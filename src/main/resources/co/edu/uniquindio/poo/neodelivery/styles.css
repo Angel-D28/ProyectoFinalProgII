@@ -308,3 +308,90 @@
 .alert-button:pressed {
     -fx-background-color: #c4d0da;
 }
+
+
+/*----------------------------------*/
+ /*Estilo para gráficos del HOME*/
+#homeBarChart {
+    -fx-padding: 20;
+    -fx-background-color: transparent;
+}
+
+#homeBarChart.chart {
+    -fx-category-gap: 60;
+    -fx-bar-gap: 15;
+}
+
+#homeBarChart .chart-plot-background {
+    -fx-background-color: transparent;
+}
+
+#homeBarChart .chart-title {
+    -fx-text-fill: #16222A;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+#homeBarChart .chart-horizontal-grid-lines {
+    -fx-stroke: #C9D6DF;
+}
+
+#homeBarChart .chart-vertical-grid-lines {
+    -fx-stroke: transparent;
+}
+
+#homeBarChart .axis-label {
+    -fx-text-fill: #16222A;
+    -fx-font-size: 14px;
+}
+
+#homeBarChart .axis {
+    -fx-tick-label-fill: #1E293B;
+    -fx-font-size: 12px;
+}
+
+#homeBarChart .chart-bar {
+    -fx-bar-fill: #355C7D;
+}
+
+#homeBarChart .chart-bar:hover {
+    -fx-bar-fill: #2a4d5c;
+    -fx-opacity: 0.8;
+}
+
+#homePieChart {
+    -fx-padding: 20;
+    -fx-background-color: transparent;
+}
+
+#homePieChart .chart-pie {
+    -fx-border-color: white;
+    -fx-border-width: 2;
+    -fx-border-radius: 5;
+}
+
+#homePieChart .chart-title {
+    -fx-text-fill: #16222A;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+#homePieChart .default-color0 {
+    -fx-pie-color: #3A7BD5;
+}
+
+#homePieChart .default-color1 {
+    -fx-pie-color: #3A6073;
+}
+
+#homePieChart .default-color2 {
+    -fx-pie-color: #16222A;
+}
+
+#homePieChart .default-color3 {
+    -fx-pie-color: #4A90E2;
+}
+
+#homePieChart .chart-legend-item-symbol {
+    -fx-background-radius: 5;
+}

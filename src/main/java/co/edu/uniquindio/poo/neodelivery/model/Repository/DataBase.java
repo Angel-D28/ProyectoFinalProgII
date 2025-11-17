@@ -1,6 +1,7 @@
 package co.edu.uniquindio.poo.neodelivery.model.Repository;
 
 import co.edu.uniquindio.poo.neodelivery.model.*;
+import co.edu.uniquindio.poo.neodelivery.model.gestores.ManageShipments;
 import co.edu.uniquindio.poo.neodelivery.model.utils.Utils;
 
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ public class DataBase {
         return Instance;
     }
 
+
     private void inicializarDatos() {
 
         listaUsers.add(new User("Alberto Pérez", Utils.hashPassword("112233"), "alberto@neo.com",
@@ -58,7 +60,7 @@ public class DataBase {
                 "3208489702", Utils.hashPassword("admin1")));
 
         Shipment shipment1 = new Shipment.Builder()
-                .id("SHP001")
+                .id("SHP1")
                 .origin(new Address("Calle 1, Armenia"))
                 .destination(new Address("SAO, Armenia"))
                 .weight(2.5)
@@ -71,7 +73,7 @@ public class DataBase {
                 .build();
 
         Shipment shipment2 = new Shipment.Builder()
-                .id("SHP002")
+                .id("SHP2")
                 .origin(new Address("Mz C Cs 5, Cali"))
                 .destination(new Address("Cra 5 Cll 20, Salento"))
                 .weight(1.0)
@@ -84,7 +86,7 @@ public class DataBase {
                 .build();
 
         Shipment shipment3 = new Shipment.Builder()
-                .id("SHP003")
+                .id("SHP3")
                 .origin(new Address("Calle 3, Armenia"))
                 .destination(new Address("Calle 9, Armenia"))
                 .weight(3.0)
@@ -97,7 +99,7 @@ public class DataBase {
                 .build();
 
         Shipment shipment4 = new Shipment.Builder()
-                .id("SHP004")
+                .id("SHP4")
                 .origin(new Address("Calle 4, Ciudad G"))
                 .destination(new Address("Calle 10, Ciudad H"))
                 .weight(0.5)
@@ -108,9 +110,6 @@ public class DataBase {
                 .requiresSignature(false)
                 .fragile(true)
                 .build();
-
-        shipment1.assignerDriver(listaAdmin.getFirst(), listaRepartidores.get(0));
-        shipment2.assignerDriver(listaAdmin.getFirst(), listaRepartidores.get(1));
 
         listaShipments.add(shipment1);
         listaShipments.add(shipment2);

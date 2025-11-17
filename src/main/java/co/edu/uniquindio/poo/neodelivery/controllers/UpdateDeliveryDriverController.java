@@ -1,5 +1,7 @@
 package co.edu.uniquindio.poo.neodelivery.controllers;
 
+import co.edu.uniquindio.poo.neodelivery.model.ActivityLogService;
+import co.edu.uniquindio.poo.neodelivery.model.Admin;
 import co.edu.uniquindio.poo.neodelivery.model.DeliveryDriver;
 import co.edu.uniquindio.poo.neodelivery.model.Repository.DataBase;
 import co.edu.uniquindio.poo.neodelivery.model.gestores.ManageDeliveryDrivers;
@@ -36,6 +38,12 @@ public class UpdateDeliveryDriverController {
     private AnchorPane mainContent;
 
     private DeliveryDriver driverToUpdate;
+
+    private Admin adminLogged;
+
+    public void setAdminLogged(Admin adminLogged) {
+        this.adminLogged = adminLogged;
+    }
 
     public void setDriverToUpdate(DeliveryDriver driverToUpdate){
         this.driverToUpdate=driverToUpdate;
@@ -90,6 +98,7 @@ public class UpdateDeliveryDriverController {
         );
         manageDrives.updateDeliveryDriverr(driverToUpdate.getId().toString(), updatedDriver);
         Utils.showAlert("VERIFIED", "Successfully updated");
+        ActivityLogService.log(adminLogged.getName(), "Updated delivery driver - Name: "+name+" ID: "+driverToUpdate.getId());
 
         try {
             ManageDeliveryDriverController controller = Utils.replaceMainContent(mainContent, "manageDeliveryDrivers(Admin).fxml");

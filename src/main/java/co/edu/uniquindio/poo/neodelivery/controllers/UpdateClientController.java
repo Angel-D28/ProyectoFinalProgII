@@ -1,6 +1,8 @@
 package co.edu.uniquindio.poo.neodelivery.controllers;
 
+import co.edu.uniquindio.poo.neodelivery.model.ActivityLogService;
 import co.edu.uniquindio.poo.neodelivery.model.Address;
+import co.edu.uniquindio.poo.neodelivery.model.Admin;
 import co.edu.uniquindio.poo.neodelivery.model.Repository.DataBase;
 import co.edu.uniquindio.poo.neodelivery.model.User;
 import co.edu.uniquindio.poo.neodelivery.model.gestores.ManageUsers;
@@ -39,16 +41,20 @@ public class UpdateClientController {
     @FXML
     private PasswordField txtConfirmClientPassword;
 
-    DataBase db = DataBase.getInstance();
-
     private ManageUsers manageUsers = new ManageUsers();
 
     private User clientToUpdate;
 
     private AnchorPane mainContent;
 
+    private Admin adminLogged;
+
     public void setContentUpdateClient(AnchorPane mainContent) {
         this.mainContent = mainContent;
+    }
+
+    public void setAdminLogged(Admin adminLogged) {
+        this.adminLogged = adminLogged;
     }
 
     public void setClient(User client) {
@@ -101,6 +107,7 @@ public class UpdateClientController {
         );
         manageUsers.updateUser(clientToUpdate.getIdUser().toString(), updatedUser);
         Utils.showAlert("VERIFIED", "Successfully updated");
+        ActivityLogService.log(adminLogged.getName(), "Updated client ID: "+ clientToUpdate.getIdUser());
 
         try {
             ManageClientController controller = Utils.replaceMainContent(mainContent, "manageClient(Admin).fxml");

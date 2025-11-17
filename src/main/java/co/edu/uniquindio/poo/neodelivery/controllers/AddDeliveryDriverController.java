@@ -1,5 +1,7 @@
 package co.edu.uniquindio.poo.neodelivery.controllers;
 
+import co.edu.uniquindio.poo.neodelivery.model.ActivityLogService;
+import co.edu.uniquindio.poo.neodelivery.model.Admin;
 import co.edu.uniquindio.poo.neodelivery.model.DeliveryDriver;
 import co.edu.uniquindio.poo.neodelivery.model.Repository.DataBase;
 import co.edu.uniquindio.poo.neodelivery.model.gestores.ManageDeliveryDrivers;
@@ -11,6 +13,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+
+import javax.lang.model.type.NullType;
 
 public class AddDeliveryDriverController {
 
@@ -36,8 +40,14 @@ public class AddDeliveryDriverController {
 
     private AnchorPane mainContent;
 
+    private Admin adminLogged;
+
     public void setContentAddDriver(AnchorPane mainContent) {
         this.mainContent = mainContent;
+    }
+
+    public void setAdminL(Admin admin){
+        this.adminLogged = admin;
     }
 
     @FXML
@@ -61,12 +71,13 @@ public class AddDeliveryDriverController {
                 String driverId = manageDriver.generateId();
                 String hashedPassword = Utils.hashPassword(password);
 
-                DeliveryDriver driver = new DeliveryDriver(driverId, name,  email, hashedPassword);
+                DeliveryDriver driver = new DeliveryDriver(driverId, name,  hashedPassword, email);
                 manageDriver.createDeliveryDriver(driver);
                 Utils.showAlert("VERIFIED", "Client successfully registered.");
+                ActivityLogService.log(adminLogged.getName(), "Created driver - Name: "+name+" ID: "+driverId);
 
                 try {
-                    ManageClientController controller = Utils.replaceMainContent(mainContent, "manageDeliveryDrivers(Admin).fxml");
+                    ManageDeliveryDriverController controller = Utils.replaceMainContent(mainContent, "manageDeliveryDrivers(Admin).fxml");
                     controller.setMainContent(mainContent);
                 } catch (Exception e) {
                     e.printStackTrace();
