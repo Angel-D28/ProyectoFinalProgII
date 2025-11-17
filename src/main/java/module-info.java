@@ -6,6 +6,11 @@ module co.edu.uniquindio.poo.neodelivery {
     requires java.compiler;
     requires com.github.librepdf.openpdf;
     requires jakarta.mail;
+    requires jdk.jshell;
+    requires org.apache.pdfbox;
+    requires java.desktop;
+    requires javafx.graphics;
+
 
     exports co.edu.uniquindio.poo.neodelivery.controllers;
     opens co.edu.uniquindio.poo.neodelivery.controllers to javafx.fxml;

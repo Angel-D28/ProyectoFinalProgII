@@ -26,16 +26,41 @@
          <children>
             <Pane prefHeight="93.0" prefWidth="200.0">
                <children>
-                  <Label fx:id="lblWelcomeClient" alignment="CENTER" prefHeight="94.0" prefWidth="200.0" styleClass="labelTitles" text="Welcome client," />
+                  <Label fx:id="lblWelcomeClient" alignment="CENTER" contentDisplay="TOP" prefHeight="94.0" prefWidth="200.0" styleClass="labelTitles" text="Welcome client,">
+                     <graphic>
+                        <ImageView fx:id="profileImageView" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
+                     </graphic>
+                     <padding>
+                        <Insets top="25.0" />
+                     </padding></Label>
                </children>
             </Pane>
-            <VBox alignment="TOP_CENTER" layoutY="96.0" prefHeight="430.0" prefWidth="200.0" spacing="25.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="96.0">
+            <VBox alignment="TOP_CENTER" layoutY="96.0" prefHeight="430.0" prefWidth="200.0" spacing="25.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="200.0">
                <children>
-                  <Button id="dashboardButton" mnemonicParsing="false" prefHeight="24.0" prefWidth="202.0" text="Option 1" VBox.vgrow="SOMETIMES" />
-                  <Button id="dashboardButton" mnemonicParsing="false" prefHeight="24.0" prefWidth="202.0" text="Option 2" />
-                  <Button id="dashboardButton" mnemonicParsing="false" prefHeight="24.0" prefWidth="202.0" text="Option 3" />
-                  <Button id="dashboardButton" mnemonicParsing="false" prefHeight="24.0" prefWidth="202.0" text="Option 4" />
-                  <Button id="dashboardButton" mnemonicParsing="false" prefHeight="24.0" prefWidth="202.0" text="Option 5" />
+                  <Button id="dashboardButton" fx:id="btnOrders" mnemonicParsing="false" onAction="#showOrders" prefHeight="24.0" prefWidth="202.0" text="Orders" VBox.vgrow="SOMETIMES">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../images/clientOrder.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
+                  <Button id="dashboardButton" fx:id="btnTrackOrder" mnemonicParsing="false" onAction="#trackOrder" prefHeight="24.0" prefWidth="202.0" text="Track a order">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../images/trackOrder.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
+                  <Button id="dashboardButton" fx:id="btnGenerateReport" mnemonicParsing="false" onAction="#goToManageReports" prefHeight="24.0" prefWidth="202.0" text="Generate Report">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../images/generateReport.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
                </children>
                <padding>
                   <Insets left="15.0" right="15.0" />
@@ -65,25 +90,53 @@
             </Pane>
             <HBox alignment="CENTER" layoutX="200.0" layoutY="26.0" prefHeight="53.0" prefWidth="700.0" spacing="50.0" AnchorPane.bottomAnchor="3.5999999999999943" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="26.0">
                <children>
-                  <Button id="buttonBar" contentDisplay="RIGHT" mnemonicParsing="false" styleClass="buttonBar" text="Item 1">
+                  <Button id="buttonBar" fx:id="btnHomeUser" mnemonicParsing="false" onAction="#homeUser" styleClass="buttonBar" text="Home">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
+                     <graphic>
+                        <ImageView fitHeight="84.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../images/home.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
                   </Button>
-                  <Button id="buttonBar" contentDisplay="RIGHT" mnemonicParsing="false" styleClass="buttonBar" text="Item 2">
+                  <Button id="buttonBar" fx:id="btnProfileUser" mnemonicParsing="false" onAction="#showProfileUser" styleClass="buttonBar" text="Profile">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
+                     <graphic>
+                        <ImageView fitHeight="84.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../images/UserAvatar.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
                   </Button>
-                  <Button id="buttonBar" contentDisplay="RIGHT" mnemonicParsing="false" styleClass="buttonBar" text="Item 3">
+                  <Button id="buttonBar" fx:id="btnAddress" mnemonicParsing="false" onAction="#btnAddress" styleClass="buttonBar" text="Address/es">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
+                     <graphic>
+                        <ImageView fitHeight="84.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../images/addressClientImage.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
                   </Button>
-                  <Button id="buttonBar" contentDisplay="RIGHT" mnemonicParsing="false" styleClass="buttonBar" text="Item 4">
+                  <Button id="buttonBar" fx:id="btnNotifications" mnemonicParsing="false" onAction="#btnActivateNotifitcations" styleClass="buttonBar" text="Notifications">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
+                     <graphic>
+                        <ImageView fitHeight="84.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../images/notification.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
                   </Button>
                </children>
             </HBox>

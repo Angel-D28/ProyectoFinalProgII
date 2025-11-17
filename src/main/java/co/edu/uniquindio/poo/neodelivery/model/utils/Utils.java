@@ -1,9 +1,16 @@
 package co.edu.uniquindio.poo.neodelivery.model.utils;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import co.edu.uniquindio.poo.neodelivery.model.CashPayment;
+import co.edu.uniquindio.poo.neodelivery.model.Payment;
+import co.edu.uniquindio.poo.neodelivery.model.Shipment;
+import co.edu.uniquindio.poo.neodelivery.model.User;
+import com.lowagie.text.*;
+import com.lowagie.text.pdf.PdfWriter;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +22,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import com.lowagie.text.Font;
+import com.lowagie.text.FontFactory;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -145,6 +154,65 @@ public class Utils {
         ft.play();
 
         return pane;
+    }
+
+    public static void createPaymentPDF(Payment payment, Shipment shipment, User client) {
+        Document document = new Document();
+        try {
+            String fileName = "recibo_" + payment.getIdPayment() + ".pdf";
+            PdfWriter.getInstance(document, new FileOutputStream(fileName));
+            document.open();
+
+            Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16);
+            Font normalFont = FontFactory.getFont(FontFactory.HELVETICA, 12);
+
+            Paragraph title = new Paragraph("Recibo de Pago - NeoDelivery", titleFont);
+            title.setAlignment(Paragraph.ALIGN_CENTER);
+            title.setSpacingAfter(20);
+            document.add(title);
+
+            Paragraph clientInfo = new Paragraph("Cliente: " + client.getName() +
+                    "\nEmail: " + client.getEmail() +
+                    "\nTeléfono: " + client.getNumbre(), normalFont);
+            clientInfo.setSpacingAfter(15);
+            document.add(clientInfo);
+
+            Paragraph shipmentInfo = new Paragraph(
+                    "Envío ID: " + shipment.getId() +
+                            "\nOrigen: " + shipment.getOrigin() +
+                            "\nDestino: " + shipment.getDestination() +
+                            "\nPeso: " + shipment.getWeight() + " kg" +
+                            "\nVolumen: " + shipment.getVolume() + " m³" +
+                            "\nPrioridad: " + (shipment.isPriority() ? "Sí" : "No") +
+                            "\nFrágil: " + (shipment.isFragile() ? "Sí" : "No") +
+                            "\nCon seguro: " + (shipment.isHasInsurance() ? "Sí" : "No") +
+                            "\nRequiere firma: " + (shipment.isRequiresSignature() ? "Sí" : "No") +
+                            "\nCosto final: $" + shipment.getCost()
+                    , normalFont);
+            shipmentInfo.setSpacingAfter(15);
+            document.add(shipmentInfo);
+
+            String paymentDetails = "Pago ID: " + payment.getIdPayment() +
+                    "\nMonto: $" + payment.getAmount() +
+                    "\nFecha: " + payment.getPaymentDate() +
+                    "\nEstado: " + payment.getStatus();
+            if(payment instanceof CashPayment cashPayment){
+                paymentDetails += "\nReferencia Efecty: " + cashPayment.getReferenceCode();
+            }
+            Paragraph paymentInfo = new Paragraph(paymentDetails, normalFont);
+            paymentInfo.setSpacingAfter(20);
+            document.add(paymentInfo);
+
+            Paragraph thanks = new Paragraph("¡Gracias por usar NeoDelivery!", titleFont);
+            thanks.setAlignment(Paragraph.ALIGN_CENTER);
+            document.add(thanks);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert("ERROR", "Failed to create PDF: " + e.getMessage());
+        } finally {
+            document.close();
+        }
     }
 
 }

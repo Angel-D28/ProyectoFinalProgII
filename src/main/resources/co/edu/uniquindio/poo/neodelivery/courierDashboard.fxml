@@ -28,11 +28,7 @@
                <children>
                   <Label fx:id="lblWelcomeCourier" alignment="CENTER" contentDisplay="TOP" prefHeight="94.0" prefWidth="200.0" styleClass="labelTitles" text="Welcome courier,">
                      <graphic>
-                        <ImageView fx:id="profileImageView" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../../../images/defaultAvatar.png" />
-                           </image>
-                        </ImageView>
+                        <ImageView fx:id="profileImageView" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
                      </graphic>
                      <padding>
                         <Insets top="25.0" />

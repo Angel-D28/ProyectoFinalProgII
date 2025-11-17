@@ -124,7 +124,8 @@ public class ManageShipmentsAdminController {
 
         if(selectedShipment.getStatus().equals(Status.PENDING)){
             AssignDeliveryDriverController assignController = Utils.replaceMainContent(mainContent, "assignDeliveryDriver.fxml");
-            assignController.setAdminAndShipment(adminLogged, selectedShipment);
+            assignController.setAdmin(adminLogged);
+            assignController.setShipment(selectedShipment);
             assignController.setMainContent(mainContent);
         }else{
             Utils.showAlert("WARNING", "Select a shipment with a pending status.");

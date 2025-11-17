@@ -1,29 +1,38 @@
 package co.edu.uniquindio.poo.neodelivery.controllers;
 
-import co.edu.uniquindio.poo.neodelivery.model.DeliveryDriver;
+import co.edu.uniquindio.poo.neodelivery.model.Admin;
 import co.edu.uniquindio.poo.neodelivery.model.Repository.DataBase;
 import co.edu.uniquindio.poo.neodelivery.model.Shipment;
 import co.edu.uniquindio.poo.neodelivery.model.Status;
+import co.edu.uniquindio.poo.neodelivery.model.User;
 import co.edu.uniquindio.poo.neodelivery.model.utils.Utils;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
-public class ManageShipmentsController {
+public class ManageShipmentsClientController {
 
     @FXML
-    private TableView<Shipment> assignedShipments;
+    private Button btnCancelShipment;
 
     @FXML
-    private Button btnChangeStatus;
+    private Button btnCreateShipment;
 
     @FXML
     private Button btnDeselect;
+
+    @FXML
+    private Button btnEditShipment;
+
+    @FXML
+    private TableColumn<Shipment, String> columnDeliveryDriver;
 
     @FXML
     private TableColumn<Shipment, String> columnDestination;
@@ -47,7 +56,7 @@ public class ManageShipmentsController {
     private TableColumn<Shipment, String> columnRequiresSignature;
 
     @FXML
-    private TableColumn<Shipment, Status> columnStatus;
+    private TableColumn<Shipment, String> columnStatus;
 
     @FXML
     private TableColumn<Shipment, Double> columnVolume;
@@ -55,39 +64,39 @@ public class ManageShipmentsController {
     @FXML
     private TableColumn<Shipment, Double> columnWeight;
 
+    @FXML
+    private TableView<Shipment> tableShipmentsClient;
+
+    private DataBase db = DataBase.getInstance();
+
     private AnchorPane mainContent;
 
-    private DeliveryDriver currentUser;
+    private User clientLogged;
+
+    private Shipment shipment;
 
     private ObservableList<Shipment> shipmentsList = FXCollections.observableArrayList();
 
-    public void setMainContent(AnchorPane mainContent) {
+    void loadShipmentsListFromUserList(){
+        shipmentsList.clear();
+        shipmentsList.addAll(clientLogged.getShipmentsList());
+    }
+
+    void setMainContentManageShipments(AnchorPane mainContent) {
         this.mainContent = mainContent;
     }
 
-    public void setCurrentUser(DeliveryDriver deliveryDriver) {
-        this.currentUser = deliveryDriver;
-        loadShipmentsFromDatabase();
+    void setClientLogged(User client){
+        this.clientLogged = client;
     }
 
-    private void loadShipmentsFromDatabase() {
-        if (currentUser == null) return;
-
-        DataBase db = DataBase.getInstance();
-        shipmentsList.clear();
-
-        for (Shipment shipment : db.getListaEnvios()) {
-            if (shipment.getAssignedDriver() != null && shipment.getAssignedDriver().getId().equals(currentUser.getId())) {
-                shipmentsList.add(shipment);
-                System.out.println("Shipment: " + shipment.getId() + ", driver: " +
-                        (shipment.getAssignedDriver() != null ? shipment.getAssignedDriver().getName() : "null"));
-            }
-        }
+    void setShipment(Shipment shipment){
+        this.shipment = shipment;
     }
 
 
     @FXML
-    public void initialize() {
+    void initialize() {
         columnID.setCellValueFactory(new PropertyValueFactory<>("id"));
         columnOrigin.setCellValueFactory(new PropertyValueFactory<>("origin"));
         columnDestination.setCellValueFactory(new PropertyValueFactory<>("destination"));
@@ -106,35 +115,40 @@ public class ManageShipmentsController {
                 new SimpleStringProperty(cellData.getValue().isFragile() ? "Yes" : "No")
         );
         columnStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+        columnDeliveryDriver.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getAssignedDriver() != null ? cellData.getValue().getAssignedDriver().getName() : "Not assigned"));
 
-        assignedShipments.setItems(shipmentsList);
+        loadShipmentsListFromUserList();
+        tableShipmentsClient.setItems(shipmentsList);
     }
 
     @FXML
-    void changeShippingStatus(ActionEvent event) {
-        Shipment selectedShipment = assignedShipments.getSelectionModel().getSelectedItem();
-
-        if (selectedShipment == null) {
-            Utils.showAlert("WARNING", "No shipment was selected, please select one.");
-            return;
+    void cancelShipment(ActionEvent event) {
+        Shipment shipmentSelected = tableShipmentsClient.getSelectionModel().getSelectedItem();
+        if(shipmentSelected == null){
+            Utils.showAlert("WARNING", "Select a shipment.");
+        }else if(shipmentSelected.getStatus().equals(Status.PENDING) || shipmentSelected.getStatus().equals(Status.DELIVERASSIGNED)){
+            clientLogged.getShipmentsList().remove(shipmentSelected);
+            db.getListaEnvios().remove(shipmentSelected);
+            Utils.showAlert("VERIFIED", "Shipping canceled.");
+        }else{
+            Utils.showAlert("ERROR", "You cannot cancel a shipment that has already been picked up by a delivery driver.");
         }
+    }
 
-        ChoiceDialog<Status> dialog = new ChoiceDialog<>(selectedShipment.getStatus(), Status.values());
-        dialog.setTitle("Cambiar estado del envío");
-        dialog.setHeaderText("Envío ID: " + selectedShipment.getId());
-        dialog.setContentText("Selecciona el nuevo estado:");
+    @FXML
+    void createShipment(ActionEvent event) {
 
-        dialog.showAndWait().ifPresent(newStatus -> {
-            selectedShipment.setStatus(newStatus);
-            assignedShipments.refresh();
-        });
     }
 
     @FXML
     void deselectShipment(ActionEvent event) {
-        assignedShipments.getSelectionModel().clearSelection();
+        tableShipmentsClient.getSelectionModel().clearSelection();
     }
 
+    @FXML
+    void edtiShipment(ActionEvent event) {
 
+    }
 
 }
