@@ -1,6 +1,8 @@
 package co.edu.uniquindio.poo.neodelivery.controllers;
 
 import co.edu.uniquindio.poo.neodelivery.model.Payment;
+import co.edu.uniquindio.poo.neodelivery.model.Shipment;
+import co.edu.uniquindio.poo.neodelivery.model.User;
 import co.edu.uniquindio.poo.neodelivery.model.gestores.ManagePayments;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -11,6 +13,18 @@ public class DaviplataController {
     @FXML private TextField txtTelefonoDaviplata;
     @FXML private PasswordField txtClaveDaviplata;
     @FXML private Button btnPagarDaviplata;
+
+    private Shipment shipment;
+
+    private User clientLogged;
+
+    void setClient(User client) {
+        this.clientLogged = client;
+    }
+
+    void setShipment(Shipment shipment) {
+        this.shipment = shipment;
+    }
 
     private double amount;
 
@@ -30,6 +44,8 @@ public class DaviplataController {
         ManagePayments mp = new ManagePayments();
 
         Payment pago = mp.createAndProcessPayment(
+                clientLogged,
+                shipment,
                 amount,
                 "billetera digital",
                 null,

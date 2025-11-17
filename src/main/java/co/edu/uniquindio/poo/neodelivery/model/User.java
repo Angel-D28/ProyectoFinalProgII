@@ -1,5 +1,8 @@
 package co.edu.uniquindio.poo.neodelivery.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User implements Observer {
     private String name;
     private String password;
@@ -8,6 +11,8 @@ public class User implements Observer {
     private String number;
     private String idUser;
     private String profilePicturePath;
+    private List<Payment> paymentsMethodsList = new ArrayList<>();
+    private List<Shipment>  shipmentsList = new ArrayList<>();
 
     public User(String name, String password, String email, Address address, String numbre, String idUser) {
         this.name = name;
@@ -77,6 +82,22 @@ public class User implements Observer {
     }
     public void setProfilePicturePath(String profilePicturePath) {
         this.profilePicturePath = profilePicturePath;
+    }
+
+    public List<Payment> getPaymentsMethodsList() {
+        return paymentsMethodsList;
+    }
+
+    public void setPaymentsMethodsList(List<Payment> paymentsMethodsList) {
+        this.paymentsMethodsList = paymentsMethodsList;
+    }
+
+    public List<Shipment> getShipmentsList() {
+        return shipmentsList;
+    }
+
+    public void setShipmentsList(List<Shipment> shipmentsList) {
+        this.shipmentsList = shipmentsList;
     }
 
     public String toString() {

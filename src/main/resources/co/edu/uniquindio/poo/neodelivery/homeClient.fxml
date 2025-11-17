@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="200.0" prefWidth="900.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.neodelivery.controllers.HomeClientController">
+<AnchorPane prefHeight="200.0" prefWidth="200.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.neodelivery.controllers.HomeClientController">
    <children>
-      <TableView fx:id="tableOrderLog" layoutY="19.2" prefHeight="356.0" prefWidth="550.0" styleClass="custom-table" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="19.0">
+      <TableView fx:id="tableOrderLog" layoutY="75.2" prefHeight="500.0" prefWidth="850.0" styleClass="custom-table" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="75.0">
         <columns>
           <TableColumn fx:id="columnID" prefWidth="59.19995188713074" text="ID" />
           <TableColumn fx:id="columnOrigin" prefWidth="87.199951171875" text="Origin" />
@@ -19,5 +21,10 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
+      <Label layoutX="25.0" layoutY="18.0" prefHeight="54.0" prefWidth="366.0" styleClass="text" text="SHIPPING HISTORY">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

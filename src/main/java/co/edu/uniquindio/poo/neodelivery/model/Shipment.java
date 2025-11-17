@@ -19,6 +19,7 @@ public class Shipment implements IShipment, Subject {
     private boolean isPriority;
     private boolean requiresSignature;
     private boolean fragile;
+    private Payment payment;
 
     private ShipmentState state;
     private DeliveryDriver assignedDriver;
@@ -206,6 +207,14 @@ public class Shipment implements IShipment, Subject {
 
     public void setFragile(boolean fragile) {
         this.fragile = fragile;
+    }
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
     }
 
     public List<Observer> getObservers() {

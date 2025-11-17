@@ -1,6 +1,8 @@
 package co.edu.uniquindio.poo.neodelivery.controllers;
 
 import co.edu.uniquindio.poo.neodelivery.model.Payment;
+import co.edu.uniquindio.poo.neodelivery.model.Shipment;
+import co.edu.uniquindio.poo.neodelivery.model.User;
 import co.edu.uniquindio.poo.neodelivery.model.gestores.ManagePayments;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -14,10 +16,22 @@ public class NequiController {
     @FXML private PasswordField txtNequiCode;
     @FXML private Button btnPagarNequi;
 
+    private Shipment shipment;
+
+    private User clientLogged;
+
     private double amount;
 
     public void setAmount(double amount) {
         this.amount = amount;
+    }
+
+    void setClient(User client) {
+        this.clientLogged = client;
+    }
+
+    void setShipment(Shipment shipment) {
+        this.shipment = shipment;
     }
 
     @FXML
@@ -32,6 +46,8 @@ public class NequiController {
         ManagePayments mp = new ManagePayments();
 
         Payment pago = mp.createAndProcessPayment(
+                clientLogged,
+                shipment,
                 amount,
                 "billetera digital",
                 null,

@@ -35,6 +35,27 @@ public class ManageShipments {
         }
     }
 
+    public Shipment createShipment(User client, Address origin, Address destination, double weight, double volume, boolean insurance,boolean priority, boolean requireSignature, boolean fragile) {
+        Shipment shipment = new Shipment.Builder()
+                .id(generateID())
+                .origin(origin)
+                .destination(destination)
+                .weight(weight)
+                .volume(volume)
+                .hasInsurance(insurance)
+                .isPriority(priority)
+                .requiresSignature(requireSignature)
+                .fragile(fragile)
+                .build();
+
+        shipment.setId(generateID());
+
+        db.getListaEnvios().add(shipment);
+        client.getShipmentsList().add(shipment);
+
+        return shipment;
+    }
+
     public double calculateShipmentCost(Shipment shipment, String method) {
         switch (method.toLowerCase()) {
             case "peso" -> calculator.setStrategy(new WeightBasedCostStrategy());
