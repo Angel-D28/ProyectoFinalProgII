@@ -5,6 +5,7 @@ module co.edu.uniquindio.poo.neodelivery {
     requires java.sql;
     requires java.compiler;
     requires com.github.librepdf.openpdf;
+    requires jakarta.mail;
 
     exports co.edu.uniquindio.poo.neodelivery.controllers;
     opens co.edu.uniquindio.poo.neodelivery.controllers to javafx.fxml;
