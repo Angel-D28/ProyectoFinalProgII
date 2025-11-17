@@ -8,6 +8,7 @@ public class DeliveryDriver {
     private String password;
     private Shipment shipmentAssigned;
     private boolean avalibility;
+    private String profilePicturePath;
 
     public DeliveryDriver(String id, String name, String password, String email) {
         this.id = id;
@@ -67,5 +68,13 @@ public class DeliveryDriver {
 
     public void setAvalibility(boolean avalibility) {
         this.avalibility = avalibility;
+    }
+
+    public String getProfilePicturePath() {
+        return profilePicturePath;
+    }
+
+    public void setProfilePicturePath(String profilePicturePath) {
+        this.profilePicturePath = profilePicturePath;
     }
 }

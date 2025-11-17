@@ -2,6 +2,9 @@ package co.edu.uniquindio.poo.neodelivery.model.gestores;
 
 import co.edu.uniquindio.poo.neodelivery.model.*;
 import co.edu.uniquindio.poo.neodelivery.model.Decorators.*;
+import co.edu.uniquindio.poo.neodelivery.model.Decorators.FragileDecorator;
+import co.edu.uniquindio.poo.neodelivery.model.Decorators.PriorityDecorator;
+import co.edu.uniquindio.poo.neodelivery.model.Decorators.SignatureDecorator;
 import co.edu.uniquindio.poo.neodelivery.model.Repository.DataBase;
 
 public class ManageShipments {
