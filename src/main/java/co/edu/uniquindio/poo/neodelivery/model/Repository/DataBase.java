@@ -1,7 +1,6 @@
 package co.edu.uniquindio.poo.neodelivery.model.Repository;
 
 import co.edu.uniquindio.poo.neodelivery.model.*;
-import co.edu.uniquindio.poo.neodelivery.model.gestores.ManageShipments;
 import co.edu.uniquindio.poo.neodelivery.model.utils.Utils;
 
 import java.util.ArrayList;
@@ -108,11 +107,56 @@ public class DataBase {
                 .fragile(true)
                 .build();
 
+        Shipment shipment5 = new Shipment.Builder()
+                .id("SHP5")
+                .origin(new Address("Calle 20 #15-30, Manizales"))
+                .destination(new Address("Centro Comercial Portal del Quindío, Armenia"))
+                .weight(4.2)
+                .volume(1.8)
+                .cost(32.0)
+                .hasInsurance(true)
+                .isPriority(true)
+                .requiresSignature(true)
+                .fragile(true)
+                .build();
+
+        Shipment shipment6 = new Shipment.Builder()
+                .id("SHP6")
+                .origin(new Address("Zona Franca, Pereira"))
+                .destination(new Address("Cra 14 #7-20, Armenia"))
+                .weight(1.7)
+                .volume(0.9)
+                .cost(12.5)
+                .hasInsurance(false)
+                .isPriority(false)
+                .requiresSignature(true)
+                .fragile(false)
+                .build();
+
+        DeliveryDriver driverLuis = listaRepartidores.get(0);
+        DeliveryDriver driverPedro = listaRepartidores.get(1);
+
+        shipment1.setAssignedDriver(driverLuis);
+        shipment1.setStatus(Status.DELIVERASSIGNED);
+
+        shipment2.setAssignedDriver(driverLuis);
+        shipment2.setStatus(Status.DELIVERING);
+
+        shipment3.setAssignedDriver(driverPedro);
+        shipment3.setStatus(Status.DELIVERED);
+
+        shipment5.setAssignedDriver(driverPedro);
+        shipment5.setStatus(Status.DELIVERASSIGNED);
+
+        shipment6.setAssignedDriver(driverPedro);
+        shipment6.setStatus(Status.DELIVERING);
 
         listaShipments.add(shipment1);
         listaShipments.add(shipment2);
         listaShipments.add(shipment3);
         listaShipments.add(shipment4);
+        listaShipments.add(shipment5);
+        listaShipments.add(shipment6);
 
     }
 
