@@ -58,45 +58,49 @@ public class AddDeliveryDriverController {
 
     @FXML
     void createDriver(ActionEvent event) {
-        String name = this.txtDriverName.getText() == null ? "" : this.txtDriverName.getText().trim();
-        String email = this.txtDriverEmail.getText() == null ? "" : this.txtDriverEmail.getText().trim();
-        String password = this.txtDriverPassword.getText() == null ? "" : this.txtDriverPassword.getText();
+        String name = txtDriverName.getText() == null ? "" : txtDriverName.getText().trim();
+        String email = txtDriverEmail.getText() == null ? "" : txtDriverEmail.getText().trim();
+        String password = txtDriverPassword.getText() == null ? "" : txtDriverPassword.getText();
 
-        if(!name.isEmpty() && !email.isEmpty() && !password.isEmpty()){
-            if(isEmailRegistered(email)){
-                Utils.showAlert("ERROR", "Email is already registered!");
-            } else if (txtDriverPassword.getLength() < 8) {
-                Utils.showAlert("ERROR", "Password must be at least 8 characters!");
-            } else{
-                String driverId = manageDriver.generateId();
-                String hashedPassword = Utils.hashPassword(password);
+        if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            Utils.showAlert("WARNING", "Please, fill in all fields");
+            return;
+        }
 
-                DeliveryDriver driver = new DeliveryDriver(driverId, name,  hashedPassword, email);
-                manageDriver.createDeliveryDriver(driver);
-                Utils.showAlert("VERIFIED", "Client successfully registered.");
-                ActivityLogService.log(adminLogged.getName(), "Created driver - Name: "+name+" ID: "+driverId);
+        if (!email.matches("^[A-Za-z0-9+_.-]+@(gmail|hotmail|outlook|yahoo)\\.com$")) {
+            Utils.showAlert("ERROR", "Email must be Gmail, Hotmail, Outlook, or Yahoo");
+            return;
+        }
 
-                try {
-                    ManageDeliveryDriverController controller = Utils.replaceMainContent(mainContent, "manageDeliveryDrivers(Admin).fxml");
-                    controller.setMainContent(mainContent);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Utils.showAlert("ERROR", "Could not return to Manage Delivery Drivers");
-                }
-            }
-        }else{Utils.showAlert("WARNING", "Please, fill in all fields");}
-    }
+        if (Utils.isEmailRegistered(email)) {
+            Utils.showAlert("ERROR", "Email is already registered!");
+            return;
+        }
 
-    private boolean isEmailRegistered(String email) {
-        String lowerEmail = email.toLowerCase();
-        DataBase db = DataBase.getInstance();
-        if (db.getListaUsuarios().stream().anyMatch((u) -> u.getEmail().toLowerCase().equals(lowerEmail))) {
-            return true;
-        } else if (db.getListaAdmin().stream().anyMatch((a) -> a.getEmail().toLowerCase().equals(lowerEmail))) {
-            return true;
-        } else {
-            return db.getListaRepartidores().stream().anyMatch((d) -> d.getEmail().toLowerCase().equals(lowerEmail));
+        if (password.length() < 8) {
+            Utils.showAlert("ERROR", "Password must be at least 8 characters!");
+            return;
+        }
+
+        String driverId = manageDriver.generateId();
+        String hashedPassword = Utils.hashPassword(password);
+
+        DeliveryDriver driver = new DeliveryDriver(driverId, name, hashedPassword, email);
+        manageDriver.createDeliveryDriver(driver);
+
+        Utils.showAlert("VERIFIED", "Driver successfully registered.");
+        ActivityLogService.log(adminLogged.getName(),
+                "Created driver - Name: " + name + " ID: " + driverId);
+
+        try {
+            ManageDeliveryDriverController controller =
+                    Utils.replaceMainContent(mainContent, "manageDeliveryDrivers(Admin).fxml");
+            controller.setMainContent(mainContent);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Utils.showAlert("ERROR", "Could not return to Manage Delivery Drivers");
         }
     }
+
 
 }

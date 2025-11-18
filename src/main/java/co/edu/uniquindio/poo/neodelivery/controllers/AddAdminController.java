@@ -64,9 +64,28 @@ public class AddAdminController {
         String password = this.txtPasswordAdmin.getText() == null ? "" : this.txtPasswordAdmin.getText();
 
         if(!name.isEmpty() && !email.isEmpty() && !password.isEmpty() && !phoneNumber.isEmpty()){
-            if(isEmailRegistered(email)){
+
+            if (!name.matches("^[A-Za-zÁÉÍÓÚáéíóúÑñ ]{2,}$")) {
+                Utils.showAlert("ERROR", "Invalid name. Only letters and spaces allowed.");
+                return;
+            }
+            if (!phoneNumber.matches("^3\\d{9}$")) {
+                Utils.showAlert("ERROR", "Phone number must start with 3 and contain 10 digits.");
+                return;
+            }
+
+            if (!email.matches("^[A-Za-z0-9+_.-]+@(gmail|hotmail|outlook|yahoo)\\.com$")) {
+                Utils.showAlert("ERROR",
+                        "Email must be Gmail, Hotmail, Outlook, or Yahoo");
+                return;
+            }
+
+            if (Utils.isEmailRegistered(email)) {
                 Utils.showAlert("ERROR", "Email is already registered!");
-            } else if (txtPasswordAdmin.getLength() < 8) {
+                return;
+            }
+
+            if (password.length() < 8) {
                 Utils.showAlert("ERROR", "Password must be at least 8 characters!");
             } else{
                 String adminId = manageAdmin.generateId();
@@ -89,16 +108,5 @@ public class AddAdminController {
         }else{Utils.showAlert("WARNING", "Please, fill in all fields");}
     }
 
-    private boolean isEmailRegistered(String email) {
-        String lowerEmail = email.toLowerCase();
-        DataBase db = DataBase.getInstance();
-        if (db.getListaUsuarios().stream().anyMatch((u) -> u.getEmail().toLowerCase().equals(lowerEmail))) {
-            return true;
-        } else if (db.getListaAdmin().stream().anyMatch((a) -> a.getEmail().toLowerCase().equals(lowerEmail))) {
-            return true;
-        } else {
-            return db.getListaRepartidores().stream().anyMatch((d) -> d.getEmail().toLowerCase().equals(lowerEmail));
-        }
-    }
 
 }

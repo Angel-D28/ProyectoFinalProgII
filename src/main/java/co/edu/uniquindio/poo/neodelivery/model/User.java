@@ -13,6 +13,8 @@ public class User implements Observer {
     private String profilePicturePath;
     private List<Payment> paymentsMethodsList = new ArrayList<>();
     private List<Shipment>  shipmentsList = new ArrayList<>();
+    private List<Address>  addressList = new ArrayList<>();
+    private boolean notificationsEnabled = true;
 
     public User(String name, String password, String email, Address address, String numbre, String idUser) {
         this.name = name;
@@ -92,12 +94,28 @@ public class User implements Observer {
         this.paymentsMethodsList = paymentsMethodsList;
     }
 
+    public boolean isNotificationsEnabled() {
+        return notificationsEnabled;
+    }
+
+    public void setNotificationsEnabled(boolean notificationsEnabled) {
+        this.notificationsEnabled = notificationsEnabled;
+    }
+
     public List<Shipment> getShipmentsList() {
         return shipmentsList;
     }
 
     public void setShipmentsList(List<Shipment> shipmentsList) {
         this.shipmentsList = shipmentsList;
+    }
+
+    public List<Address> getAddressList() {
+        return addressList;
+    }
+
+    public void setAddressList(List<Address> addressList) {
+        this.addressList = addressList;
     }
 
     public String toString() {

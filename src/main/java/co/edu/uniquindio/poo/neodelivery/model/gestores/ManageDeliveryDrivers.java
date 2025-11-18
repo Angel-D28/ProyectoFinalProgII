@@ -7,7 +7,6 @@ import java.util.List;
 
 public class ManageDeliveryDrivers {
     private DataBase db = DataBase.getInstance();
-    private int driverId;
 
     public DeliveryDriver findDeliveryDriver(String findId){
         DeliveryDriver driver = null;

@@ -1,6 +1,5 @@
 package co.edu.uniquindio.poo.neodelivery.controllers;
 
-import co.edu.uniquindio.poo.neodelivery.controllers.delivery.DeliveryShipmentsController;
 import co.edu.uniquindio.poo.neodelivery.model.ActivityLogService;
 import co.edu.uniquindio.poo.neodelivery.model.DeliveryDriver;
 import co.edu.uniquindio.poo.neodelivery.model.utils.Utils;
@@ -60,7 +59,7 @@ public class CourierDashboardController {
         this.currentCourier = courier;
         lblWelcomeCourier.setText("Welcome, " + courier.getName());
         loadCourierImage();
-        // Load statistics view by default
+
         if (mainContent != null) {
             DeliveryDriverStatisticsController controller = Utils.replaceMainContent(mainContent, "deliveryDriverStatistics.fxml");
             if (controller != null) {
@@ -117,7 +116,7 @@ public class CourierDashboardController {
 
     @FXML
     void openShipments(ActionEvent event) {
-        DeliveryShipmentsController controller = Utils.replaceMainContent(mainContent, "delivery/DeliveryShipmentsView.fxml");
+        DeliveryShipmentsController controller = Utils.replaceMainContent(mainContent, "DeliveryShipmentsView.fxml");
         if (controller != null) {
             controller.setCurrentCourier(currentCourier);
         }

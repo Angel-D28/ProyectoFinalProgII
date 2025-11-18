@@ -1,5 +1,6 @@
 package co.edu.uniquindio.poo.neodelivery.controllers;
 
+import co.edu.uniquindio.poo.neodelivery.model.EmailService;
 import co.edu.uniquindio.poo.neodelivery.model.Payment;
 import co.edu.uniquindio.poo.neodelivery.model.Repository.DataBase;
 import co.edu.uniquindio.poo.neodelivery.model.Shipment;
@@ -10,6 +11,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+
+import java.io.File;
 
 public class DaviplataController {
 
@@ -50,10 +53,10 @@ public class DaviplataController {
             Utils.showAlert("DAVIPLATA", "Por favor, rellene todos los espacios.");
         }else if(cedula.length()<5) {
             Utils.showAlert("DAVIPLATA", "Su cédula debe tener mínimo 5 caracteres.");
-        }else if(phone.length() != 10 || !phone.equals(clientLogged.getNumbre())) {
+        }else if(phone.length() != 10) {
             Utils.showAlert("DAVIPLATA", "Su número de celular debe contener 10 dígitos");
         }else if(pin.length()!= 4) {
-            Utils.showAlert("DAVIPLATA", "El pin es de 4 dígitos.");
+            Utils.showAlert("DAVIPLATA", "El pin debe tener 4 dígitos.");
         }else{
             ManagePayments mp = new ManagePayments();
 
@@ -68,13 +71,18 @@ public class DaviplataController {
             );
             clientLogged.getShipmentsList().add(shipment);
             db.getListaEnvios().add(shipment);
-            String montoMostrar = Utils.formatCOP(shipment.getCost());
 
-            Utils.showAlert("DAVIPLATA", "Sucessful payment\nOrder ID: "
-                    +pago.getIdPayment()+"\nAmount paid: "+montoMostrar);
-            ManageShipmentsClientController shipmentsClientController = Utils.replaceMainContent(mainContent, "manageShipmentsClient.fxml");
-            shipmentsClientController.setClientLogged(clientLogged);
-            shipmentsClientController.setMainContentManageShipments( mainContent);
+            File pdfGenerado = Utils.createPaymentPDF(pago, shipment, clientLogged);
+
+            if (clientLogged.isNotificationsEnabled()) {
+                EmailService.sendEmailWithAttachment(clientLogged.getEmail(), "YOUR SHIPMENT INVOICE - NEO DELIVERY",
+                        "Thank you for your purchase! Your invoice is attached.\n\nBe happy.", pdfGenerado);
+            }
+
+
+            InvoiceOptionsController invoiceController = Utils.replaceMainContent(mainContent, "invoiceOptions.fxml");
+            invoiceController.setMainContent(mainContent);
+            invoiceController.setData(clientLogged, shipment, pago);
         }
 
 

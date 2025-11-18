@@ -63,6 +63,7 @@ public class ManageReportsController {
 
     void setClientLogged(User clientLogged) {
         this.clientLogged = clientLogged;
+        loadShipmentsFromDatabase();
     }
 
     private AnchorPane mainContent;
@@ -105,12 +106,17 @@ public class ManageReportsController {
         );
 
         tableViewReports.setItems(shipmentsList);
-        loadShipmentsFromDatabase();
+
     }
 
     private void loadShipmentsFromDatabase() {
         shipmentsList.clear();
         shipmentsList.addAll(clientLogged.getShipmentsList());
+    }
+
+    private void rechargeShipmentsFromDatabase() {
+        shipmentsList.clear();
+        loadShipmentsFromDatabase();
     }
 
     private String translateStatus(co.edu.uniquindio.poo.neodelivery.model.Status status) {
@@ -137,9 +143,7 @@ public class ManageReportsController {
             String fileName = "Report-" + dateString + ".pdf";
             File pdfFile = new File(reportsDir, fileName);
 
-            // Obtener lista de envíos desde la base de datos
-            DataBase db = DataBase.getInstance();
-            List<Shipment> shipments = db.getListaEnvios();
+            List<Shipment> shipments = clientLogged.getShipmentsList();
 
             if (shipments.isEmpty()) {
                 Utils.showAlert("WARNING", "No hay envíos para generar el reporte");

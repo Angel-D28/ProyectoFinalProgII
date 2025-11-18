@@ -14,8 +14,8 @@ module co.edu.uniquindio.poo.neodelivery {
 
     exports co.edu.uniquindio.poo.neodelivery.controllers;
     opens co.edu.uniquindio.poo.neodelivery.controllers to javafx.fxml;
-    exports co.edu.uniquindio.poo.neodelivery.controllers.delivery;
-    opens co.edu.uniquindio.poo.neodelivery.controllers.delivery to javafx.fxml;
+    //exports co.edu.uniquindio.poo.neodelivery.controllers.delivery;
+   // opens co.edu.uniquindio.poo.neodelivery.controllers.delivery to javafx.fxml;
     exports co.edu.uniquindio.poo.neodelivery.App;
     opens co.edu.uniquindio.poo.neodelivery.App to javafx.fxml;
     exports co.edu.uniquindio.poo.neodelivery.model;

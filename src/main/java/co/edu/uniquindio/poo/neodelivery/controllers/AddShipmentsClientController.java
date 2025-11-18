@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 public class AddShipmentsClientController {
@@ -48,6 +49,8 @@ public class AddShipmentsClientController {
     @FXML
     private TextField txtWeigth;
 
+    DataBase db = DataBase.getInstance();
+
     private User clientLogged;
 
     private AnchorPane mainContent;
@@ -58,6 +61,8 @@ public class AddShipmentsClientController {
 
     void setClient(User client) {
         this.clientLogged = client;
+        txtOrigin.setText(clientLogged.getAddress().toString());
+        txtOrigin.setEditable(false);
     }
 
     void setMainContent(AnchorPane mainContent) {
@@ -78,13 +83,15 @@ public class AddShipmentsClientController {
 
     @FXML
     void cancelCreate(ActionEvent event) {
-
+        ManageShipmentsClientController controller = Utils.replaceMainContent(mainContent, "manageShipmentsClient.fxml");
+        controller.setClientLogged(clientLogged);
+        controller.setMainContentManageShipments(mainContent);
     }
 
     @FXML
     void goPay(ActionEvent event) {
         try {
-            if (txtOrigin.getText().isEmpty() || txtDestination.getText().isEmpty() ||
+            if (    txtDestination.getText().isEmpty() ||
                     txtWeigth.getText().isEmpty() || txtVolume.getText().isEmpty() ||
                     boxIsPriority.getValue().equals("Select one") ||
                     boxFragile.getValue().equals("Select one") ||
@@ -113,13 +120,10 @@ public class AddShipmentsClientController {
                     .fragile(boxFragile.getValue().equals("Yes"))
                     .build();
 
-            //clientLogged.getShipmentsList().add(shipment);
-            //DataBase.getInstance().getListaEnvios().add(shipment);
-
             double finalCost = manageShipments.calculateShipmentCost(shipment, "peso");
             shipment.setCost(finalCost);
 
-            Payment payment = null;
+            Payment payment;
             String paymentMethod = boxPaymentMethods.getValue();
 
             switch(paymentMethod.toLowerCase()){
@@ -158,10 +162,13 @@ public class AddShipmentsClientController {
                             shipment.getCost(), "efecty", null, null, null);
 
                     Utils.createPaymentPDF(payment, shipment, clientLogged);
-
                     shipment.setPayment(payment);
                     shipment.addObserver(clientLogged);
                     clientLogged.getPaymentsMethodsList().add(payment);
+                    clientLogged.getShipmentsList().add(shipment);
+                    db.getListaEnvios().add(shipment);
+
+
 
                     Utils.showAlert("SUCCESS", "Shipment and payment created successfully!");
 
@@ -180,6 +187,11 @@ public class AddShipmentsClientController {
         } catch (Exception e) {
             Utils.showAlert("ERROR", "Something went wrong: " + e.getMessage());
         }
+    }
+
+    @FXML
+    void messagePopUp(MouseEvent event) {
+        Utils.showAlert("WARNING", "You cannot change your address in this field.\n\nChange your default address in 'addresses'.");
     }
 
 }

@@ -3,6 +3,7 @@ package co.edu.uniquindio.poo.neodelivery.controllers;
 import co.edu.uniquindio.poo.neodelivery.model.Repository.DataBase;
 import co.edu.uniquindio.poo.neodelivery.model.Shipment;
 import co.edu.uniquindio.poo.neodelivery.model.Status;
+import co.edu.uniquindio.poo.neodelivery.model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -38,6 +39,13 @@ public class HomeClientController {
 
     private ObservableList<Shipment> listShipmentsClient = FXCollections.observableArrayList();
 
+    private User clientLogged;
+
+    public void setClient(User clientLogged){
+        this.clientLogged = clientLogged;
+        loadShipmentFromDatabase();
+    }
+
     void setMainContentHomeClient(AnchorPane mainContent){
         this.mainContent = mainContent;
     }
@@ -46,18 +54,18 @@ public class HomeClientController {
     void initialize() {
         columnID.setCellValueFactory(new PropertyValueFactory<>("id"));
         columnOrigin.setCellValueFactory(new PropertyValueFactory<>("origin"));
-        columnPaymentMethod.setCellValueFactory(new PropertyValueFactory<>("paymentMethod"));
+        columnPaymentMethod.setCellValueFactory(new PropertyValueFactory<>("paymentMethodName"));
         columnTotal.setCellValueFactory(new PropertyValueFactory<>("cost"));
         columnStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         columnDestination.setCellValueFactory(new PropertyValueFactory<>("destination"));
 
         tableOrderLog.setItems(listShipmentsClient);
-        loadShipmentFromDatabase();
     }
 
     void loadShipmentFromDatabase(){
-        DataBase db = DataBase.getInstance();
-        for (Shipment shipment : db.getListaEnvios()){
+        if(clientLogged == null) return;
+        listShipmentsClient.clear();
+        for (Shipment shipment : clientLogged.getShipmentsList()){
             if(shipment.getStatus().equals(Status.DELIVERED)){
                 listShipmentsClient.add(shipment);
             }

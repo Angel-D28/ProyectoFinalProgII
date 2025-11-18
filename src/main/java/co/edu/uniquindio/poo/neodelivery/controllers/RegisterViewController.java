@@ -44,7 +44,7 @@ public class RegisterViewController {
 
     @FXML
     public void initialize() {
-        this.choiceBoxRol.setItems(FXCollections.observableArrayList(new String[]{"Administrator", "Client", "Delivery Driver"}));
+        this.choiceBoxRol.setItems(FXCollections.observableArrayList(new String[]{"Client", "Delivery Driver"}));
         this.choiceBoxRol.getSelectionModel().clearSelection();
     }
 
@@ -55,58 +55,73 @@ public class RegisterViewController {
 
     @FXML
     void register(ActionEvent event) {
-        String name = this.txtName.getText() == null ? "" : this.txtName.getText().trim();
-        String phoneNumber = this.txtPhoneNumber.getText() == null ? "" : this.txtPhoneNumber.getText().trim();
-        String email = this.txtEmail.getText() == null ? "" : this.txtEmail.getText().trim();
-        String address = this.txtAddress.getText() == null ? "" : this.txtAddress.getText().trim();
-        String password = this.txtPassword.getText() == null ? "" : this.txtPassword.getText();
-        String rol = (String)this.choiceBoxRol.getValue();
-        if (!name.isEmpty() && !phoneNumber.isEmpty() && !email.isEmpty() && !password.isEmpty() && rol != null) {
-            if (this.isEmailRegistered(email)) {
-                Utils.showAlert("ERROR", "Email already in use");
-            }else if (password.length() < 8){
-                Utils.showAlert("ERROR", "Password must be at least 8 characters!");
-            }else {
-                String hashedPassword = Utils.hashPassword(password);
-                switch (rol) {
-                    case "Administrator" -> {
-                        String newId = this.manageAdmin.generateId();
-                        Admin admin = new Admin(newId, name, email, phoneNumber, hashedPassword);
-                        this.manageAdmin.createAdmin(admin);
-                    }
+        String name = txtName.getText() == null ? "" : txtName.getText().trim();
+        String phoneNumber = txtPhoneNumber.getText() == null ? "" : txtPhoneNumber.getText().trim();
+        String email = txtEmail.getText() == null ? "" : txtEmail.getText().trim();
+        String address = txtAddress.getText() == null ? "" : txtAddress.getText().trim();
+        String password = txtPassword.getText() == null ? "" : txtPassword.getText();
+        String rol = (String) choiceBoxRol.getValue();
 
-                    case "Client"->{
-                        String newId = this.manageUser.generateId();
-                        Address addressClient = new Address(address);
-                        User newUser = new User(name, hashedPassword, email, addressClient, phoneNumber, newId);
-                        this.manageUser.createUser(newUser);
-                    }
-
-                    case "Delivery Driver"->{
-                        String newId = this.manageDriver.generateId();
-                        DeliveryDriver newDeliveryDriver = new DeliveryDriver(newId, name, hashedPassword, email);
-                        this.manageDriver.createDeliveryDriver(newDeliveryDriver);
-                    }
-
-                }
-
-                Utils.showAlert("VERIFIED", "You have registered successfully | Welcome to Neo Delivery");
-                Utils.replaceScene(event, "loginView.fxml", "Login - Neo Delivery");
-            }
-        } else {
+        if (name.isEmpty() || phoneNumber.isEmpty() || email.isEmpty() || password.isEmpty()
+                || rol == null || address.isEmpty()) {
             Utils.showAlert("WARNING", "Fill in all fields");
+            return;
         }
+
+        if (!name.matches("^[A-Za-zÁÉÍÓÚáéíóúñÑ]+( [A-Za-zÁÉÍÓÚáéíóúñÑ]+)*$") || name.length() < 3) {
+            Utils.showAlert("ERROR",
+                    "Name must contain only letters, no double spaces, and be at least 3 characters");
+            return;
+        }
+
+        if (!phoneNumber.matches("^3[1-9][0-9]{9}$")) {
+            Utils.showAlert("ERROR",
+                    "Phone number must start with 3 and contain exactly 10 digits");
+            return;
+        }
+
+        if (!email.matches("^[A-Za-z0-9+_.-]+@(gmail|hotmail|outlook|yahoo)\\.com$")) {
+            Utils.showAlert("ERROR",
+                    "Email must be Gmail, Hotmail, Outlook, or Yahoo");
+            return;
+        }
+
+        if (Utils.isEmailRegistered(email)) {
+            Utils.showAlert("ERROR", "Email already in use");
+            return;
+        }
+
+        if (address.length() < 5 || address.matches(".*  +.*")) {
+            Utils.showAlert("ERROR",
+                    "Address must be at least 5 characters and cannot contain double spaces");
+            return;
+        }
+
+        if (!password.matches("^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*+]).{8,}$")) {
+            Utils.showAlert("ERROR",
+                    "Password must be at least 8 chars,\ninclude a capital letter,\na number, and a special character (!@#$%^&*+)");
+            return;
+        }
+        String hashedPassword = Utils.hashPassword(password);
+
+        switch (rol) {
+            case "Client" -> {
+                String newId = manageUser.generateId();
+                Address addressClient = new Address(address);
+                User newUser = new User(name, hashedPassword, email, addressClient, phoneNumber, newId);
+                newUser.getAddressList().add(addressClient);
+                manageUser.createUser(newUser);
+            }
+
+            case "Delivery Driver" -> {
+                String newId = manageDriver.generateId();
+                DeliveryDriver newDeliveryDriver = new DeliveryDriver(newId, name, hashedPassword, email);
+                manageDriver.createDeliveryDriver(newDeliveryDriver);
+            }
+        }
+
+        Utils.showAlert("VERIFIED", "You have registered successfully | Welcome to Neo Delivery");
+        Utils.replaceScene(event, "loginView.fxml", "Login - Neo Delivery");
     }
 
-    private boolean isEmailRegistered(String email) {
-        String lowerEmail = email.toLowerCase();
-        DataBase db = DataBase.getInstance();
-        if (db.getListaUsuarios().stream().anyMatch((u) -> u.getEmail().toLowerCase().equals(lowerEmail))) {
-            return true;
-        } else if (db.getListaAdmin().stream().anyMatch((a) -> a.getEmail().toLowerCase().equals(lowerEmail))) {
-            return true;
-        } else {
-            return db.getListaRepartidores().stream().anyMatch((d) -> d.getEmail().toLowerCase().equals(lowerEmail));
-        }
-    }
 }
