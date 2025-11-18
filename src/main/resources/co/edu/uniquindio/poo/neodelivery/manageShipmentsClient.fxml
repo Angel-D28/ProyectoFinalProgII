@@ -16,7 +16,6 @@
             <Button fx:id="btnCreateShipment" mnemonicParsing="false" onAction="#createShipment" prefHeight="34.0" prefWidth="172.0" styleClass="managerButton" text="Create shipment" HBox.hgrow="ALWAYS" />
             <Button fx:id="btnDeselect" mnemonicParsing="false" onAction="#deselectShipment" prefHeight="34.0" prefWidth="172.0" styleClass="managerButton" text="Deselect" />
             <Button fx:id="btnCancelShipment" mnemonicParsing="false" onAction="#cancelShipment" prefHeight="34.0" prefWidth="172.0" styleClass="managerButton" text="Cancel shipment" />
-            <Button fx:id="btnEditShipment" mnemonicParsing="false" onAction="#edtiShipment" prefHeight="34.0" prefWidth="172.0" styleClass="managerButton" text="Edit shipment" />
          </children>
       </HBox>
    </bottom>

@@ -11,6 +11,8 @@ import javafx.scene.control.Button;
 import javafx.event.ActionEvent;
 import javafx.scene.layout.AnchorPane;
 
+import java.io.File;
+
 public class CardPaymentController {
 
     @FXML private TextField txtCardNumber;
@@ -58,6 +60,12 @@ public class CardPaymentController {
                 return;
             }
 
+
+            if (!txtExpiry.getText().matches("(0[1-9]|1[0-2])\\/\\d{2}")) {
+                Utils.showAlert("ERROR", "Expiry format must be MM/YY");
+                return;
+            }
+
             if (!txtCardNumber.getText().matches("\\d{16}")) {
                 Utils.showAlert("ERROR", "Card number must be 16 digits.");
                 return;
@@ -80,14 +88,16 @@ public class CardPaymentController {
             shipment.addObserver(client);
             client.getPaymentsMethodsList().add(payment);
 
-            Utils.createPaymentPDF(payment, shipment, client);
+            File pdfGenerado = Utils.createPaymentPDF(payment, shipment, client);
 
-            Utils.showAlert("SUCCESS", "Payment successful!");
+            if (client.isNotificationsEnabled()) {
+                EmailService.sendEmailWithAttachment(client.getEmail(), "YOUR SHIPMENT INVOICE - NEO DELIVERY",
+                        "Thank you for your purchase! Your invoice is attached.\n\nBe happy.", pdfGenerado);
+            }
 
-            ManageShipmentsClientController controller = Utils.replaceMainContent(mainContent, "manageShipmentsClient.fxml");
-            controller.setClientLogged(client);
-            controller.setMainContentManageShipments(mainContent);
-            controller.setShipment(shipment);
+            InvoiceOptionsController invoiceController = Utils.replaceMainContent(mainContent, "invoiceOptions.fxml");
+            invoiceController.setMainContent(mainContent);
+            invoiceController.setData(client, shipment, payment);
 
         } catch (Exception e) {
             Utils.showAlert("ERROR", "Something went wrong: " + e.getMessage());

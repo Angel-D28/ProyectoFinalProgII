@@ -151,6 +151,8 @@ public class DataBase {
         shipment6.setAssignedDriver(driverPedro);
         shipment6.setStatus(Status.DELIVERING);
 
+        listaUsers.get(0).getShipmentsList().add(shipment3);
+
         listaShipments.add(shipment1);
         listaShipments.add(shipment2);
         listaShipments.add(shipment3);

@@ -1,5 +1,6 @@
 package co.edu.uniquindio.poo.neodelivery.controllers;
 
+import co.edu.uniquindio.poo.neodelivery.model.EmailService;
 import co.edu.uniquindio.poo.neodelivery.model.Payment;
 import co.edu.uniquindio.poo.neodelivery.model.Repository.DataBase;
 import co.edu.uniquindio.poo.neodelivery.model.Shipment;
@@ -14,6 +15,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+
+import java.io.File;
 
 public class NequiController {
 
@@ -43,8 +46,8 @@ public class NequiController {
 
     @FXML
     void validarPagoNequi(ActionEvent event) {
-        String phone = txtNequiNumber.getText();
-        String code = txtNequiCode.getText();
+        String phone = txtNequiNumber.getText().trim();
+        String code = txtNequiCode.getText().trim();
 
         if(phone.isEmpty() || code.isEmpty()) {
             Utils.showAlert("NEQUI", "Por favor, rellene todos los espacios.");
@@ -67,13 +70,17 @@ public class NequiController {
         );
         clientLogged.getShipmentsList().add(shipment);
         db.getListaEnvios().add(shipment);
-        String montoMostrar = Utils.formatCOP(shipment.getCost());
 
-        Utils.showAlert("NEQUI", "Sucessful payment\nOrder ID: "
-                +pago.getIdPayment()+"\nAmount paid: "+montoMostrar);
-        ManageShipmentsClientController shipmentsClientController = Utils.replaceMainContent(mainContentNequi, "manageShipmentsClient.fxml");
-        shipmentsClientController.setClientLogged(clientLogged);
-        shipmentsClientController.setMainContentManageShipments( mainContentNequi);
+            File pdfGenerado = Utils.createPaymentPDF(pago, shipment, clientLogged);
+
+            if (clientLogged.isNotificationsEnabled()) {
+                EmailService.sendEmailWithAttachment(clientLogged.getEmail(), "YOUR SHIPMENT INVOICE - NEO DELIVERY",
+                        "Thank you for your purchase! Your invoice is attached.\n\nBe happy.", pdfGenerado);
+            }
+
+            InvoiceOptionsController invoiceController = Utils.replaceMainContent(mainContentNequi, "invoiceOptions.fxml");
+            invoiceController.setMainContent(mainContentNequi);
+            invoiceController.setData(clientLogged, shipment, pago);
         }
     }
 

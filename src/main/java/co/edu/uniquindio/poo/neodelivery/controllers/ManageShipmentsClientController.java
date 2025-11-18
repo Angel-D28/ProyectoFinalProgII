@@ -29,9 +29,6 @@ public class ManageShipmentsClientController {
     private Button btnDeselect;
 
     @FXML
-    private Button btnEditShipment;
-
-    @FXML
     private TableColumn<Shipment, String> columnDeliveryDriver;
 
     @FXML
@@ -84,7 +81,11 @@ public class ManageShipmentsClientController {
 
     void loadShipmentsListFromUserList(){
         shipmentsList.clear();
-        shipmentsList.addAll(clientLogged.getShipmentsList());
+        for(Shipment shipment1 : clientLogged.getShipmentsList()){
+            if(!shipment1.getStatus().equals(Status.DELIVERED)){
+                shipmentsList.add(shipment1);
+            }
+        }
     }
 
     void setMainContentManageShipments(AnchorPane mainContent) {
@@ -151,10 +152,6 @@ public class ManageShipmentsClientController {
         tableShipmentsClient.getSelectionModel().clearSelection();
     }
 
-    @FXML
-    void edtiShipment(ActionEvent event) {
-
-    }
 
     public void refreshShipmentsList() {
         if (clientLogged != null) {

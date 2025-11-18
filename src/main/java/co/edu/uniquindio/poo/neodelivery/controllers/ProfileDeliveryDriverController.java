@@ -95,43 +95,66 @@ public class ProfileDeliveryDriverController {
 
     @FXML
     void saveChanges(ActionEvent event) {
+
         if (deliveryDriverLogged == null) return;
 
-        deliveryDriverLogged.setName(txtName.getText());
-        deliveryDriverLogged.setEmail(txtEmail.getText());
+        String name = txtName.getText() == null ? "" : txtName.getText().trim();
+        String email = txtEmail.getText() == null ? "" : txtEmail.getText().trim();
+        String oldPass = txtOldPassword.getText() == null ? "" : txtOldPassword.getText();
+        String newPass = txtNewPassword.getText() == null ? "" : txtNewPassword.getText();
 
-        String oldPass = txtOldPassword.getText();
-        String newPass = txtNewPassword.getText();
+        if (name.isEmpty() || email.isEmpty()) {
+            Utils.showAlert("WARNING", "Name and email cannot be empty");
+            return;
+        }
 
-        boolean valid = true;
-        String message = "Profile updated successfully!";
+        if (!email.matches("^[A-Za-z0-9+_.-]+@(gmail|hotmail|outlook|yahoo)\\.com$")) {
+            Utils.showAlert("ERROR", "Email must be Gmail, Hotmail, Outlook, or Yahoo");
+            return;
+        }
 
-        if(!oldPass.isEmpty() || !newPass.isEmpty()) {
-            if(!Utils.hashPassword(oldPass).equals(deliveryDriverLogged.getPassword())) {
-                valid = false;
-                message = "The old password doesn't match.";
-            } else if(newPass.length() < 8) {
-                valid = false;
-                message = "The new password must be at least 8 characters long.";
-            } else if(newPass.equals(oldPass)) {
-                valid = false;
-                message = "The new password must be different from the old one.";
-            } else {
-                deliveryDriverLogged.setPassword(Utils.hashPassword(newPass));
+        if (!email.equalsIgnoreCase(deliveryDriverLogged.getEmail())
+                && Utils.isEmailRegistered(email)) {
+            Utils.showAlert("ERROR", "Email already in use");
+            return;
+        }
+
+        deliveryDriverLogged.setName(name);
+        deliveryDriverLogged.setEmail(email);
+
+        if (!oldPass.isEmpty() || !newPass.isEmpty()) {
+
+            if (oldPass.isEmpty() || newPass.isEmpty()) {
+                Utils.showAlert("ERROR", "To change your password, fill both password fields");
+                return;
             }
+
+            if (!Utils.hashPassword(oldPass).equals(deliveryDriverLogged.getPassword())) {
+                Utils.showAlert("ERROR", "The old password doesn't match");
+                return;
+            }
+
+            if (newPass.length() < 8) {
+                Utils.showAlert("ERROR", "The new password must be at least 8 characters long");
+                return;
+            }
+
+            if (newPass.equals(oldPass)) {
+                Utils.showAlert("ERROR", "The new password must be different from the old one");
+                return;
+            }
+
+            deliveryDriverLogged.setPassword(Utils.hashPassword(newPass));
         }
 
         if (imageFile != null) {
             deliveryDriverLogged.setProfilePicturePath(imageFile.getAbsolutePath());
         }
 
-        if(valid) {
-            Utils.showAlert("VERIFIED", message);
-            if(mainContent != null) backToStatistics();
-            if(dashboardController != null) dashboardController.refreshProfileImage();
-        } else {
-            Utils.showAlert("ERROR", message);
-        }
+        Utils.showAlert("VERIFIED", "Profile updated successfully!");
+
+        if (mainContent != null) backToStatistics();
+        if (dashboardController != null) dashboardController.refreshProfileImage();
     }
 
     void backToStatistics(){

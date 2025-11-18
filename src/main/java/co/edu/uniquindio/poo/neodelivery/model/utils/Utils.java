@@ -7,13 +7,17 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.NumberFormat;
 import java.util.Locale;
+import java.util.Properties;
 
-import co.edu.uniquindio.poo.neodelivery.model.CashPayment;
-import co.edu.uniquindio.poo.neodelivery.model.Payment;
-import co.edu.uniquindio.poo.neodelivery.model.Shipment;
-import co.edu.uniquindio.poo.neodelivery.model.User;
+import co.edu.uniquindio.poo.neodelivery.model.*;
+import co.edu.uniquindio.poo.neodelivery.model.Repository.DataBase;
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfWriter;
+import jakarta.mail.*;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeBodyPart;
+import jakarta.mail.internet.MimeMessage;
+import jakarta.mail.internet.MimeMultipart;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -171,15 +175,18 @@ public class Utils {
         return formato.format(amount);
     }
 
-    public static void createPaymentPDF(Payment payment, Shipment shipment, User client) {
+    public static File createPaymentPDF(Payment payment, Shipment shipment, User client) {
         Document document = new Document();
+        File outputFile = null;
+
         try {
             String userHome = System.getProperty("user.home");
             String downloadPath = userHome + "/Downloads";
-            String fileName = "recibo_" + payment.getIdPayment() + ".pdf";
-            String fullPath = downloadPath + File.separator + fileName;
 
-            PdfWriter.getInstance(document, new FileOutputStream(fullPath));
+            String fileName = "recibo_" + payment.getIdPayment() + ".pdf";
+            outputFile = new File(downloadPath + File.separator + fileName);
+
+            PdfWriter.getInstance(document, new FileOutputStream(outputFile));
             document.open();
 
             Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16);
@@ -190,9 +197,12 @@ public class Utils {
             title.setSpacingAfter(20);
             document.add(title);
 
-            Paragraph clientInfo = new Paragraph("Cliente: " + client.getName() +
-                    "\nEmail: " + client.getEmail() +
-                    "\nTeléfono: " + client.getNumbre(), normalFont);
+            Paragraph clientInfo = new Paragraph(
+                    "Cliente: " + client.getName() +
+                            "\nEmail: " + client.getEmail() +
+                            "\nTeléfono: " + client.getNumbre(),
+                    normalFont
+            );
             clientInfo.setSpacingAfter(15);
             document.add(clientInfo);
 
@@ -201,42 +211,57 @@ public class Utils {
                             "\nOrigen: " + shipment.getOrigin() +
                             "\nDestino: " + shipment.getDestination() +
                             "\nPeso: " + shipment.getWeight() + " kg" +
-                            "\nVolumen: " + shipment.getVolume() + " m³" +
+                            "\nVolumen: " + shipment.getVolume() + " cm³" +
                             "\nPrioridad: " + (shipment.isPriority() ? "Sí" : "No") +
                             "\nFrágil: " + (shipment.isFragile() ? "Sí" : "No") +
                             "\nCon seguro: " + (shipment.isHasInsurance() ? "Sí" : "No") +
                             "\nRequiere firma: " + (shipment.isRequiresSignature() ? "Sí" : "No") +
-                            "\nCosto final: $" + shipment.getCost()
-                    , normalFont);
+                            "\nCosto final: $" + shipment.getCost(),
+                    normalFont
+            );
             shipmentInfo.setSpacingAfter(15);
             document.add(shipmentInfo);
 
-            String paymentDetails = "Pago ID: " + payment.getIdPayment() +
-                    "\nMonto: $" + payment.getAmount() +
-                    "\nFecha: " + payment.getPaymentDate() +
-                    "\nEstado: " + payment.getStatus();
-            if(payment instanceof CashPayment cashPayment){
+            String paymentDetails =
+                    "Pago ID: " + payment.getIdPayment() +
+                            "\nMonto: $" + payment.getAmount() +
+                            "\nFecha: " + payment.getPaymentDate() +
+                            "\nEstado: " + payment.getStatus();
+
+            if (payment instanceof CashPayment cashPayment) {
                 paymentDetails += "\nReferencia Efecty: " + cashPayment.getReferenceCode();
             }
+
             Paragraph paymentInfo = new Paragraph(paymentDetails, normalFont);
             paymentInfo.setSpacingAfter(20);
             document.add(paymentInfo);
 
-            Paragraph thanks = new Paragraph("¡Thank you for trusting NeoDelivery!", titleFont);
+            Paragraph thanks = new Paragraph("¡Gracias por confiar en NeoDelivery!", titleFont);
             thanks.setAlignment(Paragraph.ALIGN_CENTER);
             document.add(thanks);
 
-            Utils.showAlert("VERIFIED", "Invoice PDF generated successfully!\nYou can find it here: " + fullPath);
 
         } catch (Exception e) {
-            e.printStackTrace();
             Utils.showAlert("ERROR", "Failed to create PDF: " + e.getMessage());
+            return null;
         } finally {
             document.close();
         }
 
+        return outputFile;
     }
 
+    public static boolean isEmailRegistered(String email) {
+        String lowerEmail = email.toLowerCase();
+        DataBase db = DataBase.getInstance();
+        if (db.getListaUsuarios().stream().anyMatch((u) -> u.getEmail().toLowerCase().equals(lowerEmail))) {
+            return true;
+        } else if (db.getListaAdmin().stream().anyMatch((a) -> a.getEmail().toLowerCase().equals(lowerEmail))) {
+            return true;
+        } else {
+            return db.getListaRepartidores().stream().anyMatch((d) -> d.getEmail().toLowerCase().equals(lowerEmail));
+        }
+    }
 
 }
 

@@ -101,42 +101,70 @@ public class ProfileClientController {
     void saveChanges(ActionEvent event) {
         if (clientLogged == null) return;
 
-        clientLogged.setName(txtName.getText());
-        clientLogged.setEmail(txtEmail.getText());
-        clientLogged.setNumbre(txtPhone.getText());
+        String name = txtName.getText() == null ? "" : txtName.getText().trim();
+        String email = txtEmail.getText() == null ? "" : txtEmail.getText().trim();
+        String phone = txtPhone.getText() == null ? "" : txtPhone.getText().trim();
+        String oldPass = txtOldPassword.getText() == null ? "" : txtOldPassword.getText();
+        String newPass = txtNewPassword.getText() == null ? "" : txtNewPassword.getText();
 
-        String oldPass = txtOldPassword.getText();
-        String newPass = txtNewPassword.getText();
+        if (name.isEmpty() || email.isEmpty() || phone.isEmpty()) {
+            Utils.showAlert("WARNING", "Name, email, and phone cannot be empty");
+            return;
+        }
 
-        boolean valid = true;
-        String message = "Profile updated successfully!";
+        if (!email.matches("^[A-Za-z0-9+_.-]+@(gmail|hotmail|outlook|yahoo)\\.com$")) {
+            Utils.showAlert("ERROR", "Email must be Gmail, Hotmail, Outlook, or Yahoo");
+            return;
+        }
 
-        if(!oldPass.isEmpty() || !newPass.isEmpty()) {
-            if(!Utils.hashPassword(oldPass).equals(clientLogged.getPassword())) {
-                valid = false;
-                message = "The old password doesn't match.";
-            } else if(newPass.length() < 8) {
-                valid = false;
-                message = "The new password must be at least 8 characters long.";
-            } else if(newPass.equals(oldPass)) {
-                valid = false;
-                message = "The new password must be different from the old one.";
-            } else {
-                clientLogged.setPassword(Utils.hashPassword(newPass));
+        if (!email.equalsIgnoreCase(clientLogged.getEmail())
+                && Utils.isEmailRegistered(email)) {
+            Utils.showAlert("ERROR", "Email already in use");
+            return;
+        }
+
+        if (!phone.matches("^3\\d{9}$")) {
+            Utils.showAlert("ERROR", "Phone must be 10 digits and start with 3");
+            return;
+        }
+
+        clientLogged.setName(name);
+        clientLogged.setEmail(email);
+        clientLogged.setNumbre(phone);
+
+        if (!oldPass.isEmpty() || !newPass.isEmpty()) {
+
+            if (oldPass.isEmpty() || newPass.isEmpty()) {
+                Utils.showAlert("ERROR", "To change your password, fill both fields");
+                return;
             }
+
+            if (!Utils.hashPassword(oldPass).equals(clientLogged.getPassword())) {
+                Utils.showAlert("ERROR", "The old password doesn't match");
+                return;
+            }
+
+            if (newPass.length() < 8) {
+                Utils.showAlert("ERROR", "The new password must be at least 8 characters long");
+                return;
+            }
+
+            if (newPass.equals(oldPass)) {
+                Utils.showAlert("ERROR", "The new password must be different from the old one");
+                return;
+            }
+
+            clientLogged.setPassword(Utils.hashPassword(newPass));
         }
 
         if (imageFile != null) {
             clientLogged.setProfilePicturePath(imageFile.getAbsolutePath());
         }
 
-        if(valid) {
-            Utils.showAlert("VERIFIED", message);
-            if(mainContent != null) backToHome();
-            if(dashboardController != null) dashboardController.refreshProfileImage();
-        } else {
-            Utils.showAlert("ERROR", message);
-        }
+        Utils.showAlert("VERIFIED", "Profile updated successfully!");
+
+        if (mainContent != null) backToHome();
+        if (dashboardController != null) dashboardController.refreshProfileImage();
     }
 
     void backToHome(){

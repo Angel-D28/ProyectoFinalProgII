@@ -100,6 +100,18 @@ public class Shipment implements IShipment, Subject {
         notifyObservers("El envío " + id + " cambió su estado a: " + newStatus);
     }
 
+    public String getPaymentMethodName() {
+        if (payment == null) return "Not paid";
+
+        return switch (payment.getClass().getSimpleName()) {
+            case "CashPayment" -> "Cash";
+            case "CardPayment" -> "Card";
+            case "DaviplataPayment" -> "Daviplata";
+            case "NequiPayment" -> "Nequi";
+            default -> "Unknown";
+        };
+    }
+
     public DeliveryDriver getAssignedDriver() {
         return assignedDriver;
     }

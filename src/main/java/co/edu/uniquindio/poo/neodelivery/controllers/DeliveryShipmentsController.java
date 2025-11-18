@@ -1,4 +1,4 @@
-package co.edu.uniquindio.poo.neodelivery.controllers.delivery;
+package co.edu.uniquindio.poo.neodelivery.controllers;
 
 import co.edu.uniquindio.poo.neodelivery.model.DeliveryDriver;
 import co.edu.uniquindio.poo.neodelivery.model.Repository.DataBase;
@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 
 import java.util.List;
 
@@ -63,8 +64,10 @@ public class DeliveryShipmentsController {
 
     private DeliveryDriver currentCourier;
 
+
     private final ObservableList<Shipment> assignedShipments = FXCollections.observableArrayList();
     private final ObservableList<Shipment> deliveredShipments = FXCollections.observableArrayList();
+
 
     @FXML
     public void initialize() {
@@ -151,6 +154,7 @@ public class DeliveryShipmentsController {
         }
 
         selectedShipment.setStatus(Status.DELIVERED);
+        currentCourier.setAvalibility(true);
         assignedShipments.remove(selectedShipment);
         if (!deliveredShipments.contains(selectedShipment)) {
             deliveredShipments.add(selectedShipment);

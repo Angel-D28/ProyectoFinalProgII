@@ -85,7 +85,7 @@
                                     <Insets left="70.0" />
                                  </GridPane.margin>
                               </Label>
-                              <TextField fx:id="txtOrigin" GridPane.columnIndex="1" />
+                              <TextField fx:id="txtOrigin" onMouseClicked="#messagePopUp" GridPane.columnIndex="1" />
                               <TextField fx:id="txtDestination" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <TextField fx:id="txtWeigth" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <TextField fx:id="txtVolume" GridPane.columnIndex="1" GridPane.rowIndex="3" />
