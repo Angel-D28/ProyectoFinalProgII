@@ -47,7 +47,6 @@ public class Utils {
             stage.setScene(new Scene(root));
             stage.show();
 
-
             return loader.getController();
         } catch (IOException e) {
             e.printStackTrace();
@@ -73,6 +72,14 @@ public class Utils {
         }
     }
 
+    public static void showWebPage(String fileName) {
+        try {
+            String path = new File(fileName).toURI().toString();
+            java.awt.Desktop.getDesktop().browse(new java.net.URI(path));
+        } catch (Exception e) {
+            Utils.showAlert("ERROR", "Could not open the web page: " + e.getMessage());
+        }
+    }
 
     public static String hashPassword(String password) {
         try {
@@ -82,10 +89,7 @@ public class Utils {
 
             for(byte b : hash) {
                 String hex = Integer.toHexString(255 & b);
-                if (hex.length() == 1) {
-                    hexString.append('0');
-                }
-
+                if (hex.length() == 1) hexString.append('0');
                 hexString.append(hex);
             }
 
@@ -96,7 +100,6 @@ public class Utils {
     }
 
     public static void showAlert(String type, String message) {
-
         String css = Utils.class.getResource("/co/edu/uniquindio/poo/neodelivery/styles.css").toExternalForm();
 
         String iconPath = switch (type.toUpperCase()) {
@@ -171,7 +174,7 @@ public class Utils {
 
     public static String formatCOP(double amount) {
         NumberFormat formato = NumberFormat.getCurrencyInstance(new Locale("es", "CO"));
-        formato.setMaximumFractionDigits(0); // sin decimales
+        formato.setMaximumFractionDigits(0);
         return formato.format(amount);
     }
 
@@ -240,7 +243,6 @@ public class Utils {
             thanks.setAlignment(Paragraph.ALIGN_CENTER);
             document.add(thanks);
 
-
         } catch (Exception e) {
             Utils.showAlert("ERROR", "Failed to create PDF: " + e.getMessage());
             return null;
@@ -262,6 +264,5 @@ public class Utils {
             return db.getListaRepartidores().stream().anyMatch((d) -> d.getEmail().toLowerCase().equals(lowerEmail));
         }
     }
-
 }
 

@@ -5,6 +5,7 @@ import co.edu.uniquindio.poo.neodelivery.model.Repository.DataBase;
 import co.edu.uniquindio.poo.neodelivery.model.gestores.ManagePayments;
 import co.edu.uniquindio.poo.neodelivery.model.gestores.ManageShipments;
 import co.edu.uniquindio.poo.neodelivery.model.utils.Utils;
+import javafx.animation.ScaleTransition;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,6 +14,10 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.Label;
+import javafx.util.Duration;
+import java.io.File;
+import co.edu.uniquindio.poo.neodelivery.App.HelloApplication;
 
 public class AddShipmentsClientController {
 
@@ -49,6 +54,9 @@ public class AddShipmentsClientController {
     @FXML
     private TextField txtWeigth;
 
+    @FXML
+    private Label txtAboutRates;
+
     DataBase db = DataBase.getInstance();
 
     private User clientLogged;
@@ -67,6 +75,37 @@ public class AddShipmentsClientController {
 
     void setMainContent(AnchorPane mainContent) {
         this.mainContent = mainContent;
+    }
+
+    @FXML
+    void OnClickedAboutRates(MouseEvent event) {
+        try {
+            // Cargar el HTML desde resources
+            String url = getClass()
+                    .getResource("/NeoDeliveryInformation.html")
+                    .toExternalForm();
+
+            HelloApplication.getAppHostServices().showDocument(url);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void onMouseEnteredAboutRates(MouseEvent event) {
+        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(200), txtAboutRates);
+        scaleTransition.setToX(1.1);
+        scaleTransition.setToY(1.1);
+        scaleTransition.play();
+    }
+
+    @FXML
+    void onMouseExitedAboutRates(MouseEvent event) {
+        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(200), txtAboutRates);
+        scaleTransition.setToX(1.0);
+        scaleTransition.setToY(1.0);
+        scaleTransition.play();
     }
 
     @FXML

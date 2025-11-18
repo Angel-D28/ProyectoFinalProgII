@@ -79,7 +79,7 @@ public class ManageShipments {
         if (shipment.isFragile())
             decorated = new FragileDecorator((decorated));
 
-        double finalCost = decorated.getCost();
+        double finalCost = decorated.getCost() + 5000;
         System.out.println("Costo final del envío: $" + finalCost);
 
         shipment.setCost(finalCost);
