@@ -65,7 +65,6 @@ public class DataBase {
                 .destination(new Address("SAO, Armenia"))
                 .weight(2.5)
                 .volume(1.2)
-                .cost(15.0)
                 .hasInsurance(true)
                 .isPriority(true)
                 .requiresSignature(true)
@@ -78,7 +77,6 @@ public class DataBase {
                 .destination(new Address("Cra 5 Cll 20, Salento"))
                 .weight(1.0)
                 .volume(0.5)
-                .cost(7.5)
                 .hasInsurance(false)
                 .isPriority(false)
                 .requiresSignature(false)
@@ -91,7 +89,6 @@ public class DataBase {
                 .destination(new Address("Calle 9, Armenia"))
                 .weight(3.0)
                 .volume(2.0)
-                .cost(20.0)
                 .hasInsurance(true)
                 .isPriority(false)
                 .requiresSignature(true)
@@ -104,12 +101,13 @@ public class DataBase {
                 .destination(new Address("Calle 10, Ciudad H"))
                 .weight(0.5)
                 .volume(0.3)
-                .cost(5.0)
+                .cost(60000)
                 .hasInsurance(false)
                 .isPriority(false)
                 .requiresSignature(false)
                 .fragile(true)
                 .build();
+
 
         listaShipments.add(shipment1);
         listaShipments.add(shipment2);

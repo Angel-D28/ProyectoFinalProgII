@@ -94,9 +94,10 @@ public class ClientDashboardController {
 
     @FXML
     void showOrders(ActionEvent event) {
-        ManageShipmentsClientController shipmentController = Utils.replaceMainContent(mainContent, "manageShipments(Client).fxml");
-        shipmentController.setMainContentManageShipments(mainContent);
+        System.out.println(Utils.class.getResource("/co/edu/uniquindio/poo/neodelivery/manageShipmentsClient.fxml"));
+        ManageShipmentsClientController shipmentController = Utils.replaceMainContent(mainContent, "manageShipmentsClient.fxml");
         shipmentController.setClientLogged(userLogged);
+        shipmentController.setMainContentManageShipments(mainContent);
     }
 
     @FXML

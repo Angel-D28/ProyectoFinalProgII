@@ -1,9 +1,12 @@
 package co.edu.uniquindio.poo.neodelivery.model.utils;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 import co.edu.uniquindio.poo.neodelivery.model.CashPayment;
 import co.edu.uniquindio.poo.neodelivery.model.Payment;
@@ -39,6 +42,7 @@ public class Utils {
             stage.setTitle(title);
             stage.setScene(new Scene(root));
             stage.show();
+
 
             return loader.getController();
         } catch (IOException e) {
@@ -95,11 +99,12 @@ public class Utils {
             case "ERROR" -> "/co/edu/uniquindio/poo/neodelivery/icons/error.png";
             case "WARNING" -> "/co/edu/uniquindio/poo/neodelivery/icons/warning.png";
             case "VERIFIED" -> "/co/edu/uniquindio/poo/neodelivery/icons/verified.png";
+            case "DAVIPLATA" -> "/co/edu/uniquindio/poo/neodelivery/icons/daviplata.png";
+            case "NEQUI" -> "/co/edu/uniquindio/poo/neodelivery/icons/nequi.png";
             default -> "/co/edu/uniquindio/poo/neodelivery/icons/info.png";
         };
 
         Alert alert = new Alert(Alert.AlertType.NONE);
-
         DialogPane pane = createCustomPane(type, message, iconPath, css);
         alert.setDialogPane(pane);
 
@@ -109,17 +114,24 @@ public class Utils {
         alert.showAndWait();
     }
 
-    private static DialogPane createCustomPane(String title, String message, String iconPath, String css) {
-
+    private static DialogPane createCustomPane(String type, String message, String iconPath, String css) {
         DialogPane pane = new DialogPane();
         pane.getStylesheets().add(css);
         pane.getStyleClass().add("custom-alert-pane");
 
-        //root
+        String typeClass = switch(type.toUpperCase()) {
+            case "ERROR" -> "alert-error";
+            case "WARNING" -> "alert-warning";
+            case "VERIFIED" -> "alert-verified";
+            case "DAVIPLATA" -> "alert-daviplata";
+            case "NEQUI" -> "alert-nequi";
+            default -> "alert-info";
+        };
+        pane.getStyleClass().add(typeClass);
+
         VBox root = new VBox(15);
         root.setPadding(new Insets(20));
 
-        //Title and icon
         HBox header = new HBox(10);
         header.setAlignment(Pos.CENTER_LEFT);
 
@@ -127,16 +139,14 @@ public class Utils {
         icon.setFitHeight(32);
         icon.setFitWidth(32);
 
-        Label lblTitle = new Label(title);
+        Label lblTitle = new Label(type);
         lblTitle.getStyleClass().add("alert-title");
 
         header.getChildren().addAll(icon, lblTitle);
 
-        //message
         Label lblMessage = new Label(message);
         lblMessage.getStyleClass().add("alert-message");
 
-        //Button
         Button btn = new Button("Accept");
         btn.getStyleClass().add("alert-button");
         btn.setOnAction(e -> pane.getScene().getWindow().hide());
@@ -147,7 +157,6 @@ public class Utils {
         root.getChildren().addAll(header, lblMessage, buttonBox);
         pane.setContent(root);
 
-        //Animation
         FadeTransition ft = new FadeTransition(Duration.millis(200), root);
         ft.setFromValue(0);
         ft.setToValue(1);
@@ -156,11 +165,21 @@ public class Utils {
         return pane;
     }
 
+    public static String formatCOP(double amount) {
+        NumberFormat formato = NumberFormat.getCurrencyInstance(new Locale("es", "CO"));
+        formato.setMaximumFractionDigits(0); // sin decimales
+        return formato.format(amount);
+    }
+
     public static void createPaymentPDF(Payment payment, Shipment shipment, User client) {
         Document document = new Document();
         try {
+            String userHome = System.getProperty("user.home");
+            String downloadPath = userHome + "/Downloads";
             String fileName = "recibo_" + payment.getIdPayment() + ".pdf";
-            PdfWriter.getInstance(document, new FileOutputStream(fileName));
+            String fullPath = downloadPath + File.separator + fileName;
+
+            PdfWriter.getInstance(document, new FileOutputStream(fullPath));
             document.open();
 
             Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16);
@@ -203,17 +222,21 @@ public class Utils {
             paymentInfo.setSpacingAfter(20);
             document.add(paymentInfo);
 
-            Paragraph thanks = new Paragraph("¡Gracias por usar NeoDelivery!", titleFont);
+            Paragraph thanks = new Paragraph("¡Thank you for trusting NeoDelivery!", titleFont);
             thanks.setAlignment(Paragraph.ALIGN_CENTER);
             document.add(thanks);
 
+            Utils.showAlert("VERIFIED", "Invoice PDF generated successfully!\nYou can find it here: " + fullPath);
+
         } catch (Exception e) {
             e.printStackTrace();
-            showAlert("ERROR", "Failed to create PDF: " + e.getMessage());
+            Utils.showAlert("ERROR", "Failed to create PDF: " + e.getMessage());
         } finally {
             document.close();
         }
+
     }
+
 
 }
 

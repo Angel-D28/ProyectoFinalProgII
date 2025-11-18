@@ -10,10 +10,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 
-public class addShipmentClientController {
+public class AddShipmentsClientController {
 
     @FXML
     private ChoiceBox<String> boxFragile;
@@ -50,12 +50,18 @@ public class addShipmentClientController {
 
     private User clientLogged;
 
+    private AnchorPane mainContent;
+
     private ManageShipments manageShipments = new ManageShipments();
 
     private ManagePayments managePayments = new ManagePayments();
 
     void setClient(User client) {
         this.clientLogged = client;
+    }
+
+    void setMainContent(AnchorPane mainContent) {
+        this.mainContent = mainContent;
     }
 
     @FXML
@@ -107,8 +113,8 @@ public class addShipmentClientController {
                     .fragile(boxFragile.getValue().equals("Yes"))
                     .build();
 
-            clientLogged.getShipmentsList().add(shipment);
-            DataBase.getInstance().getListaEnvios().add(shipment);
+            //clientLogged.getShipmentsList().add(shipment);
+            //DataBase.getInstance().getListaEnvios().add(shipment);
 
             double finalCost = manageShipments.calculateShipmentCost(shipment, "peso");
             shipment.setCost(finalCost);
@@ -118,38 +124,56 @@ public class addShipmentClientController {
 
             switch(paymentMethod.toLowerCase()){
                 case "card payment":
-                    //pagarTarjeta(clientLogged, shipment);
-                    return;
+                    CardPaymentController cardController =
+                            Utils.replaceMainContent(mainContent, "CardPayment.fxml");
+
+                    if(cardController != null){
+                        cardController.setShipment(shipment);
+                        cardController.setClient(clientLogged);
+                        cardController.setMainContent(mainContent);
+                    }
+                    break;
                 case "daviplata":
-                    //pagarDaviplata(clientLogged, shipment, paymentMethod)
+                    DaviplataController daviplataController = Utils.replaceMainContent(mainContent, "DaviplataPayment.fxml");
+                    if(daviplataController != null){
+                        daviplataController.setShipment(shipment);
+                        daviplataController.setClient(clientLogged);
+                        daviplataController.setMainContent(mainContent);
+                    }else{
+                        Utils.showAlert("ERROR", "Could not load Daviplata payment view.");
+                    }
+                    break;
                 case "nequi":
-                    //pagarNequi(clientLogged, shipment, paymentMethod);
-                    return;
+                    NequiController nequiController = Utils.replaceMainContent(mainContent, "NequiPayment.fxml");
+                    if(nequiController != null){
+                        nequiController.setShipment(shipment);
+                        nequiController.setClient(clientLogged);
+                        nequiController.setMainContentNequi(mainContent);
+                    }else {
+                        Utils.showAlert("ERROR", "Could not load Nequi payment view.");
+                    }
+                    break;
                 case "cash":
                     payment = managePayments.createAndProcessPayment(clientLogged, shipment,
                             shipment.getCost(), "efecty", null, null, null);
+
+                    Utils.createPaymentPDF(payment, shipment, clientLogged);
+
+                    shipment.setPayment(payment);
+                    shipment.addObserver(clientLogged);
+                    clientLogged.getPaymentsMethodsList().add(payment);
+
+                    Utils.showAlert("SUCCESS", "Shipment and payment created successfully!");
+
+                    ManageShipmentsClientController controller = Utils.replaceMainContent(mainContent, "manageShipmentsClient.fxml");
+                    controller.setClientLogged(clientLogged);
+                    controller.setMainContentManageShipments(mainContent);
+                    controller.setShipment(shipment);
                     break;
                 default:
                     Utils.showAlert("ERROR","Please select a payment method");
-                    return;
             }
 
-            Utils.createPaymentPDF(payment, shipment, clientLogged);
-            shipment.setPayment(payment);
-            shipment.addObserver(clientLogged);
-            clientLogged.getPaymentsMethodsList().add(payment);
-
-            Utils.showAlert("SUCCESS", "Shipment and payment created successfully!");
-
-            txtOrigin.clear();
-            txtDestination.clear();
-            txtWeigth.clear();
-            txtVolume.clear();
-            boxIsPriority.setValue("Select one");
-            boxFragile.setValue("Select one");
-            boxHasInsure.setValue("Select one");
-            boxToSign.setValue("Select one");
-            boxPaymentMethods.setValue("Select a payment method");
 
         } catch (NumberFormatException e) {
             Utils.showAlert("ERROR", "Weight and volume must be numbers.");

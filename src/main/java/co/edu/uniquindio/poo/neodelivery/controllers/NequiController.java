@@ -1,14 +1,19 @@
 package co.edu.uniquindio.poo.neodelivery.controllers;
 
 import co.edu.uniquindio.poo.neodelivery.model.Payment;
+import co.edu.uniquindio.poo.neodelivery.model.Repository.DataBase;
 import co.edu.uniquindio.poo.neodelivery.model.Shipment;
 import co.edu.uniquindio.poo.neodelivery.model.User;
 import co.edu.uniquindio.poo.neodelivery.model.gestores.ManagePayments;
+import co.edu.uniquindio.poo.neodelivery.model.utils.Utils;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 
 public class NequiController {
 
@@ -16,14 +21,16 @@ public class NequiController {
     @FXML private PasswordField txtNequiCode;
     @FXML private Button btnPagarNequi;
 
+    private DataBase db = DataBase.getInstance();
+
     private Shipment shipment;
 
     private User clientLogged;
 
-    private double amount;
+    private AnchorPane mainContentNequi;
 
-    public void setAmount(double amount) {
-        this.amount = amount;
+    void setMainContentNequi(AnchorPane mainContent) {
+        this.mainContentNequi = mainContent;
     }
 
     void setClient(User client) {
@@ -35,30 +42,39 @@ public class NequiController {
     }
 
     @FXML
-    public void initialize() {
-        btnPagarNequi.setOnAction(e -> pagar());
-    }
-
-    private void pagar() {
-        String number = txtNequiNumber.getText();
+    void validarPagoNequi(ActionEvent event) {
+        String phone = txtNequiNumber.getText();
         String code = txtNequiCode.getText();
 
+        if(phone.isEmpty() || code.isEmpty()) {
+            Utils.showAlert("NEQUI", "Por favor, rellene todos los espacios.");
+        }else if(code.length()!= 6) {
+            Utils.showAlert("NEQUI", "El código es de 6 dígitos.");
+        }else if(phone.length() != 10 || !phone.equals(clientLogged.getNumbre())) {
+            Utils.showAlert("NEQUI", "Su número de celular debe contener 10 dígitos");
+        }
+        else{
         ManagePayments mp = new ManagePayments();
 
         Payment pago = mp.createAndProcessPayment(
                 clientLogged,
                 shipment,
-                amount,
+                shipment.getCost(),
                 "billetera digital",
                 null,
                 "nequi",
-                number + ":" + code
+                phone + ":" + code
         );
+        clientLogged.getShipmentsList().add(shipment);
+        db.getListaEnvios().add(shipment);
+        String montoMostrar = Utils.formatCOP(shipment.getCost());
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Resultado");
-        alert.setHeaderText("Pago con Nequi");
-        alert.setContentText("Estado: " + pago.getStatus());
-        alert.show();
+        Utils.showAlert("NEQUI", "Sucessful payment\nOrder ID: "
+                +pago.getIdPayment()+"\nAmount paid: "+montoMostrar);
+        ManageShipmentsClientController shipmentsClientController = Utils.replaceMainContent(mainContentNequi, "manageShipmentsClient.fxml");
+        shipmentsClientController.setClientLogged(clientLogged);
+        shipmentsClientController.setMainContentManageShipments( mainContentNequi);
+        }
     }
+
 }

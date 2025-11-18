@@ -77,6 +77,11 @@ public class ManageShipmentsClientController {
 
     private ObservableList<Shipment> shipmentsList = FXCollections.observableArrayList();
 
+    void setClientLogged(User client){
+        this.clientLogged = client;
+        loadShipmentsListFromUserList();
+    }
+
     void loadShipmentsListFromUserList(){
         shipmentsList.clear();
         shipmentsList.addAll(clientLogged.getShipmentsList());
@@ -84,10 +89,6 @@ public class ManageShipmentsClientController {
 
     void setMainContentManageShipments(AnchorPane mainContent) {
         this.mainContent = mainContent;
-    }
-
-    void setClientLogged(User client){
-        this.clientLogged = client;
     }
 
     void setShipment(Shipment shipment){
@@ -118,8 +119,9 @@ public class ManageShipmentsClientController {
         columnDeliveryDriver.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getAssignedDriver() != null ? cellData.getValue().getAssignedDriver().getName() : "Not assigned"));
 
-        loadShipmentsListFromUserList();
+
         tableShipmentsClient.setItems(shipmentsList);
+        refreshShipmentsList();
     }
 
     @FXML
@@ -131,6 +133,7 @@ public class ManageShipmentsClientController {
             clientLogged.getShipmentsList().remove(shipmentSelected);
             db.getListaEnvios().remove(shipmentSelected);
             Utils.showAlert("VERIFIED", "Shipping canceled.");
+            refreshShipmentsList();
         }else{
             Utils.showAlert("ERROR", "You cannot cancel a shipment that has already been picked up by a delivery driver.");
         }
@@ -138,7 +141,9 @@ public class ManageShipmentsClientController {
 
     @FXML
     void createShipment(ActionEvent event) {
-
+        AddShipmentsClientController shipmentsClientController = Utils.replaceMainContent(mainContent, "addShipmentClient.fxml");
+        shipmentsClientController.setClient(clientLogged);
+        shipmentsClientController.setMainContent(mainContent);
     }
 
     @FXML
@@ -149,6 +154,14 @@ public class ManageShipmentsClientController {
     @FXML
     void edtiShipment(ActionEvent event) {
 
+    }
+
+    public void refreshShipmentsList() {
+        if (clientLogged != null) {
+            shipmentsList.clear();
+            shipmentsList.addAll(clientLogged.getShipmentsList());
+            tableShipmentsClient.setItems(shipmentsList);
+        }
     }
 
 }

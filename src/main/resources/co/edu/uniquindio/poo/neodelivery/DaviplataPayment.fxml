@@ -9,12 +9,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="560" prefWidth="380" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ffffff;" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.neodelivery.controllers.DaviplataController">
 
-    <VBox alignment="CENTER" layoutX="40" layoutY="40" prefWidth="300" spacing="25">
-      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+    <VBox id="loginPane" alignment="CENTER" fillWidth="false" layoutX="248.0" layoutY="39.0" maxWidth="500.0" prefHeight="628.0" prefWidth="404.0" spacing="25" AnchorPane.bottomAnchor="38.60000000000002" AnchorPane.leftAnchor="248.0" AnchorPane.rightAnchor="248.0" AnchorPane.topAnchor="39.0">
+      <ImageView fitHeight="116.0" fitWidth="209.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../images/Daviplata.jpg" />
+            <Image url="@../../../../../images/Daviplata.png" />
          </image>
       </ImageView>
 
@@ -24,23 +24,23 @@
 
         <VBox alignment="CENTER_LEFT" spacing="6">
             <Label style="-fx-font-size: 14px;" text="Cédula" />
-            <TextField fx:id="txtCedulaDaviplata" promptText="Número de documento" style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-padding: 10;" />
+            <TextField fx:id="txtCedulaDaviplata" prefHeight="42.0" prefWidth="300.0" promptText="Número de documento" style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-padding: 10;" />
         </VBox>
 
 
         <VBox alignment="CENTER_LEFT" spacing="6">
             <Label style="-fx-font-size: 14px;" text="Número telefónico" />
-            <TextField fx:id="txtTelefonoDaviplata" promptText="Ej: 3115678901" style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-padding: 10;" />
+            <TextField fx:id="txtTelefonoDaviplata" prefHeight="42.0" prefWidth="300.0" promptText="Ej: 3115678901" style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-padding: 10;" />
         </VBox>
 
 
         <VBox alignment="CENTER_LEFT" spacing="6">
             <Label style="-fx-font-size: 14px;" text="Clave Daviplata" />
-            <PasswordField fx:id="txtClaveDaviplata" promptText="Clave de 4 dígitos" style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-padding: 10;" />
+            <PasswordField fx:id="txtClaveDaviplata" prefHeight="41.0" prefWidth="300.0" promptText="Clave de 4 dígitos" style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-padding: 10;" />
         </VBox>
 
 
-        <Button fx:id="btnPagarDaviplata" prefWidth="250" style="-fx-background-color: #E30613; -fx-text-fill: white; -fx-font-size: 16px;                        -fx-background-radius: 15;" text="Continuar" />
+        <Button id="buttonDaviplata" fx:id="btnPagarDaviplata" onAction="#validarPago" prefWidth="250" text="Continuar" />
 
 
         <Label style="-fx-font-size: 12px; -fx-text-fill: #777;" text="Transacción segura Daviplata" />

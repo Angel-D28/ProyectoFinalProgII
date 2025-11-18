@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="co.edu.uniquindio.poo.neodelivery.controllers.CardPaymentController"
+            prefWidth="800" prefHeight="600">
+
+    <children>
+        <VBox spacing="20" layoutX="200" layoutY="80" prefWidth="400">
+            <padding>
+                <Insets top="20" bottom="20" left="20" right="20"/>
+            </padding>
+
+            <Label text="Card Payment" styleClass="title-label"/>
+
+            <TextField fx:id="txtCardNumber" promptText="Card Number (16 digits)" />
+            <TextField fx:id="txtCardHolder" promptText="Card Holder Name" />
+            <TextField fx:id="txtExpiry" promptText="MM/YY" />
+            <PasswordField fx:id="txtCVV" promptText="CVV (3 digits)" />
+
+            <HBox spacing="10">
+                <Button fx:id="btnCancel" text="Cancel" onAction="#cancel" prefWidth="150"/>
+                <Button fx:id="btnPay" text="Pay" onAction="#pay" prefWidth="150"/>
+            </HBox>
+
+        </VBox>
+    </children>
+
+</AnchorPane>
