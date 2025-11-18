@@ -50,7 +50,7 @@ public class NequiController {
             Utils.showAlert("NEQUI", "Por favor, rellene todos los espacios.");
         }else if(code.length()!= 6) {
             Utils.showAlert("NEQUI", "El código es de 6 dígitos.");
-        }else if(phone.length() != 10 || !phone.equals(clientLogged.getNumbre())) {
+        }else if(phone.length() != 10 ){
             Utils.showAlert("NEQUI", "Su número de celular debe contener 10 dígitos");
         }
         else{

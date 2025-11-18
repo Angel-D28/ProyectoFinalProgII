@@ -50,7 +50,7 @@ public class DaviplataController {
             Utils.showAlert("DAVIPLATA", "Por favor, rellene todos los espacios.");
         }else if(cedula.length()<5) {
             Utils.showAlert("DAVIPLATA", "Su cédula debe tener mínimo 5 caracteres.");
-        }else if(phone.length() != 10 || !phone.equals(clientLogged.getNumbre())) {
+        }else if(phone.length() != 10) {
             Utils.showAlert("DAVIPLATA", "Su número de celular debe contener 10 dígitos");
         }else if(pin.length()!= 4) {
             Utils.showAlert("DAVIPLATA", "El pin es de 4 dígitos.");
