@@ -15,6 +15,8 @@ public class CashPayment extends Payment {
 
     @Override
     public void processPayment() {
+        System.out.println("Generando recibo Efecty...");
+        status = StatusPayment.Pending;
         System.out.println("Pago generado con Efecty. Código de referencia: " + referenceCode);
         System.out.println("El pago quedará en estado PENDIENTE hasta que sea confirmado en Efecty.");
     }

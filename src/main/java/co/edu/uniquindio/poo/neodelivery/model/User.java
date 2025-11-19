@@ -1,19 +1,25 @@
 package co.edu.uniquindio.poo.neodelivery.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User implements Observer {
     private String name;
     private String password;
     private String email;
     private Address address;
-    private String numbre;
+    private String number;
     private String idUser;
+    private String profilePicturePath;
+    private List<Payment> paymentsMethodsList = new ArrayList<>();
+    private List<Shipment>  shipmentsList = new ArrayList<>();
 
     public User(String name, String password, String email, Address address, String numbre, String idUser) {
         this.name = name;
         this.password = password;
         this.email = email;
         this.address = address;
-        this.numbre = numbre;
+        this.number = numbre;
         this.idUser = idUser;
     }
 
@@ -23,7 +29,8 @@ public class User implements Observer {
 
     @Override
     public void update(String message) {
-        EmailService.sendEmail(email, name, message);
+        System.out.println("Enviando gmail en tiempo real");
+        EmailService.sendEmail(email,"Actualizacion de Envio", message);
     }
 
     public void setName(String name) {
@@ -55,11 +62,11 @@ public class User implements Observer {
     }
 
     public String getNumbre() {
-        return numbre;
+        return number;
     }
 
     public void setNumbre(String numbre) {
-        this.numbre = numbre;
+        this.number = numbre;
     }
 
     public String getIdUser() {
@@ -68,5 +75,32 @@ public class User implements Observer {
 
     public void setIdUser(String idUser) {
         this.idUser = idUser;
+    }
+
+    public String getProfilePicturePath() {
+        return profilePicturePath;
+    }
+    public void setProfilePicturePath(String profilePicturePath) {
+        this.profilePicturePath = profilePicturePath;
+    }
+
+    public List<Payment> getPaymentsMethodsList() {
+        return paymentsMethodsList;
+    }
+
+    public void setPaymentsMethodsList(List<Payment> paymentsMethodsList) {
+        this.paymentsMethodsList = paymentsMethodsList;
+    }
+
+    public List<Shipment> getShipmentsList() {
+        return shipmentsList;
+    }
+
+    public void setShipmentsList(List<Shipment> shipmentsList) {
+        this.shipmentsList = shipmentsList;
+    }
+
+    public String toString() {
+        return "Nombre:" + name + "Contraseña:" + password + "Email:" + email + "Direccion:" + address + "Número:" + number + "IdUsuario:" + idUser;
     }
 }

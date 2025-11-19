@@ -43,12 +43,7 @@ public abstract class Payment implements Subject  {
 
     @Override
     public String toString() {
-        return "Payment{" +
-                "idPayment='" + idPayment + '\'' +
-                ", amount=" + amount +
-                ", paymentDate=" + paymentDate +
-                ", status=" + status +
-                '}';
+        return "idPayment: " + idPayment + "Cantidad" + amount + "FechaPago" + paymentDate + "Estado: " + status;
     }
     @Override
     public void addObserver(Observer observer) {

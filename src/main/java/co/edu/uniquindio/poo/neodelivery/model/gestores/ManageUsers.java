@@ -18,6 +18,30 @@ public class ManageUsers {
         return user;
     }
 
+    public String showUsers() {
+        String users = "";
+        for (User user : db.getListaUsuarios()) {
+            users += user.toString() + "\n";
+        }
+        return users;
+    }
+
+    public String generateId(){
+        int maxId = 0;
+
+        for (User user : db.getListaUsuarios()) {
+            try {
+                int id = Integer.parseInt(user.getIdUser());
+                if (id > maxId) maxId = id;
+            } catch (NumberFormatException e) {
+
+            }
+        }
+
+        return String.valueOf(maxId + 1);
+    }
+
+
     public void createUser(User user) {
         db.getListaUsuarios().add(user);
     }
@@ -31,6 +55,7 @@ public class ManageUsers {
         userToUpdate.setNumbre(userUpdated.getNumbre());
         userToUpdate.setEmail(userUpdated.getEmail());
         userToUpdate.setAddress(userUpdated.getAddress());
+        userToUpdate.setPassword(userUpdated.getPassword());
     }
 
     public List<User> getAllUsers() {
