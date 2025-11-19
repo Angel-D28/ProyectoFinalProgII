@@ -14,7 +14,8 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="608.0" prefWidth="717.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.neodelivery.controllers.AddShipmentsClientController">
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.neodelivery.controllers.addShipmentClientController">
    <center>
       <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
@@ -50,12 +51,12 @@
                                     <Insets left="70.0" />
                                  </GridPane.margin>
                               </Label>
-                              <Label prefHeight="26.0" prefWidth="274.0" style="-fx-font-size: 16;" styleClass="text" text="Weigth (Kg):" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="2">
+                              <Label prefHeight="26.0" prefWidth="274.0" style="-fx-font-size: 16;" styleClass="text" text="Weigth:" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="2">
                                  <GridPane.margin>
                                     <Insets left="70.0" />
                                  </GridPane.margin>
                               </Label>
-                              <Label prefHeight="26.0" prefWidth="318.0" style="-fx-font-size: 16;" styleClass="text" text="Volume (cm3):" GridPane.rowIndex="3">
+                              <Label prefHeight="26.0" prefWidth="318.0" style="-fx-font-size: 16;" styleClass="text" text="Volume:" GridPane.rowIndex="3">
                                  <GridPane.margin>
                                     <Insets left="70.0" />
                                  </GridPane.margin>
@@ -85,10 +86,10 @@
                                     <Insets left="70.0" />
                                  </GridPane.margin>
                               </Label>
-                              <TextField fx:id="txtOrigin" onMouseClicked="#messagePopUp" GridPane.columnIndex="1" />
-                              <TextField fx:id="txtDestination" promptText="Enter the destination address" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <TextField fx:id="txtWeigth" promptText="Enter the weight of your delivery" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <TextField fx:id="txtVolume" promptText="Enter the package volume" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <TextField fx:id="txtOrigin" GridPane.columnIndex="1" />
+                              <TextField fx:id="txtDestination" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <TextField fx:id="txtWeigth" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <TextField fx:id="txtVolume" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                               <ChoiceBox fx:id="boxHasInsure" prefHeight="34.0" prefWidth="330.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                               <ChoiceBox fx:id="boxIsPriority" prefHeight="22.0" prefWidth="307.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                               <ChoiceBox fx:id="boxToSign" prefHeight="34.0" prefWidth="326.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
@@ -98,7 +99,6 @@
                         </GridPane>
                      </children>
                   </AnchorPane>
-                  <Label fx:id="txtAboutRates" onMouseClicked="#OnClickedAboutRates" onMouseEntered="#onMouseEnteredAboutRates" onMouseExited="#onMouseExitedAboutRates" prefHeight="20.0" prefWidth="123.0" style="-fx-font-size: 16; -fx-cursor: hand;" styleClass="text" text="About our rates" textFill="#a7a4b5" underline="true" />
                </children>
                <StackPane.margin>
                   <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
