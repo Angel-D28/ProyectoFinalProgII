@@ -22,7 +22,7 @@
       "idPayment" : "PAY-1763527819606",
       "amount" : 17000.0,
       "paymentDate" : "2025-11-18",
-      "status" : "Approved",
+      "status" : null,
       "paymentMethodName" : "daviplata",
       "walletProvider" : "daviplata",
       "numberWallet" : "3108489702:1112"
@@ -87,7 +87,7 @@
         "idPayment" : "PAY-1763527819606",
         "amount" : 17000.0,
         "paymentDate" : "2025-11-18",
-        "status" : "Approved",
+        "status" : null,
         "paymentMethodName" : "daviplata",
         "walletProvider" : "daviplata",
         "numberWallet" : "3108489702:1112"
@@ -167,7 +167,7 @@
       "idPayment" : "PAY-1763527819606",
       "amount" : 17000.0,
       "paymentDate" : "2025-11-18",
-      "status" : "Approved",
+      "status" : null,
       "paymentMethodName" : "daviplata",
       "walletProvider" : "daviplata",
       "numberWallet" : "3108489702:1112"
@@ -203,14 +203,14 @@
     "idPayment" : "PAY-1763527819606",
     "amount" : 17000.0,
     "paymentDate" : "2025-11-18",
-    "status" : "Approved",
+    "status" : null,
     "paymentMethodName" : "daviplata",
     "walletProvider" : "daviplata",
     "numberWallet" : "3108489702:1112"
   } ],
   "admins" : [ {
     "idAdmin" : "1",
-    "name" : "Carlos Molina",
+    "name" : "Andres Leal",
     "email" : "caml.7carlos@gmail.com",
     "number" : "3208489702",
     "password" : "201bce2458f00a54130c695ca8d1658319b32206d495adf175847b57bd4a4151",

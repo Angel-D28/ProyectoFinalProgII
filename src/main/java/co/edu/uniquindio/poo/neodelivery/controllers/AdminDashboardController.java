@@ -54,8 +54,12 @@ public class AdminDashboardController {
 
     void setAdmin (Admin admin) {
         this.admin = admin;
-        lblWelcomeAdmin.setText("Welcome, " + admin.getName());
+        setNameLabel(admin.getName());
         loadAdminImage();
+    }
+
+    void setNameLabel(String name){
+        lblWelcomeAdmin.setText(name);
     }
 
     @FXML

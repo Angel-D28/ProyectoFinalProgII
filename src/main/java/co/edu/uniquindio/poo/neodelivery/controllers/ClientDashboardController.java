@@ -55,7 +55,7 @@ public class ClientDashboardController {
 
     public void setClient(User userLogged) {
         this.userLogged = userLogged;
-        lblWelcomeClient.setText(userLogged.getName());
+        setNameLabel(userLogged.getName());
         loadUserImage();
 
         HomeClientController homeController = Utils.replaceMainContent(mainContent, "homeClient.fxml");
@@ -63,6 +63,10 @@ public class ClientDashboardController {
             homeController.setClient(userLogged);
             homeController.setMainContentHomeClient(mainContent);
         }
+    }
+
+    void setNameLabel(String name){
+        lblWelcomeClient.setText(name);
     }
 
     @FXML

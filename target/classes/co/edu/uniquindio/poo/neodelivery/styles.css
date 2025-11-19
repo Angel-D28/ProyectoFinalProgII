@@ -54,7 +54,7 @@
     -fx-font-size: 14px;
     -fx-background-radius: 10;
     -fx-cursor: hand;
-    -fx-padding: 10 20;
+    -fx-padding: 5 5;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 8, 0, 0, 2);
     -fx-border-color: transparent;
     -fx-border-radius: 10;
@@ -101,6 +101,35 @@
     -fx-border-width: 0.5;
     -fx-padding: 0 0 0 0;
     -fx-font-size: 14;
+}
+
+.choice-box > .label {
+    -fx-text-fill: #555555;
+    -fx-font-size: 14;
+}
+
+.choice-box, .choice-box > .label {
+    -fx-cursor: hand;
+}
+
+.choice-box .context-menu {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+}
+
+.menu-item, .menu-item > * {
+    -fx-cursor: hand;
+}
+
+.menu-item:focused {
+    -fx-background-color: #888888;
+    -fx-text-fill: #333333;
+}
+
+.choice-box:hover {
+    -fx-background-color: #e6e6e6;
 }
 
 #mainContentDashboard{
@@ -310,6 +339,8 @@
 }
 
 
+
+
 /*----------------------------------*/
  /*Estilo para gráficos del HOME*/
 #homeBarChart {
@@ -394,4 +425,111 @@
 
 #homePieChart .chart-legend-item-symbol {
     -fx-background-radius: 5;
+}
+
+
+/*ESTILOS PARA LAS VIEWS DE LAS BILLETERAS DIGITRALES*/
+
+.alert-daviplata{
+    -fx-background-color: #f1f1f1;
+}
+
+.alert-daviplata .alert-title {
+    -fx-text-fill: #E30613;
+}
+
+.alert-daviplata .alert-message {
+    -fx-text-fill: black;
+    -fx-font-size: 20;
+    -fx-font-family: Cambria;
+}
+
+.alert-daviplata .alert-button {
+    -fx-background-color: #E30613;
+    -fx-text-fill: white;
+    -fx-font-size: 16;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+}
+
+.alert-daviplata .alert-button:hover {
+    -fx-scale-y: 1.01;
+    -fx-scale-x: 1.01;
+    -fx-cursor: hand;
+}
+.alert-daviplata .alert-button:pressed {
+    -fx-opacity: 0.8;
+}
+
+.alert-nequi{
+    -fx-background-color: #f1f1f1;
+    -fx-font-size: 16;
+    -fx-font-fill: black;
+}
+
+.alert-nequi .alert-title {
+    -fx-text-fill: #F5008D;
+}
+
+.alert-nequi .alert-message {
+    -fx-text-fill: black;
+    -fx-font-size: 20;
+    -fx-font-family: Cambria;
+}
+
+.alert-nequi .alert-button {
+    --fx-background-color: #F5008D;
+    -fx-text-fill: white;
+    -fx-font-size: 16;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+}
+
+.alert-nequi .alert-button:hover {
+    -fx-scale-y: 1.01;
+    -fx-scale-x: 1.01;
+    -fx-cursor: hand;
+}
+.alert-nequi .alert-button:pressed {
+    -fx-opacity: 0.8;
+}
+
+#buttonDaviplata{
+    -fx-background-color: #E30613;
+    -fx-text-fill: white;
+    -fx-font-size: 16;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+}
+
+#buttonDaviplata:hover{
+    -fx-background-color: #bd0310;
+    -fx-scale-y: 1.01;
+    -fx-scale-x: 1.01;
+    -fx-cursor: hand;
+}
+
+#buttonDaviplata:pressed{
+    -fx-opacity: 0.8;
+    -fx-translate-y: 1;
+}
+
+#buttonNequi{
+    -fx-background-color: #F5008D;
+    -fx-text-fill: white;
+    -fx-font-size: 16;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+}
+
+#buttonNequi:hover{
+    -fx-background-color: #c80072;
+    -fx-scale-y: 1.01;
+    -fx-scale-x: 1.01;
+    -fx-cursor: hand;
+}
+
+#buttonNequi:pressed{
+    -fx-opacity: 0.8;
+    -fx-translate-y: 1;
 }

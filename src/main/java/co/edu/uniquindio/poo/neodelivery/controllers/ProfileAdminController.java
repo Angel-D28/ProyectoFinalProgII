@@ -184,7 +184,11 @@ public class ProfileAdminController {
         Utils.showAlert("VERIFIED", "Profile updated successfully!");
 
         if (mainContent != null) backToHome();
-        if (dashboardController != null) dashboardController.refreshProfileImage();
+        if (dashboardController != null) {
+            dashboardController.refreshProfileImage();
+            dashboardController.setNameLabel(name);
+        }
+
     }
 
 

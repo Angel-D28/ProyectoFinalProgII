@@ -174,7 +174,10 @@ public class ProfileDeliveryDriverController {
         Utils.showAlert("VERIFIED", "Profile updated successfully!");
 
         if (mainContent != null) backToStatistics();
-        if (dashboardController != null) dashboardController.refreshProfileImage();
+        if (dashboardController != null) {
+            dashboardController.refreshProfileImage();
+            dashboardController.setNameLabel(name);
+        }
     }
 
     void backToStatistics(){

@@ -57,7 +57,7 @@ public class CourierDashboardController {
 
     public void setCurrentCourier(DeliveryDriver courier) {
         this.currentCourier = courier;
-        lblWelcomeCourier.setText("Welcome, " + courier.getName());
+        setNameLabel(courier.getName());
         loadCourierImage();
 
         if (mainContent != null) {
@@ -66,6 +66,10 @@ public class CourierDashboardController {
                 controller.setCurrentCourier(currentCourier);
             }
         }
+    }
+
+    void setNameLabel(String name) {
+        lblWelcomeCourier.setText(name);
     }
 
     @FXML
