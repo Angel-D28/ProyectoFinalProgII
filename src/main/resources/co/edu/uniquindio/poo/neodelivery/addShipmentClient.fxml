@@ -98,7 +98,7 @@
                         </GridPane>
                      </children>
                   </AnchorPane>
-                  <Label fx:id="txtAboutRates" onMouseClicked="#OnClickedAboutRates" onMouseEntered="#onMouseEnteredAboutRates" onMouseExited="#onMouseExitedAboutRates" prefHeight="20.0" prefWidth="123.0" style="-fx-font-size: 16;" styleClass="text" text="About our rates" textFill="#a7a4b5" underline="true" />
+                  <Label fx:id="txtAboutRates" onMouseClicked="#OnClickedAboutRates" onMouseEntered="#onMouseEnteredAboutRates" onMouseExited="#onMouseExitedAboutRates" prefHeight="20.0" prefWidth="123.0" style="-fx-font-size: 16; -fx-cursor: hand;" styleClass="text" text="About our rates" textFill="#a7a4b5" underline="true" />
                </children>
                <StackPane.margin>
                   <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
