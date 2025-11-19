@@ -17,6 +17,15 @@
       "paymentMethodName" : "daviplata",
       "walletProvider" : "daviplata",
       "numberWallet" : "3108897766:1122"
+    }, {
+      "type" : "digitalWallet",
+      "idPayment" : "PAY-1763527819606",
+      "amount" : 17000.0,
+      "paymentDate" : "2025-11-18",
+      "status" : "Approved",
+      "paymentMethodName" : "daviplata",
+      "walletProvider" : "daviplata",
+      "numberWallet" : "3108489702:1112"
     } ],
     "shipmentsList" : [ {
       "id" : "SHP1",
@@ -57,6 +66,39 @@
       },
       "priority" : true,
       "description" : "Envío desde Mz H Casa 1, Calarcá, Quindío hasta Cra 15 #25-21 Pereira, Risaralda",
+      "paymentMethodName" : "Daviplata"
+    }, {
+      "id" : "SHP2",
+      "origin" : {
+        "address" : "Mz H Casa 1, Calarcá, Quindío"
+      },
+      "destination" : {
+        "address" : "La mesa, Nariño"
+      },
+      "weight" : 2.0,
+      "volume" : 15.0,
+      "cost" : 17000.0,
+      "status" : "PENDING",
+      "hasInsurance" : false,
+      "requiresSignature" : true,
+      "fragile" : false,
+      "payment" : {
+        "type" : "digitalWallet",
+        "idPayment" : "PAY-1763527819606",
+        "amount" : 17000.0,
+        "paymentDate" : "2025-11-18",
+        "status" : "Approved",
+        "paymentMethodName" : "daviplata",
+        "walletProvider" : "daviplata",
+        "numberWallet" : "3108489702:1112"
+      },
+      "state" : {
+        "type" : "Pending",
+        "statusName" : "PENDING"
+      },
+      "assignedDriver" : null,
+      "priority" : false,
+      "description" : "Envío desde Mz H Casa 1, Calarcá, Quindío hasta La mesa, Nariño",
       "paymentMethodName" : "Daviplata"
     } ],
     "addressList" : [ {
@@ -105,6 +147,39 @@
     "priority" : true,
     "description" : "Envío desde Mz H Casa 1, Calarcá, Quindío hasta Cra 15 #25-21 Pereira, Risaralda",
     "paymentMethodName" : "Daviplata"
+  }, {
+    "id" : "SHP2",
+    "origin" : {
+      "address" : "Mz H Casa 1, Calarcá, Quindío"
+    },
+    "destination" : {
+      "address" : "La mesa, Nariño"
+    },
+    "weight" : 2.0,
+    "volume" : 15.0,
+    "cost" : 17000.0,
+    "status" : "PENDING",
+    "hasInsurance" : false,
+    "requiresSignature" : true,
+    "fragile" : false,
+    "payment" : {
+      "type" : "digitalWallet",
+      "idPayment" : "PAY-1763527819606",
+      "amount" : 17000.0,
+      "paymentDate" : "2025-11-18",
+      "status" : "Approved",
+      "paymentMethodName" : "daviplata",
+      "walletProvider" : "daviplata",
+      "numberWallet" : "3108489702:1112"
+    },
+    "state" : {
+      "type" : "Pending",
+      "statusName" : "PENDING"
+    },
+    "assignedDriver" : null,
+    "priority" : false,
+    "description" : "Envío desde Mz H Casa 1, Calarcá, Quindío hasta La mesa, Nariño",
+    "paymentMethodName" : "Daviplata"
   } ],
   "drivers" : [ {
     "id" : "1",
@@ -123,6 +198,15 @@
     "paymentMethodName" : "daviplata",
     "walletProvider" : "daviplata",
     "numberWallet" : "3108897766:1122"
+  }, {
+    "type" : "digitalWallet",
+    "idPayment" : "PAY-1763527819606",
+    "amount" : 17000.0,
+    "paymentDate" : "2025-11-18",
+    "status" : "Approved",
+    "paymentMethodName" : "daviplata",
+    "walletProvider" : "daviplata",
+    "numberWallet" : "3108489702:1112"
   } ],
   "admins" : [ {
     "idAdmin" : "1",
@@ -130,6 +214,6 @@
     "email" : "caml.7carlos@gmail.com",
     "number" : "3208489702",
     "password" : "201bce2458f00a54130c695ca8d1658319b32206d495adf175847b57bd4a4151",
-    "profilePicturePath" : null
+    "profilePicturePath" : "C:\\Users\\andre\\OneDrive\\Desktop\\Programación\\FinalProjectP2\\ProyectoFinalProgII\\data\\images\\fotoPerfil.jpg"
   } ]
 }
