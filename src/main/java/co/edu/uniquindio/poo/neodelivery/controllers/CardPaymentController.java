@@ -3,6 +3,7 @@ package co.edu.uniquindio.poo.neodelivery.controllers;
 import co.edu.uniquindio.poo.neodelivery.model.*;
 import co.edu.uniquindio.poo.neodelivery.model.Repository.DataBase;
 import co.edu.uniquindio.poo.neodelivery.model.gestores.ManagePayments;
+import co.edu.uniquindio.poo.neodelivery.model.gestores.ManageShipments;
 import co.edu.uniquindio.poo.neodelivery.model.utils.Utils;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -29,6 +30,8 @@ public class CardPaymentController {
 
     private ManagePayments managePayments = new ManagePayments();
 
+    private ManageShipments manageShipments = new ManageShipments();
+
     public void setShipment(Shipment shipment) {
         this.shipment = shipment;
     }
@@ -44,8 +47,10 @@ public class CardPaymentController {
     @FXML
     void cancel(ActionEvent event) {
         Utils.showAlert("WARNING", "Cancelando...");
+        manageShipments.deleteShipment(shipment, client);
         ManageShipmentsClientController shipmentsController = Utils.replaceMainContent(mainContent, "manageShipmentsClient.fxml");
         shipmentsController.setMainContentManageShipments(mainContent);
+        shipmentsController.setClientLogged(client);
     }
 
     @FXML

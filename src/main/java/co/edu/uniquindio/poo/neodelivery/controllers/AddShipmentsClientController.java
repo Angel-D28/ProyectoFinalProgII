@@ -1,18 +1,22 @@
 package co.edu.uniquindio.poo.neodelivery.controllers;
 
+import co.edu.uniquindio.poo.neodelivery.App.NeoDeliveryApp;
 import co.edu.uniquindio.poo.neodelivery.model.*;
 import co.edu.uniquindio.poo.neodelivery.model.Repository.DataBase;
 import co.edu.uniquindio.poo.neodelivery.model.gestores.ManagePayments;
 import co.edu.uniquindio.poo.neodelivery.model.gestores.ManageShipments;
 import co.edu.uniquindio.poo.neodelivery.model.utils.Utils;
+import javafx.animation.ScaleTransition;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 
 public class AddShipmentsClientController {
 
@@ -27,6 +31,9 @@ public class AddShipmentsClientController {
     @FXML private TextField txtOrigin;
     @FXML private TextField txtVolume;
     @FXML private TextField txtWeigth;
+
+    @FXML
+    private Label txtAboutRates;
 
     DataBase db = DataBase.getInstance();
     private User clientLogged;
@@ -158,4 +165,36 @@ public class AddShipmentsClientController {
     void messagePopUp(MouseEvent event) {
         Utils.showAlert("WARNING", "You cannot change your address in this field.\n\nChange your default address in 'addresses'.");
     }
+
+    @FXML
+    void OnClickedAboutRates(MouseEvent event) {
+        try {
+            String url = getClass()
+                    .getResource("/NeoDeliveryInformation.html")
+                    .toExternalForm();
+
+            NeoDeliveryApp.getAppHostServices().showDocument(url);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void onMouseEnteredAboutRates(MouseEvent event) {
+        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(200), txtAboutRates);
+        scaleTransition.setToX(1.1);
+        scaleTransition.setToY(1.1);
+        scaleTransition.play();
+    }
+
+    @FXML
+    void onMouseExitedAboutRates(MouseEvent event) {
+        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(200), txtAboutRates);
+        scaleTransition.setToX(1.0);
+        scaleTransition.setToY(1.0);
+        scaleTransition.play();
+    }
+
+
 }

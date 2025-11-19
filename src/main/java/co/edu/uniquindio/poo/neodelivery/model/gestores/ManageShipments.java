@@ -89,7 +89,8 @@ public class ManageShipments {
         if (shipment.isRequiresSignature()) decorated = new SignatureDecorator(decorated);
         if (shipment.isFragile()) decorated = new FragileDecorator(decorated);
 
-        double finalCost = decorated.getCost();
+        double finalCost = decorated.getCost()+5000;
+        System.out.println("Costo final del envío: $" + finalCost);
         shipment.setCost(finalCost);
         return finalCost;
     }
@@ -106,5 +107,13 @@ public class ManageShipments {
             }
         }
         return "SHP" + (maxId + 1);
+    }
+
+    public void deleteShipment(Shipment shipment, User client) {
+        if(shipment != null && client != null) {
+            db.getListaEnvios().remove(shipment);
+            client.getShipmentsList().remove(shipment);
+            DataBase.getInstance().saveToJson();
+        }
     }
 }

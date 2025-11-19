@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NeoDeliver - Delivery Information</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            background: #000c4a;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            color: white;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        .container {
+            margin-top: 30px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #000c4a;
+            color: white;
+            padding: 10px;
+        }
+
+        td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>NeoDeliver</h1>
+    <p>Delivery Information</p>
+</header>
+
+<div class="container">
+    <h2>Pricing Table</h2>
+    <p>Here you can find the detailed cost of deliveries based on weight, distance, and additional services.</p>
+
+    <table>
+        <tr>
+            <th>Service</th>
+            <th>Description</th>
+            <th>Price (COP)</th>
+        </tr>
+
+        <tr>
+            <td>Base Delivery Fee</td>
+            <td>What we will charge you for using our services</td>
+            <td>5000 COP</td>
+        </tr>
+
+        <tr>
+            <td>Has Insurance</td>
+            <td>We will charge extra to insure your order (If it is damaged in transit, we will pay for it)</td>
+            <td>5000 COP</td>
+        </tr>
+
+        <tr>
+            <td>Is Priority</td>
+            <td>Faster pickup and delivery</td>
+            <td>8000 COP</td>
+        </tr>
+
+        <tr>
+            <td>Requires Signature</td>
+            <td>We will charge extra to require a signature for your order</td>
+            <td>2000 COP</td>
+        </tr>
+
+        <tr>
+            <td>Is Fragile</td>
+            <td>We will charge extra to handle fragile packages</td>
+            <td>3000 COP</td>
+        </tr>
+
+    </table>
+</div>
+
+</body>
+</html>

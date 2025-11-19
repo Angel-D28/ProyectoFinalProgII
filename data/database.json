@@ -26,6 +26,45 @@
       "paymentMethodName" : "daviplata",
       "walletProvider" : "daviplata",
       "numberWallet" : "3108489702:1112"
+    }, {
+      "type" : "cash",
+      "idPayment" : "PAY-1763535692142",
+      "amount" : 62000.0,
+      "paymentDate" : "2025-11-19",
+      "status" : null,
+      "paymentMethodName" : "Unknown",
+      "referenceCode" : "EF-864480"
+    }, {
+      "type" : "card",
+      "idPayment" : "PAY-1763535992167",
+      "amount" : 6000.0,
+      "paymentDate" : "2025-11-19",
+      "status" : null,
+      "paymentMethodName" : "Unknown"
+    }, {
+      "type" : "cash",
+      "idPayment" : "PAY-1763536065066",
+      "amount" : 40000.0,
+      "paymentDate" : "2025-11-19",
+      "status" : null,
+      "paymentMethodName" : "Unknown",
+      "referenceCode" : "EF-985334"
+    }, {
+      "type" : "digitalWallet",
+      "idPayment" : "PAY-1763536085959",
+      "amount" : 40000.0,
+      "paymentDate" : "2025-11-19",
+      "status" : null,
+      "paymentMethodName" : "daviplata",
+      "walletProvider" : "daviplata",
+      "numberWallet" : "3115012956:1122"
+    }, {
+      "type" : "card",
+      "idPayment" : "PAY-1763537834570",
+      "amount" : 17000.0,
+      "paymentDate" : "2025-11-19",
+      "status" : "Approved",
+      "paymentMethodName" : "Unknown"
     } ],
     "shipmentsList" : [ {
       "id" : "SHP1",
@@ -100,6 +139,37 @@
       "priority" : false,
       "description" : "Envío desde Mz H Casa 1, Calarcá, Quindío hasta La mesa, Nariño",
       "paymentMethodName" : "Daviplata"
+    }, {
+      "id" : "SHP4",
+      "origin" : {
+        "address" : "Mz H Casa 1, Calarcá, Quindío"
+      },
+      "destination" : {
+        "address" : "Mz W Casa 12, Armenia, Quindío"
+      },
+      "weight" : 2.0,
+      "volume" : 25.0,
+      "cost" : 17000.0,
+      "status" : "PENDING",
+      "hasInsurance" : false,
+      "requiresSignature" : true,
+      "fragile" : false,
+      "payment" : {
+        "type" : "card",
+        "idPayment" : "PAY-1763537834570",
+        "amount" : 17000.0,
+        "paymentDate" : "2025-11-19",
+        "status" : "Approved",
+        "paymentMethodName" : "Unknown"
+      },
+      "state" : {
+        "type" : "Pending",
+        "statusName" : "PENDING"
+      },
+      "assignedDriver" : null,
+      "priority" : false,
+      "description" : "Envío desde Mz H Casa 1, Calarcá, Quindío hasta Mz W Casa 12, Armenia, Quindío",
+      "paymentMethodName" : "Unknown"
     } ],
     "addressList" : [ {
       "address" : "Mz H Casa 1, Calarcá, Quindío"
@@ -180,6 +250,68 @@
     "priority" : false,
     "description" : "Envío desde Mz H Casa 1, Calarcá, Quindío hasta La mesa, Nariño",
     "paymentMethodName" : "Daviplata"
+  }, {
+    "id" : "SHP3",
+    "origin" : {
+      "address" : "Mz H Casa 1, Calarcá, Quindío"
+    },
+    "destination" : {
+      "address" : "Mz D Casa 2"
+    },
+    "weight" : 4.0,
+    "volume" : 22.0,
+    "cost" : 0.0,
+    "status" : "PENDING",
+    "hasInsurance" : false,
+    "requiresSignature" : false,
+    "fragile" : false,
+    "payment" : {
+      "type" : "card",
+      "idPayment" : "PAY-1763533693655",
+      "amount" : 0.0,
+      "paymentDate" : "2025-11-19",
+      "status" : null,
+      "paymentMethodName" : "Unknown"
+    },
+    "state" : {
+      "type" : "Pending",
+      "statusName" : "PENDING"
+    },
+    "assignedDriver" : null,
+    "priority" : false,
+    "description" : "Envío desde Mz H Casa 1, Calarcá, Quindío hasta Mz D Casa 2",
+    "paymentMethodName" : "Unknown"
+  }, {
+    "id" : "SHP4",
+    "origin" : {
+      "address" : "Mz H Casa 1, Calarcá, Quindío"
+    },
+    "destination" : {
+      "address" : "Mz W Casa 12, Armenia, Quindío"
+    },
+    "weight" : 2.0,
+    "volume" : 25.0,
+    "cost" : 17000.0,
+    "status" : "PENDING",
+    "hasInsurance" : false,
+    "requiresSignature" : true,
+    "fragile" : false,
+    "payment" : {
+      "type" : "card",
+      "idPayment" : "PAY-1763537834570",
+      "amount" : 17000.0,
+      "paymentDate" : "2025-11-19",
+      "status" : "Approved",
+      "paymentMethodName" : "Unknown"
+    },
+    "state" : {
+      "type" : "Pending",
+      "statusName" : "PENDING"
+    },
+    "assignedDriver" : null,
+    "priority" : false,
+    "description" : "Envío desde Mz H Casa 1, Calarcá, Quindío hasta Mz W Casa 12, Armenia, Quindío",
+    "paymentMethodName" : "Unknown"
   } ],
   "drivers" : [ {
     "id" : "1",
@@ -207,6 +339,45 @@
     "paymentMethodName" : "daviplata",
     "walletProvider" : "daviplata",
     "numberWallet" : "3108489702:1112"
+  }, {
+    "type" : "cash",
+    "idPayment" : "PAY-1763535692142",
+    "amount" : 62000.0,
+    "paymentDate" : "2025-11-19",
+    "status" : null,
+    "paymentMethodName" : "Unknown",
+    "referenceCode" : "EF-864480"
+  }, {
+    "type" : "card",
+    "idPayment" : "PAY-1763535992167",
+    "amount" : 6000.0,
+    "paymentDate" : "2025-11-19",
+    "status" : null,
+    "paymentMethodName" : "Unknown"
+  }, {
+    "type" : "cash",
+    "idPayment" : "PAY-1763536065066",
+    "amount" : 40000.0,
+    "paymentDate" : "2025-11-19",
+    "status" : null,
+    "paymentMethodName" : "Unknown",
+    "referenceCode" : "EF-985334"
+  }, {
+    "type" : "digitalWallet",
+    "idPayment" : "PAY-1763536085959",
+    "amount" : 40000.0,
+    "paymentDate" : "2025-11-19",
+    "status" : null,
+    "paymentMethodName" : "daviplata",
+    "walletProvider" : "daviplata",
+    "numberWallet" : "3115012956:1122"
+  }, {
+    "type" : "card",
+    "idPayment" : "PAY-1763537834570",
+    "amount" : 17000.0,
+    "paymentDate" : "2025-11-19",
+    "status" : "Approved",
+    "paymentMethodName" : "Unknown"
   } ],
   "admins" : [ {
     "idAdmin" : "1",

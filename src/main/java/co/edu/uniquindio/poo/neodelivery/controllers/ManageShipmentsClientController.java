@@ -1,10 +1,7 @@
 package co.edu.uniquindio.poo.neodelivery.controllers;
 
-import co.edu.uniquindio.poo.neodelivery.model.Admin;
+import co.edu.uniquindio.poo.neodelivery.model.*;
 import co.edu.uniquindio.poo.neodelivery.model.Repository.DataBase;
-import co.edu.uniquindio.poo.neodelivery.model.Shipment;
-import co.edu.uniquindio.poo.neodelivery.model.Status;
-import co.edu.uniquindio.poo.neodelivery.model.User;
 import co.edu.uniquindio.poo.neodelivery.model.gestores.ManageShipments;
 import co.edu.uniquindio.poo.neodelivery.model.utils.Utils;
 import javafx.beans.property.SimpleStringProperty;
@@ -134,8 +131,13 @@ public class ManageShipmentsClientController {
         }else if(shipmentSelected.getStatus().equals(Status.PENDING) || shipmentSelected.getStatus().equals(Status.DELIVERASSIGNED)){
             clientLogged.getShipmentsList().remove(shipmentSelected);
             db.getListaEnvios().remove(shipmentSelected);
-            shipmentSelected.getAssignedDriver().setShipmentAssigned(null);
-            shipmentSelected.getAssignedDriver().setAvalibility(true);
+
+            DeliveryDriver driver = shipmentSelected.getAssignedDriver();
+            if(driver != null){
+                driver.setAvalibility(true);
+                driver.setShipmentAssigned(null);
+            }
+
             Utils.showAlert("VERIFIED", "Shipping canceled.");
             refreshShipmentsList();
         }else{
@@ -159,9 +161,7 @@ public class ManageShipmentsClientController {
 
     public void refreshShipmentsList() {
         if (clientLogged != null) {
-            shipmentsList.clear();
-            shipmentsList.addAll(clientLogged.getShipmentsList());
-            tableShipmentsClient.setItems(shipmentsList);
+            loadShipmentsListFromUserList();
         }
     }
 
