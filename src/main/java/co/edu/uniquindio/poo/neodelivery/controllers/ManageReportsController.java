@@ -2,6 +2,7 @@ package co.edu.uniquindio.poo.neodelivery.controllers;
 
 import co.edu.uniquindio.poo.neodelivery.model.Repository.DataBase;
 import co.edu.uniquindio.poo.neodelivery.model.Shipment;
+import co.edu.uniquindio.poo.neodelivery.model.User;
 import co.edu.uniquindio.poo.neodelivery.model.utils.Utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -58,6 +59,13 @@ public class ManageReportsController {
     @FXML
     private TableColumn<Shipment, String> columnDate;
 
+    private User clientLogged;
+
+    void setClientLogged(User clientLogged) {
+        this.clientLogged = clientLogged;
+        loadShipmentsFromDatabase();
+    }
+
     private AnchorPane mainContent;
     private ObservableList<Shipment> shipmentsList = FXCollections.observableArrayList();
     private static final String REPORTS_DIR = "reports";
@@ -73,7 +81,7 @@ public class ManageReportsController {
         columnAddress.setCellValueFactory(cellData -> 
             new javafx.beans.property.SimpleStringProperty(
                 cellData.getValue().getDestination() != null ? 
-                cellData.getValue().getDestination().toString() : "N/D"
+                cellData.getValue().getDestination().toString() : "N/N"
             )
         );
         columnStatus.setCellValueFactory(cellData -> 
@@ -84,43 +92,43 @@ public class ManageReportsController {
         columnDriver.setCellValueFactory(cellData -> 
             new javafx.beans.property.SimpleStringProperty(
                 cellData.getValue().getAssignedDriver() != null ? 
-                cellData.getValue().getAssignedDriver().getName() : "N/D"
+                cellData.getValue().getAssignedDriver().getName() : "N/N"
             )
         );
         columnClient.setCellValueFactory(cellData -> 
             new javafx.beans.property.SimpleStringProperty(
                 cellData.getValue().getOrigin() != null ? 
-                cellData.getValue().getOrigin().toString() : "N/D"
+                cellData.getValue().getOrigin().toString() : "N/N"
             )
         );
         columnDate.setCellValueFactory(cellData -> 
-            new javafx.beans.property.SimpleStringProperty("N/D")
+            new javafx.beans.property.SimpleStringProperty("N/N")
         );
 
         tableViewReports.setItems(shipmentsList);
-        loadShipmentsFromDatabase();
+
     }
 
     private void loadShipmentsFromDatabase() {
-        DataBase db = DataBase.getInstance();
         shipmentsList.clear();
-        shipmentsList.addAll(db.getListaEnvios());
+        shipmentsList.addAll(clientLogged.getShipmentsList());
+    }
+
+    private void rechargeShipmentsFromDatabase() {
+        shipmentsList.clear();
+        loadShipmentsFromDatabase();
     }
 
     private String translateStatus(co.edu.uniquindio.poo.neodelivery.model.Status status) {
         if (status == null) return "N/D";
         return switch(status) {
-            case PENDING -> "Pendiente";
-            case DELIVERASSIGNED -> "Asignado";
-            case DELIVERED -> "Entregado";
-            case DELIVERING -> "En Camino";
+            case PENDING -> "Pending";
+            case DELIVERASSIGNED -> "Assigned";
+            case DELIVERED -> "Delivered";
+            case DELIVERING -> "Delivering";
         };
     }
 
-    /**
-     * Genera un reporte PDF con todos los envíos disponibles
-     * Guarda el archivo en /reports/Report-<fecha>.pdf
-     */
     public void generateDeliveryReportPDF() {
         try {
             // Crear directorio de reportes si no existe
@@ -135,9 +143,7 @@ public class ManageReportsController {
             String fileName = "Report-" + dateString + ".pdf";
             File pdfFile = new File(reportsDir, fileName);
 
-            // Obtener lista de envíos desde la base de datos
-            DataBase db = DataBase.getInstance();
-            List<Shipment> shipments = db.getListaEnvios();
+            List<Shipment> shipments = clientLogged.getShipmentsList();
 
             if (shipments.isEmpty()) {
                 Utils.showAlert("WARNING", "No hay envíos para generar el reporte");

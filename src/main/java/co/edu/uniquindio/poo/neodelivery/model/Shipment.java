@@ -2,10 +2,14 @@ package co.edu.uniquindio.poo.neodelivery.model;
 
 import co.edu.uniquindio.poo.neodelivery.model.State.PendingState;
 import co.edu.uniquindio.poo.neodelivery.model.State.ShipmentState;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Shipment implements IShipment, Subject {
 
     private String id;
@@ -22,9 +26,17 @@ public class Shipment implements IShipment, Subject {
     private Payment payment;
 
     private ShipmentState state;
+
+    @JsonManagedReference
     private DeliveryDriver assignedDriver;
 
-    private final List<Observer> observers = new ArrayList<>();
+    @JsonIgnore
+    private List<Observer> observers = new ArrayList<>();
+
+    //Constructor vacío para funcionar con la "base de datos" Jackson/json
+    public Shipment(){
+        observers = new ArrayList<>();
+    }
 
     private Shipment(Builder builder) {
         this.id = builder.id;
@@ -98,6 +110,15 @@ public class Shipment implements IShipment, Subject {
     public void setStatus(Status newStatus) {
         this.status = newStatus;
         notifyObservers("El envío " + id + " cambió su estado a: " + newStatus);
+    }
+
+    public String getPaymentMethodName() {
+        if (payment == null) return "Not paid";
+
+        String raw = payment.getPaymentMethodName();
+        if (raw == null || raw.isEmpty()) return "Unknown";
+
+        return raw.substring(0,1).toUpperCase() + raw.substring(1).toLowerCase();
     }
 
     public DeliveryDriver getAssignedDriver() {

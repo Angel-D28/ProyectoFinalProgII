@@ -4,8 +4,12 @@ import co.edu.uniquindio.poo.neodelivery.model.Admin;
 import co.edu.uniquindio.poo.neodelivery.model.DeliveryDriver;
 import co.edu.uniquindio.poo.neodelivery.model.Shipment;
 import co.edu.uniquindio.poo.neodelivery.model.Status;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class PendingState implements ShipmentState{
+
+    public PendingState(){}
 
     @Override
     public void assignerDriver(Shipment shipment, Admin admin, DeliveryDriver driver) {

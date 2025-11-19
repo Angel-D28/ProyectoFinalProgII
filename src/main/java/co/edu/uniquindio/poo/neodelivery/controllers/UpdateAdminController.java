@@ -75,20 +75,38 @@ public class UpdateAdminController {
             return;
         }
 
-        String name = this.txtAdminName.getText() == null ? "" : this.txtAdminName.getText().trim();
-        String phoneNumber = this.txtAdminNumber.getText() == null ? "" : this.txtAdminNumber.getText().trim();
-        String email = this.txtAdminEmail.getText() == null ? "" : this.txtAdminEmail.getText().trim();
-        String password = this.txtAdminPassword.getText() == null ? "" : this.txtAdminPassword.getText();
-        String confirmPassword = this.txtAdminPasswordConfirm.getText() == null ? "" : this.txtAdminPasswordConfirm.getText();
+        String name = txtAdminName.getText() == null ? "" : txtAdminName.getText().trim();
+        String phoneNumber = txtAdminNumber.getText() == null ? "" : txtAdminNumber.getText().trim();
+        String email = txtAdminEmail.getText() == null ? "" : txtAdminEmail.getText().trim();
+        String password = txtAdminPassword.getText() == null ? "" : txtAdminPassword.getText();
+        String confirmPassword = txtAdminPasswordConfirm.getText() == null ? "" : txtAdminPasswordConfirm.getText();
 
-        if (name.isEmpty() || phoneNumber.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+        if (name.isEmpty() || phoneNumber.isEmpty() || email.isEmpty()
+                || password.isEmpty() || confirmPassword.isEmpty()) {
             Utils.showAlert("WARNING", "Fill in all fields");
             return;
         }
-        if (!email.equalsIgnoreCase(adminToUpdate.getEmail()) && isEmailRegistered(email)) {
+
+        if (!phoneNumber.matches("^3\\d{9}$")) {
+            Utils.showAlert("ERROR", "Phone number must start with 3 and have 10 digits");
+            return;
+        }
+
+        if (!email.matches("^[A-Za-z0-9+_.-]+@(gmail|hotmail|outlook|yahoo)\\.com$")) {
+            Utils.showAlert("ERROR", "Email must be Gmail, Hotmail, Outlook, or Yahoo");
+            return;
+        }
+
+        if (!email.equalsIgnoreCase(adminToUpdate.getEmail()) && Utils.isEmailRegistered(email)) {
             Utils.showAlert("ERROR", "Email already in use");
             return;
         }
+
+        if (password.length() < 8) {
+            Utils.showAlert("ERROR", "Password must be at least 8 characters!");
+            return;
+        }
+
         if (!password.equals(confirmPassword)) {
             Utils.showAlert("ERROR", "Passwords don't match");
             return;
@@ -101,12 +119,17 @@ public class UpdateAdminController {
                 phoneNumber,
                 Utils.hashPassword(password)
         );
+
         manageAdmin.updateAdmin(adminToUpdate.getIdAdmin().toString(), updatedAdmin);
         Utils.showAlert("VERIFIED", "Successfully updated");
-        ActivityLogService.log(adminLogged.getName(), "Created Admin - Name: "+name+" ID: "+adminToUpdate.getIdAdmin());
+
+        ActivityLogService.log(adminLogged.getName(),
+                "Updated Admin - Name: " + name + " ID: " + adminToUpdate.getIdAdmin()
+        );
 
         try {
-            ManageAdminController controller = Utils.replaceMainContent(mainContent, "manageAdmin.fxml");
+            ManageAdminController controller =
+                    Utils.replaceMainContent(mainContent, "manageAdmin.fxml");
             controller.setLoggedAdmin(adminLogged);
             controller.setMainContent(mainContent);
         } catch (Exception e) {
@@ -115,16 +138,6 @@ public class UpdateAdminController {
         }
     }
 
-    private boolean isEmailRegistered(String email) {
-        String lowerEmail = email.toLowerCase();
-        DataBase db = DataBase.getInstance();
-        if (db.getListaUsuarios().stream().anyMatch((u) -> u.getEmail().toLowerCase().equals(lowerEmail))) {
-            return true;
-        } else if (db.getListaAdmin().stream().anyMatch((a) -> a.getEmail().toLowerCase().equals(lowerEmail))) {
-            return true;
-        } else {
-            return db.getListaRepartidores().stream().anyMatch((d) -> d.getEmail().toLowerCase().equals(lowerEmail));
-        }
-    }
+
 
 }

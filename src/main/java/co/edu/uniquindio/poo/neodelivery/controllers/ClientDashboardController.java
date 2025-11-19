@@ -1,6 +1,7 @@
 package co.edu.uniquindio.poo.neodelivery.controllers;
 
 import co.edu.uniquindio.poo.neodelivery.model.ActivityLogService;
+import co.edu.uniquindio.poo.neodelivery.model.Repository.DataBase;
 import co.edu.uniquindio.poo.neodelivery.model.User;
 import co.edu.uniquindio.poo.neodelivery.model.utils.Utils;
 import javafx.animation.Interpolator;
@@ -56,47 +57,54 @@ public class ClientDashboardController {
         this.userLogged = userLogged;
         lblWelcomeClient.setText(userLogged.getName());
         loadUserImage();
+
+        HomeClientController homeController = Utils.replaceMainContent(mainContent, "homeClient.fxml");
+        if(homeController != null){
+            homeController.setClient(userLogged);
+            homeController.setMainContentHomeClient(mainContent);
+        }
     }
 
     @FXML
     public void initialize() {
-        Utils.replaceMainContent(mainContent, "homeClient.fxml");
         profileImageView.setClip(new Circle(50, 50, 50));
-
-        if (userLogged != null) {
-            loadUserImage();
-        }
     }
 
     @FXML
     void btnActivateNotifitcations(ActionEvent event) {
+        boolean newState = !userLogged.isNotificationsEnabled();
+        userLogged.setNotificationsEnabled(newState);
 
-        if (notificationActived) {
-            Utils.showAlert("VERIFIED", "Notifications actived");
-
-        }else{
-            Utils.showAlert("VERIFIED", "Notifications desactived");
+        if (newState) {
+            Utils.showAlert("VERIFIED", "Notifications activated");
+        } else {
+            Utils.showAlert("VERIFIED", "Notifications deactivated");
         }
-        notificationActived = !notificationActived;
+        DataBase.getInstance().saveToJson();
     }
 
     @FXML
     void btnAddress(ActionEvent event) {
-
+        ManageAddressesController addressController = Utils.replaceMainContent(mainContent, "manageAddresses.fxml");
+        if(addressController != null){
+            addressController.setClient(userLogged);
+            addressController.setMainContent(mainContent);
+        }
     }
 
     @FXML
     void homeUser(ActionEvent event) {
         HomeClientController homeClientController = Utils.replaceMainContent(mainContent, "homeClient.fxml");
         homeClientController.setMainContentHomeClient(mainContent);
+        homeClientController.setClient(userLogged);
         loadUserImage();
     }
 
     @FXML
     void showOrders(ActionEvent event) {
-        ManageShipmentsClientController shipmentController = Utils.replaceMainContent(mainContent, "manageShipments(Client).fxml");
-        shipmentController.setMainContentManageShipments(mainContent);
+        ManageShipmentsClientController shipmentController = Utils.replaceMainContent(mainContent, "manageShipmentsClient.fxml");
         shipmentController.setClientLogged(userLogged);
+        shipmentController.setMainContentManageShipments(mainContent);
     }
 
     @FXML
@@ -113,7 +121,9 @@ public class ClientDashboardController {
 
     @FXML
     void trackOrder(ActionEvent event) {
-
+        TrackOrderController trackOrderController = Utils.replaceMainContent(mainContent, "trackOrder.fxml");
+        trackOrderController.setUserLogged(userLogged);
+        trackOrderController.setMainContent(mainContent);
     }
 
     @FXML
@@ -156,8 +166,7 @@ public class ClientDashboardController {
     @FXML
     void goToManageReports(ActionEvent event) {
         try {
-            ManageReportsController controller = Utils.replaceMainContent(mainContent, "manageReports.fxml");
-            controller.setMainContent(mainContent);
+            generateReport();
         } catch (Exception e) {
             e.printStackTrace();
             Utils.showAlert("ERROR", "No se pudo cargar la vista de reportes");
@@ -165,11 +174,15 @@ public class ClientDashboardController {
     }
 
     @FXML
-    void generateReport(ActionEvent event) {
+    void generateReport() {
         try {
             ManageReportsController controller = Utils.replaceMainContent(mainContent, "manageReports.fxml");
-            controller.setMainContent(mainContent);
-            controller.generateDeliveryReportPDF();
+            if(controller != null){
+                controller.setMainContent(mainContent);
+                controller.setClientLogged(userLogged);
+                controller.generateDeliveryReportPDF();
+
+            }
         } catch (Exception e) {
             e.printStackTrace();
             Utils.showAlert("ERROR", "No se pudo generar el reporte");

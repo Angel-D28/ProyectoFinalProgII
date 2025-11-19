@@ -1,21 +1,19 @@
 package co.edu.uniquindio.poo.neodelivery.model;
 
-
 import jakarta.mail.*;
-import jakarta.mail.internet.InternetAddress;
-import jakarta.mail.internet.MimeMessage;
-
+import jakarta.mail.internet.*;
+import java.io.File;
 import java.util.Properties;
 
-//contraseña de app: ircn wjqu zhyd gafd
 public class EmailService {
 
-    private static final String emailOrigen = "neodelivery123@gmail.com";
-    private final String appPassword = "ircn wjqu zhyd gafd";
+    //password: bdtg vyzm ufvq mygq
+    private static final String EMAIL_ORIGEN = "neodeliveryuq@gmail.com";
+    private static final String APP_PASSWORD = "bdtg vyzm ufvq mygq";
 
-    private static Session session;
+    private static final Session session;
 
-    public EmailService() {
+    static {
         Properties props = new Properties();
 
         props.put("mail.smtp.auth", "true");
@@ -23,25 +21,20 @@ public class EmailService {
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");
 
-        session = Session.getInstance (props , new Authenticator() {
+        session = Session.getInstance(props, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(emailOrigen, appPassword);
+                return new PasswordAuthentication(EMAIL_ORIGEN, APP_PASSWORD);
             }
         });
     }
-
-
 
     public static void sendEmail(String destinatario, String asunto, String mensajeTexto) {
         try {
             Message message = new MimeMessage(session);
 
-            message.setFrom(new InternetAddress(emailOrigen));
-            message.setRecipients(
-                    Message.RecipientType.TO,
-                    InternetAddress.parse(destinatario)
-            );
+            message.setFrom(new InternetAddress(EMAIL_ORIGEN));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinatario));
             message.setSubject(asunto);
             message.setText(mensajeTexto);
 
@@ -54,4 +47,39 @@ public class EmailService {
         }
     }
 
+    public static void sendEmailWithAttachment(
+            String destinatario,
+            String asunto,
+            String mensajeTexto,
+            File attachmentFile
+    ) {
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(EMAIL_ORIGEN));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinatario));
+            message.setSubject(asunto);
+
+            // Parte del texto
+            MimeBodyPart textPart = new MimeBodyPart();
+            textPart.setText(mensajeTexto);
+
+            // Parte del archivo adjunto
+            MimeBodyPart attachmentPart = new MimeBodyPart();
+            attachmentPart.attachFile(attachmentFile);
+
+            // Combinar en multipart
+            Multipart multipart = new MimeMultipart();
+            multipart.addBodyPart(textPart);
+            multipart.addBodyPart(attachmentPart);
+
+            message.setContent(multipart);
+
+            Transport.send(message);
+
+            System.out.println("Correo con adjunto enviado a " + destinatario);
+
+        } catch (Exception e) {
+            System.out.println("Error enviando correo con adjunto: " + e.getMessage());
+        }
+    }
 }

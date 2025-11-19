@@ -7,7 +7,6 @@ import java.util.List;
 
 public class ManageDeliveryDrivers {
     private DataBase db = DataBase.getInstance();
-    private int driverId;
 
     public DeliveryDriver findDeliveryDriver(String findId){
         DeliveryDriver driver = null;
@@ -45,10 +44,12 @@ public class ManageDeliveryDrivers {
 
     public void createDeliveryDriver(DeliveryDriver deliveryDriver) {
         db.getListaRepartidores().add(deliveryDriver);
+        DataBase.getInstance().saveToJson();
     }
 
     public void deleteDeliveyDriver(DeliveryDriver deliveryDriver) {
         db.getListaRepartidores().remove(deliveryDriver);
+        DataBase.getInstance().saveToJson();
     }
 
     //Falta el metodo de update
@@ -57,6 +58,7 @@ public class ManageDeliveryDrivers {
         deliveryDriverToUpdate.setName(deliveryDriverUpdated.getName());
         deliveryDriverToUpdate.setEmail(deliveryDriverUpdated.getEmail());
         deliveryDriverToUpdate.setPassword(deliveryDriverUpdated.getPassword());
+        DataBase.getInstance().saveToJson();
     }
 
 

@@ -5,6 +5,7 @@ import co.edu.uniquindio.poo.neodelivery.model.Repository.DataBase;
 import co.edu.uniquindio.poo.neodelivery.model.Shipment;
 import co.edu.uniquindio.poo.neodelivery.model.Status;
 import co.edu.uniquindio.poo.neodelivery.model.User;
+import co.edu.uniquindio.poo.neodelivery.model.gestores.ManageShipments;
 import co.edu.uniquindio.poo.neodelivery.model.utils.Utils;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -27,9 +28,6 @@ public class ManageShipmentsClientController {
 
     @FXML
     private Button btnDeselect;
-
-    @FXML
-    private Button btnEditShipment;
 
     @FXML
     private TableColumn<Shipment, String> columnDeliveryDriver;
@@ -77,17 +75,22 @@ public class ManageShipmentsClientController {
 
     private ObservableList<Shipment> shipmentsList = FXCollections.observableArrayList();
 
+    void setClientLogged(User client){
+        this.clientLogged = client;
+        loadShipmentsListFromUserList();
+    }
+
     void loadShipmentsListFromUserList(){
         shipmentsList.clear();
-        shipmentsList.addAll(clientLogged.getShipmentsList());
+        for(Shipment shipment1 : clientLogged.getShipmentsList()){
+            if(!shipment1.getStatus().equals(Status.DELIVERED)){
+                shipmentsList.add(shipment1);
+            }
+        }
     }
 
     void setMainContentManageShipments(AnchorPane mainContent) {
         this.mainContent = mainContent;
-    }
-
-    void setClientLogged(User client){
-        this.clientLogged = client;
     }
 
     void setShipment(Shipment shipment){
@@ -118,8 +121,9 @@ public class ManageShipmentsClientController {
         columnDeliveryDriver.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getAssignedDriver() != null ? cellData.getValue().getAssignedDriver().getName() : "Not assigned"));
 
-        loadShipmentsListFromUserList();
+
         tableShipmentsClient.setItems(shipmentsList);
+        refreshShipmentsList();
     }
 
     @FXML
@@ -130,15 +134,21 @@ public class ManageShipmentsClientController {
         }else if(shipmentSelected.getStatus().equals(Status.PENDING) || shipmentSelected.getStatus().equals(Status.DELIVERASSIGNED)){
             clientLogged.getShipmentsList().remove(shipmentSelected);
             db.getListaEnvios().remove(shipmentSelected);
+            shipmentSelected.getAssignedDriver().setShipmentAssigned(null);
+            shipmentSelected.getAssignedDriver().setAvalibility(true);
             Utils.showAlert("VERIFIED", "Shipping canceled.");
+            refreshShipmentsList();
         }else{
             Utils.showAlert("ERROR", "You cannot cancel a shipment that has already been picked up by a delivery driver.");
         }
+        DataBase.getInstance().saveToJson();
     }
 
     @FXML
     void createShipment(ActionEvent event) {
-
+        AddShipmentsClientController shipmentsClientController = Utils.replaceMainContent(mainContent, "addShipmentClient.fxml");
+        shipmentsClientController.setClient(clientLogged);
+        shipmentsClientController.setMainContent(mainContent);
     }
 
     @FXML
@@ -146,9 +156,13 @@ public class ManageShipmentsClientController {
         tableShipmentsClient.getSelectionModel().clearSelection();
     }
 
-    @FXML
-    void edtiShipment(ActionEvent event) {
 
+    public void refreshShipmentsList() {
+        if (clientLogged != null) {
+            shipmentsList.clear();
+            shipmentsList.addAll(clientLogged.getShipmentsList());
+            tableShipmentsClient.setItems(shipmentsList);
+        }
     }
 
 }

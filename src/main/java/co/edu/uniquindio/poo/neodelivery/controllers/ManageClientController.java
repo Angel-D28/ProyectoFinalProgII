@@ -5,6 +5,7 @@ import co.edu.uniquindio.poo.neodelivery.model.Address;
 import co.edu.uniquindio.poo.neodelivery.model.Admin;
 import co.edu.uniquindio.poo.neodelivery.model.Repository.DataBase;
 import co.edu.uniquindio.poo.neodelivery.model.User;
+import co.edu.uniquindio.poo.neodelivery.model.gestores.ManageUsers;
 import co.edu.uniquindio.poo.neodelivery.model.utils.Utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -52,6 +53,8 @@ public class ManageClientController {
 
     private Admin adminLogged;
 
+    private ManageUsers modificarUser = new ManageUsers();
+
     private ObservableList<User> userList = FXCollections.observableArrayList();
 
     private AnchorPane mainContent;
@@ -86,8 +89,7 @@ public class ManageClientController {
     void deleteUser(ActionEvent event) {
         User selected = manageUsers.getSelectionModel().getSelectedItem();
         if (selected != null) {
-            userList.remove(selected);
-            DataBase.getInstance().getListaUsuarios().remove(selected);
+            modificarUser.deleteUser(selected);
             Utils.showAlert("VERIFIED", "Successfully removed");
             ActivityLogService.log(adminLogged.getName(), "Deleted a user");
         }else{

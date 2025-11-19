@@ -128,6 +128,7 @@ public class ManageShipmentsController {
             selectedShipment.setStatus(newStatus);
             assignedShipments.refresh();
         });
+        DataBase.getInstance().saveToJson();
     }
 
     @FXML

@@ -63,48 +63,69 @@ public class AddClientController {
 
     @FXML
     void createClient(ActionEvent event) {
-        String name = this.txtClientName.getText() == null ? "" : this.txtClientName.getText().trim();
-        String phoneNumber = this.txtClientNumber.getText() == null ? "" : this.txtClientNumber.getText().trim();
-        String email = this.txtClientEmail.getText() == null ? "" : this.txtClientEmail.getText().trim();
-        String address = this.txtAddressClient.getText() == null ? "" : this.txtAddressClient.getText().trim();
-        String password = this.txtPasswordClient.getText() == null ? "" : this.txtPasswordClient.getText();
 
-        if(!name.isEmpty() && !phoneNumber.isEmpty() && !email.isEmpty() && !password.isEmpty()){
-            if(isEmailRegistered(email)){
-                Utils.showAlert("ERROR", "Email is already registered!");
-            } else if (txtPasswordClient.getLength() < 8) {
-                Utils.showAlert("ERROR", "Password must be at least 8 characters!");
-            } else{
-                String clientId = manageUser.generateId();
-                String hashedPassword = Utils.hashPassword(password);
-                Address clientAddress = new Address(address);
+        String name = txtClientName.getText() == null ? "" : txtClientName.getText().trim();
+        String phoneNumber = txtClientNumber.getText() == null ? "" : txtClientNumber.getText().trim();
+        String email = txtClientEmail.getText() == null ? "" : txtClientEmail.getText().trim();
+        String address = txtAddressClient.getText() == null ? "" : txtAddressClient.getText().trim();
+        String password = txtPasswordClient.getText() == null ? "" : txtPasswordClient.getText();
 
-                User registerUser = new User(name, hashedPassword, email, clientAddress, phoneNumber, clientId);
-                manageUser.createUser(registerUser);
-                Utils.showAlert("VERIFIED", "Client successfully registered.");
-                ActivityLogService.log(admin.getName(), "Created client: " + name + ", ID: "+ clientId);
+        if (name.isEmpty() || phoneNumber.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            Utils.showAlert("WARNING", "Please, fill in all fields");
+            return;
+        }
 
-                try {
-                    ManageClientController controller = Utils.replaceMainContent(mainContent, "manageClient(Admin).fxml");
-                    controller.setMainContent(mainContent);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Utils.showAlert("ERROR", "Could not return to Manage Clients");
-                }
-            }
-        }else{Utils.showAlert("WARNING", "Please, fill in all fields");}
-    }
+        if (!name.matches("^[A-Za-zÁÉÍÓÚáéíóúÑñ ]{2,}$")) {
+            Utils.showAlert("ERROR", "Invalid name. Only letters and spaces allowed.");
+            return;
+        }
 
-    private boolean isEmailRegistered(String email) {
-        String lowerEmail = email.toLowerCase();
-        DataBase db = DataBase.getInstance();
-        if (db.getListaUsuarios().stream().anyMatch((u) -> u.getEmail().toLowerCase().equals(lowerEmail))) {
-            return true;
-        } else if (db.getListaAdmin().stream().anyMatch((a) -> a.getEmail().toLowerCase().equals(lowerEmail))) {
-            return true;
-        } else {
-            return db.getListaRepartidores().stream().anyMatch((d) -> d.getEmail().toLowerCase().equals(lowerEmail));
+        if (!phoneNumber.matches("^3\\d{9}$")) {
+            Utils.showAlert("ERROR", "Phone number must start with 3 and contain 10 digits.");
+            return;
+        }
+
+        if (!email.matches("^[A-Za-z0-9+_.-]+@(gmail|hotmail|outlook|yahoo)\\.com$")) {
+            Utils.showAlert("ERROR",
+                    "Email must be Gmail, Hotmail, Outlook, or Yahoo");
+            return;
+        }
+
+        if (Utils.isEmailRegistered(email)) {
+            Utils.showAlert("ERROR", "Email is already registered!");
+            return;
+        }
+
+        if (password.length() < 8) {
+            Utils.showAlert("ERROR", "Password must be at least 8 characters!");
+            return;
+        }
+
+        if (address.length() < 3) {
+            Utils.showAlert("ERROR", "Address seems too short.");
+            return;
+        }
+
+        String clientId = manageUser.generateId();
+        String hashedPassword = Utils.hashPassword(password);
+        Address clientAddress = new Address(address);
+
+        User registerUser = new User(name, hashedPassword, email, clientAddress, phoneNumber, clientId);
+        manageUser.createUser(registerUser);
+        registerUser.getAddressList().add(clientAddress);
+        DataBase.getInstance().saveToJson();
+
+        Utils.showAlert("VERIFIED", "Client successfully registered.");
+        ActivityLogService.log(admin.getName(), "Created client: " + name + ", ID: " + clientId);
+
+        try {
+            ManageClientController controller = Utils.replaceMainContent(mainContent, "manageClient(Admin).fxml");
+            controller.setMainContent(mainContent);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Utils.showAlert("ERROR", "Could not return to Manage Clients");
         }
     }
+
 
 }

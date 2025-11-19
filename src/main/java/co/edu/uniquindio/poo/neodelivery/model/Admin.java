@@ -8,6 +8,8 @@ public class Admin implements Observer{
     private String password;
     private String profilePicturePath;
 
+    public Admin(){}
+
     public Admin(String idAdmin, String name, String email, String number, String password) {
         this.idAdmin = idAdmin;
         this.name = name;

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.neodelivery.controllers.TrackOrderController">
+    <center>
+        <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <children>
+                <VBox id="loginPane" alignment="TOP_CENTER" fillWidth="false" layoutX="53.0" layoutY="25.0" prefHeight="200.0" prefWidth="794.0" spacing="25.0" AnchorPane.bottomAnchor="24.59999999999991" AnchorPane.leftAnchor="53.0" AnchorPane.rightAnchor="53.39999999999998" AnchorPane.topAnchor="25.0">
+                    <children>
+                        <Label style="-fx-font-size: 18; -fx-font-weight: bold;" styleClass="text" text="Enter order ID:">
+                     <VBox.margin>
+                        <Insets top="25.0" />
+                     </VBox.margin></Label>
+                        <TextField fx:id="txtOrderID" prefHeight="25.0" prefWidth="302.0" promptText="Type the order ID" VBox.vgrow="NEVER">
+                     <VBox.margin>
+                        <Insets left="200.0" right="200.0" />
+                     </VBox.margin></TextField>
+                  <Button fx:id="btnTrackOrder" mnemonicParsing="false" onAction="#trackOrder" prefHeight="26.0" prefWidth="138.0" styleClass="mainButton" text="Track order" />
+                        <Line endX="100.0" fill="BLACK" startX="-500.0" />
+                  <Label fx:id="lblInformation" alignment="CENTER" prefHeight="20.0" prefWidth="602.0" style="-fx-font-size: 14;" styleClass="text" textAlignment="CENTER" />
+                        <HBox fx:id="timelineBox" alignment="CENTER" prefHeight="364.0" prefWidth="740.0" spacing="20.0" />
+                    </children>
+                </VBox>
+            </children>
+        </AnchorPane>
+    </center>
+</BorderPane>
