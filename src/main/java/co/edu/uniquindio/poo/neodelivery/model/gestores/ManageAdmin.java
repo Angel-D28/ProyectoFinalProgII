@@ -44,10 +44,12 @@ public class ManageAdmin {
 
     public void createAdmin(Admin admin) {
         db.getListaAdmin().add(admin);
+        DataBase.getInstance().saveToJson();
     }
 
     public void deleteAdmin(Admin admin) {
         db.getListaAdmin().remove(admin);
+        DataBase.getInstance().saveToJson();
     }
 
     public void updateAdmin(String adminId, Admin adminUpdated) {
@@ -57,6 +59,7 @@ public class ManageAdmin {
             adminToUpdate.setEmail(adminUpdated.getEmail());
             adminToUpdate.setNumber(adminUpdated.getNumber());
         }
+        DataBase.getInstance().saveToJson();
     }
 
     public List<Admin> getAllAdmins() {

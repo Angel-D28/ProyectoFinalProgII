@@ -1,6 +1,7 @@
 package co.edu.uniquindio.poo.neodelivery.controllers;
 
 import co.edu.uniquindio.poo.neodelivery.model.Address;
+import co.edu.uniquindio.poo.neodelivery.model.Repository.DataBase;
 import co.edu.uniquindio.poo.neodelivery.model.User;
 import co.edu.uniquindio.poo.neodelivery.model.utils.Utils;
 import javafx.collections.FXCollections;
@@ -48,6 +49,7 @@ public class ManageAddressesController {
 
         clientLogged.getAddressList().add(newAddress);
         addressesObs.add(newAddress);
+        DataBase.getInstance().saveToJson();
 
         txtNewAddress.clear();
         Utils.showAlert("VERIFIED", "Address added");
@@ -64,6 +66,7 @@ public class ManageAddressesController {
 
         clientLogged.getAddressList().remove(selected);
         addressesObs.remove(selected);
+        DataBase.getInstance().saveToJson();
 
         Utils.showAlert("VERIFIED", "Address deleted");
     }
@@ -77,7 +80,9 @@ public class ManageAddressesController {
             return;
         }
 
+
         clientLogged.setAddress(selected);
+        DataBase.getInstance().saveToJson();
         Utils.showAlert("VERIFIED", "Default address updated");
     }
 

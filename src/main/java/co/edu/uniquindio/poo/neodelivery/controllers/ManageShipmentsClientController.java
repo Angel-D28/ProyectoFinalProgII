@@ -5,6 +5,7 @@ import co.edu.uniquindio.poo.neodelivery.model.Repository.DataBase;
 import co.edu.uniquindio.poo.neodelivery.model.Shipment;
 import co.edu.uniquindio.poo.neodelivery.model.Status;
 import co.edu.uniquindio.poo.neodelivery.model.User;
+import co.edu.uniquindio.poo.neodelivery.model.gestores.ManageShipments;
 import co.edu.uniquindio.poo.neodelivery.model.utils.Utils;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -133,11 +134,14 @@ public class ManageShipmentsClientController {
         }else if(shipmentSelected.getStatus().equals(Status.PENDING) || shipmentSelected.getStatus().equals(Status.DELIVERASSIGNED)){
             clientLogged.getShipmentsList().remove(shipmentSelected);
             db.getListaEnvios().remove(shipmentSelected);
+            shipmentSelected.getAssignedDriver().setShipmentAssigned(null);
+            shipmentSelected.getAssignedDriver().setAvalibility(true);
             Utils.showAlert("VERIFIED", "Shipping canceled.");
             refreshShipmentsList();
         }else{
             Utils.showAlert("ERROR", "You cannot cancel a shipment that has already been picked up by a delivery driver.");
         }
+        DataBase.getInstance().saveToJson();
     }
 
     @FXML

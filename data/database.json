@@ -1,0 +1,135 @@
+{
+  "users" : [ {
+    "name" : "Mateo Rodriguez",
+    "password" : "b27b0cbdb9440045facccea10a7066008c1afa64254eb0429ca7e61e41bdcc90",
+    "email" : "mateor@gmail.com",
+    "address" : {
+      "address" : "Mz H Casa 1, Calarcá, Quindío"
+    },
+    "idUser" : "1",
+    "profilePicturePath" : "C:\\Users\\andre\\OneDrive\\Desktop\\Programación\\FinalProjectP2\\ProyectoFinalProgII\\data\\images\\fotoPutinez.jpg",
+    "paymentsMethodsList" : [ {
+      "type" : "digitalWallet",
+      "idPayment" : "PAY-1763524761537",
+      "amount" : 110000.0,
+      "paymentDate" : "2025-11-18",
+      "status" : null,
+      "paymentMethodName" : "daviplata",
+      "walletProvider" : "daviplata",
+      "numberWallet" : "3108897766:1122"
+    } ],
+    "shipmentsList" : [ {
+      "id" : "SHP1",
+      "origin" : {
+        "address" : "Mz H Casa 1, Calarcá, Quindío"
+      },
+      "destination" : {
+        "address" : "Cra 15 #25-21 Pereira, Risaralda"
+      },
+      "weight" : 50.0,
+      "volume" : 300.0,
+      "cost" : 110000.0,
+      "status" : "DELIVERED",
+      "hasInsurance" : false,
+      "requiresSignature" : true,
+      "fragile" : false,
+      "payment" : {
+        "type" : "digitalWallet",
+        "idPayment" : "PAY-1763524761537",
+        "amount" : 110000.0,
+        "paymentDate" : "2025-11-18",
+        "status" : null,
+        "paymentMethodName" : "daviplata",
+        "walletProvider" : "daviplata",
+        "numberWallet" : "3108897766:1122"
+      },
+      "state" : {
+        "type" : "Deliver assigned",
+        "statusName" : "DELIVERASSIGNED"
+      },
+      "assignedDriver" : {
+        "id" : "1",
+        "name" : "Federico Gutierrez",
+        "email" : "fede@gmail.com",
+        "password" : "d5bf0e1516403a82a38c9c33eabcc95aaa37aba7ab0a26d50fde4e485148bba1",
+        "avalibility" : true,
+        "profilePicturePath" : null
+      },
+      "priority" : true,
+      "description" : "Envío desde Mz H Casa 1, Calarcá, Quindío hasta Cra 15 #25-21 Pereira, Risaralda",
+      "paymentMethodName" : "Daviplata"
+    } ],
+    "addressList" : [ {
+      "address" : "Mz H Casa 1, Calarcá, Quindío"
+    } ],
+    "notificationsEnabled" : false,
+    "numbre" : "3125432233"
+  } ],
+  "shipments" : [ {
+    "id" : "SHP1",
+    "origin" : {
+      "address" : "Mz H Casa 1, Calarcá, Quindío"
+    },
+    "destination" : {
+      "address" : "Cra 15 #25-21 Pereira, Risaralda"
+    },
+    "weight" : 50.0,
+    "volume" : 300.0,
+    "cost" : 110000.0,
+    "status" : "DELIVERED",
+    "hasInsurance" : false,
+    "requiresSignature" : true,
+    "fragile" : false,
+    "payment" : {
+      "type" : "digitalWallet",
+      "idPayment" : "PAY-1763524761537",
+      "amount" : 110000.0,
+      "paymentDate" : "2025-11-18",
+      "status" : null,
+      "paymentMethodName" : "daviplata",
+      "walletProvider" : "daviplata",
+      "numberWallet" : "3108897766:1122"
+    },
+    "state" : {
+      "type" : "Deliver assigned",
+      "statusName" : "DELIVERASSIGNED"
+    },
+    "assignedDriver" : {
+      "id" : "1",
+      "name" : "Federico Gutierrez",
+      "email" : "fede@gmail.com",
+      "password" : "d5bf0e1516403a82a38c9c33eabcc95aaa37aba7ab0a26d50fde4e485148bba1",
+      "avalibility" : true,
+      "profilePicturePath" : null
+    },
+    "priority" : true,
+    "description" : "Envío desde Mz H Casa 1, Calarcá, Quindío hasta Cra 15 #25-21 Pereira, Risaralda",
+    "paymentMethodName" : "Daviplata"
+  } ],
+  "drivers" : [ {
+    "id" : "1",
+    "name" : "Federico Gutierrez",
+    "email" : "fede@gmail.com",
+    "password" : "d5bf0e1516403a82a38c9c33eabcc95aaa37aba7ab0a26d50fde4e485148bba1",
+    "avalibility" : true,
+    "profilePicturePath" : null
+  } ],
+  "payments" : [ {
+    "type" : "digitalWallet",
+    "idPayment" : "PAY-1763524761537",
+    "amount" : 110000.0,
+    "paymentDate" : "2025-11-18",
+    "status" : null,
+    "paymentMethodName" : "daviplata",
+    "walletProvider" : "daviplata",
+    "numberWallet" : "3108897766:1122"
+  } ],
+  "admins" : [ {
+    "idAdmin" : "1",
+    "name" : "Carlos Molina",
+    "email" : "caml.7carlos@gmail.com",
+    "number" : "3208489702",
+    "password" : "201bce2458f00a54130c695ca8d1658319b32206d495adf175847b57bd4a4151",
+    "profilePicturePath" : null
+  } ]
+}

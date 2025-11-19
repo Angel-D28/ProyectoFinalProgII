@@ -7,17 +7,11 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.NumberFormat;
 import java.util.Locale;
-import java.util.Properties;
-
 import co.edu.uniquindio.poo.neodelivery.model.*;
 import co.edu.uniquindio.poo.neodelivery.model.Repository.DataBase;
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfWriter;
 import jakarta.mail.*;
-import jakarta.mail.internet.InternetAddress;
-import jakarta.mail.internet.MimeBodyPart;
-import jakarta.mail.internet.MimeMessage;
-import jakarta.mail.internet.MimeMultipart;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -260,6 +254,32 @@ public class Utils {
             return true;
         } else {
             return db.getListaRepartidores().stream().anyMatch((d) -> d.getEmail().toLowerCase().equals(lowerEmail));
+        }
+    }
+
+    public static void saveProfileImage(File selectedFile, Object account, String id) {
+        try {
+            File dir = new File("data/images");
+            if (!dir.exists()) dir.mkdirs();
+
+            String extension = selectedFile.getName().substring(selectedFile.getName().lastIndexOf("."));
+            String newFileName = id + extension;
+            File destFile = new File(dir, newFileName);
+
+            java.nio.file.Files.copy(selectedFile.toPath(), destFile.toPath(),
+                    java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+
+            if (account instanceof User user) {
+                user.setProfilePicturePath(destFile.getPath());
+            } else if (account instanceof Admin admin) {
+                admin.setProfilePicturePath(destFile.getPath());
+            } else if (account instanceof DeliveryDriver driver) {
+                driver.setProfilePicturePath(destFile.getPath());
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Utils.showAlert("ERROR", "No se pudo guardar la imagen: " + e.getMessage());
         }
     }
 

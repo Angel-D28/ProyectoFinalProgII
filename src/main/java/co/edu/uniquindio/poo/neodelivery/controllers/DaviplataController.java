@@ -69,8 +69,6 @@ public class DaviplataController {
                     "daviplata",
                     phone + ":" + pin
             );
-            clientLogged.getShipmentsList().add(shipment);
-            db.getListaEnvios().add(shipment);
 
             File pdfGenerado = Utils.createPaymentPDF(pago, shipment, clientLogged);
 

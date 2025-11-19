@@ -1,5 +1,7 @@
 package co.edu.uniquindio.poo.neodelivery.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,10 +13,18 @@ public class User implements Observer {
     private String number;
     private String idUser;
     private String profilePicturePath;
-    private List<Payment> paymentsMethodsList = new ArrayList<>();
-    private List<Shipment>  shipmentsList = new ArrayList<>();
-    private List<Address>  addressList = new ArrayList<>();
+    private List<Payment> paymentsMethodsList;
+
+    private List<Shipment>  shipmentsList;
+
+    private List<Address>  addressList;
     private boolean notificationsEnabled = true;
+
+    public User(){
+        paymentsMethodsList = new ArrayList<>();
+        shipmentsList = new ArrayList<>();
+        addressList = new ArrayList<>();
+    }
 
     public User(String name, String password, String email, Address address, String numbre, String idUser) {
         this.name = name;
@@ -23,6 +33,10 @@ public class User implements Observer {
         this.address = address;
         this.number = numbre;
         this.idUser = idUser;
+
+        paymentsMethodsList = new ArrayList<>();
+        shipmentsList = new ArrayList<>();
+        addressList = new ArrayList<>();
     }
 
     public String getName() {

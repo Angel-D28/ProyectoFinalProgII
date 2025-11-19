@@ -4,8 +4,13 @@ import co.edu.uniquindio.poo.neodelivery.model.Admin;
 import co.edu.uniquindio.poo.neodelivery.model.DeliveryDriver;
 import co.edu.uniquindio.poo.neodelivery.model.Shipment;
 import co.edu.uniquindio.poo.neodelivery.model.Status;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DeliveredState implements ShipmentState {
+
+    public DeliveredState(){}
+
     @Override
     public void assignerDriver(Shipment shipment, Admin admin, DeliveryDriver driver) {
         System.out.println("⚠El envío ya fue entregado. No se puede reasignar.");

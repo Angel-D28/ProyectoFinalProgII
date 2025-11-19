@@ -44,10 +44,12 @@ public class ManageUsers {
 
     public void createUser(User user) {
         db.getListaUsuarios().add(user);
+        DataBase.getInstance().saveToJson();
     }
 
     public void deleteUser(User user) {
         db.getListaUsuarios().remove(user);
+        DataBase.getInstance().saveToJson();
     }
     public void updateUser(String idUser, User userUpdated) {
         User userToUpdate = findUser(idUser);
@@ -56,6 +58,7 @@ public class ManageUsers {
         userToUpdate.setEmail(userUpdated.getEmail());
         userToUpdate.setAddress(userUpdated.getAddress());
         userToUpdate.setPassword(userUpdated.getPassword());
+        DataBase.getInstance().saveToJson();
     }
 
     public List<User> getAllUsers() {

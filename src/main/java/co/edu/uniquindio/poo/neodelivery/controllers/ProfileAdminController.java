@@ -15,6 +15,9 @@ import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 public class ProfileAdminController {
 
@@ -90,9 +93,25 @@ public class ProfileAdminController {
 
         File file = chooser.showOpenDialog(null);
         if (file != null) {
-            imageFile = file;
-            Image img = new Image(file.toURI().toString(), 100, 100, false, true);
-            imageProfile.setImage(img);
+            File destDir = new File("data/images");
+            if (!destDir.exists()) destDir.mkdirs();
+
+            File destFile = new File(destDir, file.getName());
+            try {
+                Files.copy(file.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                imageFile = destFile;
+
+                Image img = new Image(destFile.toURI().toString(), 100, 100, false, true);
+                imageProfile.setImage(img);
+
+                adminLogged.setProfilePicturePath(destFile.getPath());
+
+                DataBase.getInstance().saveToJson();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                Utils.showAlert("ERROR", "Error saving image");
+            }
         }
     }
 
@@ -159,6 +178,8 @@ public class ProfileAdminController {
         if (imageFile != null) {
             adminLogged.setProfilePicturePath(imageFile.getAbsolutePath());
         }
+
+        DataBase.getInstance().saveToJson();
 
         Utils.showAlert("VERIFIED", "Profile updated successfully!");
 

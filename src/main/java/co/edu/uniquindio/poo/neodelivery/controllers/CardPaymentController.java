@@ -82,13 +82,10 @@ public class CardPaymentController {
                     txtExpiry.getText(), txtCVV.getText()
             );
 
-            client.getShipmentsList().add(shipment);
-            db.getListaEnvios().add(shipment);
-            shipment.setPayment(payment);
             shipment.addObserver(client);
-            client.getPaymentsMethodsList().add(payment);
 
             File pdfGenerado = Utils.createPaymentPDF(payment, shipment, client);
+            //DataBase.getInstance().saveToJson();
 
             if (client.isNotificationsEnabled()) {
                 EmailService.sendEmailWithAttachment(client.getEmail(), "YOUR SHIPMENT INVOICE - NEO DELIVERY",

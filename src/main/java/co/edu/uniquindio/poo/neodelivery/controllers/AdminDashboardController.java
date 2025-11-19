@@ -61,12 +61,8 @@ public class AdminDashboardController {
     @FXML
     public void initialize() {
         Utils.replaceMainContent(mainContent, "adminHome.fxml");
-
         profileImageView.setClip(new Circle(50, 50, 50));
 
-        if (admin != null) {
-            loadAdminImage();
-        }
     }
 
     @FXML

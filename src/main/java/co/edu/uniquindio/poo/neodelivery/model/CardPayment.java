@@ -3,6 +3,8 @@ package co.edu.uniquindio.poo.neodelivery.model;
 public class CardPayment extends Payment {
     private String cardNumber;
 
+    public CardPayment(){}
+
     public CardPayment(double amount, String cardNumber) {
         super(amount);
         this.cardNumber = cardNumber;

@@ -1,8 +1,22 @@
 package co.edu.uniquindio.poo.neodelivery.model;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "type"
+)
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = DigitalWalletPayment.class, name = "digitalWallet"),
+        @JsonSubTypes.Type(value = CardPayment.class, name = "card"),
+        @JsonSubTypes.Type(value = CashPayment.class, name = "cash")
+})
 
 public abstract class Payment implements Subject  {
     protected String idPayment;
@@ -10,6 +24,9 @@ public abstract class Payment implements Subject  {
     protected LocalDate paymentDate;
     protected StatusPayment status;
     private List<Observer> observers = new ArrayList<>();
+    protected String paymentMethodName = "Unknown";
+
+    public Payment(){}
 
     public Payment(double amount){
         this.amount = amount;
@@ -34,6 +51,10 @@ public abstract class Payment implements Subject  {
 
     public StatusPayment getStatus() {
         return status;
+    }
+
+    public String getPaymentMethodName() {
+        return paymentMethodName;
     }
 
     public void setStatus(StatusPayment newStatus) {

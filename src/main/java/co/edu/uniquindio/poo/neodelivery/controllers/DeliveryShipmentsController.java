@@ -4,6 +4,7 @@ import co.edu.uniquindio.poo.neodelivery.model.DeliveryDriver;
 import co.edu.uniquindio.poo.neodelivery.model.Repository.DataBase;
 import co.edu.uniquindio.poo.neodelivery.model.Shipment;
 import co.edu.uniquindio.poo.neodelivery.model.Status;
+import co.edu.uniquindio.poo.neodelivery.model.gestores.ManageDeliveryDrivers;
 import co.edu.uniquindio.poo.neodelivery.model.utils.Utils;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -121,6 +122,7 @@ public class DeliveryShipmentsController {
                 assignedShipments.add(shipment);
             }
         }
+        DataBase.getInstance().saveToJson();
     }
 
     @FXML
@@ -161,6 +163,7 @@ public class DeliveryShipmentsController {
         }
         deliveredShipmentsTable.refresh();
         assignedShipmentsTable.refresh();
+        DataBase.getInstance().saveToJson();
         Utils.showAlert("VERIFIED", "Shipment marked as delivered.");
     }
 
@@ -196,6 +199,7 @@ public class DeliveryShipmentsController {
 
         selectedShipment.setStatus(Status.DELIVERING);
         assignedShipmentsTable.refresh();
+        DataBase.getInstance().saveToJson();
         Utils.showAlert("VERIFIED", "Shipment marked as picked up.");
     }
 

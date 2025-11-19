@@ -104,6 +104,7 @@ public class ManageAdminController {
 
         listAdmins.remove(selected);
         manageAdmin.deleteAdmin(selected);
+        DataBase.getInstance().saveToJson();
         Utils.showAlert("VERIFIED", "Successfully removed");
         ActivityLogService.log(adminLogged.getName(), "Deleted admin");
     }

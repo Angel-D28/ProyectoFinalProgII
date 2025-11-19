@@ -16,47 +16,22 @@ import javafx.scene.layout.AnchorPane;
 
 public class AddShipmentsClientController {
 
-    @FXML
-    private ChoiceBox<String> boxFragile;
-
-    @FXML
-    private ChoiceBox<String> boxHasInsure;
-
-    @FXML
-    private ChoiceBox<String> boxIsPriority;
-
-    @FXML
-    private ChoiceBox<String> boxPaymentMethods;
-
-    @FXML
-    private ChoiceBox<String> boxToSign;
-
-    @FXML
-    private Button btnCancel;
-
-    @FXML
-    private Button btnGoPay;
-
-    @FXML
-    private TextField txtDestination;
-
-    @FXML
-    private TextField txtOrigin;
-
-    @FXML
-    private TextField txtVolume;
-
-    @FXML
-    private TextField txtWeigth;
+    @FXML private ChoiceBox<String> boxFragile;
+    @FXML private ChoiceBox<String> boxHasInsure;
+    @FXML private ChoiceBox<String> boxIsPriority;
+    @FXML private ChoiceBox<String> boxPaymentMethods;
+    @FXML private ChoiceBox<String> boxToSign;
+    @FXML private Button btnCancel;
+    @FXML private Button btnGoPay;
+    @FXML private TextField txtDestination;
+    @FXML private TextField txtOrigin;
+    @FXML private TextField txtVolume;
+    @FXML private TextField txtWeigth;
 
     DataBase db = DataBase.getInstance();
-
     private User clientLogged;
-
     private AnchorPane mainContent;
-
     private ManageShipments manageShipments = new ManageShipments();
-
     private ManagePayments managePayments = new ManagePayments();
 
     void setClient(User client) {
@@ -91,15 +66,27 @@ public class AddShipmentsClientController {
     @FXML
     void goPay(ActionEvent event) {
         try {
-            if (    txtDestination.getText().isEmpty() ||
-                    txtWeigth.getText().isEmpty() || txtVolume.getText().isEmpty() ||
-                    boxIsPriority.getValue().equals("Select one") ||
-                    boxFragile.getValue().equals("Select one") ||
-                    boxHasInsure.getValue().equals("Select one") ||
-                    boxToSign.getValue().equals("Select one") ||
+            if (txtDestination.getText().isEmpty() || txtWeigth.getText().isEmpty() || txtVolume.getText().isEmpty() ||
+                    boxIsPriority.getValue().equals("Select one") || boxFragile.getValue().equals("Select one") ||
+                    boxHasInsure.getValue().equals("Select one") || boxToSign.getValue().equals("Select one") ||
                     boxPaymentMethods.getValue().equals("Select a payment method")) {
 
                 Utils.showAlert("ERROR", "Please fill all the fields and select all options.");
+                return;
+            }
+
+            String paymentMethod = boxPaymentMethods.getValue().toLowerCase();
+
+            Payment payment = switch(paymentMethod) {
+                case "card payment" -> new CardPayment(0, "");
+                case "daviplata" -> new DigitalWalletPayment(0, "Daviplata", "");
+                case "nequi" -> new DigitalWalletPayment(0, "Nequi", "");
+                case "cash" -> new CashPayment(0);
+                default -> null;
+            };
+
+            if (payment == null) {
+                Utils.showAlert("ERROR", "Seleccione un método de pago válido.");
                 return;
             }
 
@@ -108,79 +95,57 @@ public class AddShipmentsClientController {
             Address origin = new Address(txtOrigin.getText());
             Address destination = new Address(txtDestination.getText());
 
-            Shipment shipment = new Shipment.Builder()
-                    .id(manageShipments.generateID())
-                    .origin(origin)
-                    .destination(destination)
-                    .weight(weight)
-                    .volume(volume)
-                    .hasInsurance(boxHasInsure.getValue().equals("Yes"))
-                    .isPriority(boxIsPriority.getValue().equals("Yes"))
-                    .requiresSignature(boxToSign.getValue().equals("Yes"))
-                    .fragile(boxFragile.getValue().equals("Yes"))
-                    .build();
+            Shipment shipment = manageShipments.createShipment(clientLogged, origin, destination, weight, volume,
+                    boxHasInsure.getValue().equals("Yes"),
+                    boxIsPriority.getValue().equals("Yes"),
+                    boxToSign.getValue().equals("Yes"),
+                    boxFragile.getValue().equals("Yes"),
+                    payment);
 
             double finalCost = manageShipments.calculateShipmentCost(shipment, "peso");
             shipment.setCost(finalCost);
+            shipment.setPayment(payment);
+            shipment.addObserver(clientLogged);
 
-            Payment payment;
-            String paymentMethod = boxPaymentMethods.getValue();
-
-            switch(paymentMethod.toLowerCase()){
-                case "card payment":
-                    CardPaymentController cardController =
-                            Utils.replaceMainContent(mainContent, "CardPayment.fxml");
-
-                    if(cardController != null){
+            switch(paymentMethod) {
+                case "card payment" -> {
+                    CardPaymentController cardController = Utils.replaceMainContent(mainContent, "CardPayment.fxml");
+                    if(cardController != null) {
                         cardController.setShipment(shipment);
                         cardController.setClient(clientLogged);
                         cardController.setMainContent(mainContent);
                     }
-                    break;
-                case "daviplata":
+                }
+                case "daviplata" -> {
                     DaviplataController daviplataController = Utils.replaceMainContent(mainContent, "DaviplataPayment.fxml");
-                    if(daviplataController != null){
+                    if(daviplataController != null) {
                         daviplataController.setShipment(shipment);
                         daviplataController.setClient(clientLogged);
                         daviplataController.setMainContent(mainContent);
-                    }else{
-                        Utils.showAlert("ERROR", "Could not load Daviplata payment view.");
                     }
-                    break;
-                case "nequi":
+                }
+                case "nequi" -> {
                     NequiController nequiController = Utils.replaceMainContent(mainContent, "NequiPayment.fxml");
-                    if(nequiController != null){
+                    if(nequiController != null) {
                         nequiController.setShipment(shipment);
                         nequiController.setClient(clientLogged);
                         nequiController.setMainContentNequi(mainContent);
-                    }else {
-                        Utils.showAlert("ERROR", "Could not load Nequi payment view.");
                     }
-                    break;
-                case "cash":
-                    payment = managePayments.createAndProcessPayment(clientLogged, shipment,
-                            shipment.getCost(), "efecty", null, null, null);
+                }
+                case "cash" -> {
+                    payment = managePayments.createAndProcessPayment(clientLogged, shipment, shipment.getCost(),
+                            "efecty", null, null, null);
 
                     Utils.createPaymentPDF(payment, shipment, clientLogged);
-                    shipment.setPayment(payment);
-                    shipment.addObserver(clientLogged);
-                    clientLogged.getPaymentsMethodsList().add(payment);
-                    clientLogged.getShipmentsList().add(shipment);
-                    db.getListaEnvios().add(shipment);
-
-
-
+                    DataBase.getInstance().saveToJson();
                     Utils.showAlert("SUCCESS", "Shipment and payment created successfully!");
 
                     ManageShipmentsClientController controller = Utils.replaceMainContent(mainContent, "manageShipmentsClient.fxml");
                     controller.setClientLogged(clientLogged);
                     controller.setMainContentManageShipments(mainContent);
                     controller.setShipment(shipment);
-                    break;
-                default:
-                    Utils.showAlert("ERROR","Please select a payment method");
+                }
             }
-
 
         } catch (NumberFormatException e) {
             Utils.showAlert("ERROR", "Weight and volume must be numbers.");
@@ -193,5 +158,4 @@ public class AddShipmentsClientController {
     void messagePopUp(MouseEvent event) {
         Utils.showAlert("WARNING", "You cannot change your address in this field.\n\nChange your default address in 'addresses'.");
     }
-
 }

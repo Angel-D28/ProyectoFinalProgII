@@ -1,14 +1,20 @@
 package co.edu.uniquindio.poo.neodelivery.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 public class DeliveryDriver {
     private String id;
     private String name;
     private String email;
     private String password;
+
+    @JsonBackReference
     private Shipment shipmentAssigned;
     private boolean avalibility;
     private String profilePicturePath;
+
+    public DeliveryDriver(){}
 
     public DeliveryDriver(String id, String name, String password, String email) {
         this.id = id;

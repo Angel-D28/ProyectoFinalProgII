@@ -112,6 +112,8 @@ public class AddClientController {
 
         User registerUser = new User(name, hashedPassword, email, clientAddress, phoneNumber, clientId);
         manageUser.createUser(registerUser);
+        registerUser.getAddressList().add(clientAddress);
+        DataBase.getInstance().saveToJson();
 
         Utils.showAlert("VERIFIED", "Client successfully registered.");
         ActivityLogService.log(admin.getName(), "Created client: " + name + ", ID: " + clientId);

@@ -74,7 +74,7 @@ public class RegisterViewController {
             return;
         }
 
-        if (!phoneNumber.matches("^3[1-9][0-9]{9}$")) {
+        if (!phoneNumber.matches("^3[0-9]{9}$")) {
             Utils.showAlert("ERROR",
                     "Phone number must start with 3 and contain exactly 10 digits");
             return;

@@ -1,5 +1,6 @@
 package co.edu.uniquindio.poo.neodelivery.controllers;
 
+import co.edu.uniquindio.poo.neodelivery.model.Repository.DataBase;
 import co.edu.uniquindio.poo.neodelivery.model.User;
 import co.edu.uniquindio.poo.neodelivery.model.utils.Utils;
 import javafx.event.ActionEvent;
@@ -14,6 +15,9 @@ import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 public class ProfileClientController {
 
@@ -91,9 +95,25 @@ public class ProfileClientController {
 
         File file = chooser.showOpenDialog(null);
         if (file != null) {
-            imageFile = file;
-            Image img = new Image(file.toURI().toString(), 100, 100, false, true);
-            imageProfile.setImage(img);
+            File destDir = new File("data/images");
+            if (!destDir.exists()) destDir.mkdirs();
+
+            File destFile = new File(destDir, file.getName());
+            try {
+                Files.copy(file.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                imageFile = destFile;
+
+                Image img = new Image(destFile.toURI().toString(), 100, 100, false, true);
+                imageProfile.setImage(img);
+
+                clientLogged.setProfilePicturePath(destFile.getPath());
+
+                DataBase.getInstance().saveToJson();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                Utils.showAlert("ERROR", "Error saving image");
+            }
         }
     }
 
@@ -161,6 +181,7 @@ public class ProfileClientController {
             clientLogged.setProfilePicturePath(imageFile.getAbsolutePath());
         }
 
+        DataBase.getInstance().saveToJson();
         Utils.showAlert("VERIFIED", "Profile updated successfully!");
 
         if (mainContent != null) backToHome();

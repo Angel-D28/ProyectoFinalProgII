@@ -3,6 +3,8 @@ package co.edu.uniquindio.poo.neodelivery.model;
 public class CashPayment extends Payment {
     private String referenceCode; // Código de referencia Efecty
 
+    public CashPayment(){}
+
     public CashPayment(double amount) {
         super(amount);
         this.referenceCode = generateReference();

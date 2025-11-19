@@ -93,7 +93,6 @@ public class ManageDeliveryDriverController {
     void deleteDriver(ActionEvent event) {
         DeliveryDriver selectedDriver = tableDriversList.getSelectionModel().getSelectedItem();
         if (selectedDriver != null && selectedDriver.getShipmentAssigned() == null) {
-            driversList.remove(selectedDriver);
             manageDriver.deleteDeliveyDriver(selectedDriver);
             Utils.showAlert("VERIFIED", "Successfully deleted");
             ActivityLogService.log(adminLogged.getName(), "Deleted a delivery driver");

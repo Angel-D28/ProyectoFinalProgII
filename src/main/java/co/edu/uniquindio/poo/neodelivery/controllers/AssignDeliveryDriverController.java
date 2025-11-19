@@ -90,6 +90,7 @@ public class AssignDeliveryDriverController {
         }
         manageShipments.assignDriver(adminLogged, shipmentSelected, deliverySelected);
         deliverySelected.setShipmentAssigned(shipmentSelected);
+        DataBase.getInstance().saveToJson();
         Utils.showAlert("VERIFIED", "Successfully assigned.");
         ActivityLogService.log(adminLogged.getName() +
                 " - ID: "+adminLogged.getIdAdmin(), "He assigned an order to "+

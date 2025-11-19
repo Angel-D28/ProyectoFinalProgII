@@ -45,6 +45,7 @@ public class ManagePayments {
             shipment.setPayment(payment);
         }
 
+        DataBase.getInstance().saveToJson();
         return payment;
     }
 

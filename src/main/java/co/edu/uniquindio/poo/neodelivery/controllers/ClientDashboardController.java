@@ -1,6 +1,7 @@
 package co.edu.uniquindio.poo.neodelivery.controllers;
 
 import co.edu.uniquindio.poo.neodelivery.model.ActivityLogService;
+import co.edu.uniquindio.poo.neodelivery.model.Repository.DataBase;
 import co.edu.uniquindio.poo.neodelivery.model.User;
 import co.edu.uniquindio.poo.neodelivery.model.utils.Utils;
 import javafx.animation.Interpolator;
@@ -66,12 +67,6 @@ public class ClientDashboardController {
 
     @FXML
     public void initialize() {
-        /*HomeClientController homeController = Utils.replaceMainContent(mainContent, "homeClient.fxml");
-        if(homeController != null){
-            homeController.setClient(userLogged);
-            homeController.setMainContentHomeClient(mainContent);
-        }*/
-        //Utils.replaceMainContent(mainContent, "homeClient.fxml");
         profileImageView.setClip(new Circle(50, 50, 50));
     }
 
@@ -85,6 +80,7 @@ public class ClientDashboardController {
         } else {
             Utils.showAlert("VERIFIED", "Notifications deactivated");
         }
+        DataBase.getInstance().saveToJson();
     }
 
     @FXML
@@ -106,7 +102,6 @@ public class ClientDashboardController {
 
     @FXML
     void showOrders(ActionEvent event) {
-        System.out.println(Utils.class.getResource("/co/edu/uniquindio/poo/neodelivery/manageShipmentsClient.fxml"));
         ManageShipmentsClientController shipmentController = Utils.replaceMainContent(mainContent, "manageShipmentsClient.fxml");
         shipmentController.setClientLogged(userLogged);
         shipmentController.setMainContentManageShipments(mainContent);
